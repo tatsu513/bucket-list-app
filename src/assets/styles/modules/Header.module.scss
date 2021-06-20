@@ -1,0 +1,52 @@
+@import '../_common.scss';
+
+.header {
+  height: 72px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image: url('../../images/header.png');
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+}
+
+.title {
+  color: #fff;
+  display: inline-block;
+  font-size: 24px;
+  padding-left: 24px;
+  cursor: pointer;
+}
+
+.hamburgerBox {
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  flex-flow: column;
+  justify-content: center;
+  background-color: $primary;
+  cursor: pointer;
+  transition: all 300ms ease;
+
+  &:hover {
+    background-color: $primary-dark;
+  }
+}
+
+.bar {
+  height: 2px;
+  width: 32px;
+  display: inline-block;
+  margin-bottom: 8px;
+  background-color: #fff;
+
+  &:last-of-type {
+    margin-bottom: 0;
+  }
+}
