@@ -1,0 +1,47 @@
+@import '../common';
+
+.label {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #646464;
+  font-size: 12px;
+}
+
+.selectBoxWrap {
+  width: 100%;
+  position: relative;
+
+  &::before {
+    content: '';
+    display: inline-block;
+    height: 1px;
+    width: 12px;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    transform: rotate(45deg);
+    background-color: $line-gray;
+  }
+
+  &::after {
+    content: '';
+    display: inline-block;
+    height: 1px;
+    width: 12px;
+    position: absolute;
+    top: 20px;
+    right: 12px;
+    transform: rotate(-45deg);
+    background-color: $line-gray;
+  }
+}
+
+.selectBox {
+  height: 40px;
+  width: 100%;
+  padding: 0 16px;
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  cursor: pointer;
+  line-height: 40px;
+}

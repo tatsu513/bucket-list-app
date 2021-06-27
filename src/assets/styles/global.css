@@ -1,4 +1,10 @@
 html,
 body {
+  font-size: 14px;
   font-family: 'Montserrat', '游ゴシック体', YuGothic;
+  color: #505050;
+}
+
+main {
+  margin-top: 72px;
 }

@@ -1,0 +1,90 @@
+@import '../common';
+
+.container {
+  margin: 0;
+  background-color: $grey;
+}
+
+.content {
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 auto;
+  padding: 24px;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.titleBox {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.title {
+  display: inline-block;
+  margin-right: 8px;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.titleIcon {
+  display: flex;
+  align-items: center;
+}
+
+.filterTop {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 24px;
+}
+
+.star {
+  display: inline-block;
+  height: 30px;
+  width: 30px;
+  color: $secondary;
+}
+
+.filterBox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.filterItem {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-right: 24px;
+  width: 24%;
+
+  &:nth-child(1) {
+    width: 12%;
+  }
+
+  &:nth-child(2) {
+    width: 40%;
+  }
+
+  &:last-of-type {
+    margin-right: 0;
+  }
+}
+
+.filterImportant {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.label {
+  display: inline-block;
+  margin-bottom: 12px;
+  color: #646464;
+  font-size: 12px;
+}
+
+.selectFiled,
+.textField {
+  width: 100%;
+}
