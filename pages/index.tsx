@@ -1,11 +1,13 @@
-import { Filter } from '../src/components';
+import { Filter, List } from '../src/components';
 import styles from 'src/assets/styles/modules/Home.module.scss';
 
 const home = () => {
   return (
     <>
       <Filter />
-      <div className={styles.container}></div>
+      <div className={styles.container}>
+        <List />
+      </div>
     </>
   );
 };

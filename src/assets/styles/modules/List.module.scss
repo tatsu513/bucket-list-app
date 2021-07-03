@@ -1,0 +1,73 @@
+@import '../common';
+
+.table {
+  width: 100%;
+}
+
+.status {
+  width: 100px;
+}
+
+.limit {
+  width: 60px;
+}
+
+.category {
+  width: 172px;
+}
+
+.star {
+  width: 104px;
+}
+
+.cellHead {
+  padding: 0 16px 8px;
+  font-size: 12px;
+  font-weight: normal;
+  border-bottom: 1px solid $line-gray;
+  color: $text-gray;
+  text-align: center;
+
+  &.cellHeadBody {
+    text-align: left;
+  }
+}
+
+.tableRow {
+  cursor: pointer;
+
+  &:hover {
+    background-color: $grey;
+  }
+}
+
+.cell {
+  padding: 16px;
+  border-bottom: 1px solid $line-gray;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.cellBody {
+  text-align: left;
+
+  .cellBodyTitle {
+    margin-bottom: 8px;
+    font-size: 18px;
+  }
+
+  .cellBodyText {
+    display: inline-block;
+    margin-right: 8px;
+    color: $text-gray;
+  }
+}
+
+.cellLimitOld {
+  margin-bottom: 8px;
+  font-size: 18px;
+}
+
+.cellStarIcon {
+  color: $secondary;
+}
