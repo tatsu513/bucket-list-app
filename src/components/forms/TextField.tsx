@@ -3,10 +3,11 @@ interface Props {
   label: string;
   placeholder: string;
   type: string;
+  value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const TextField = (props: Props) => {
+const TextField: React.VFC<Props> = (props) => {
   return (
     <>
       <label className={styles.label}>{props.label}</label>
@@ -14,6 +15,7 @@ const TextField = (props: Props) => {
         className={styles.textField}
         type={props.type}
         placeholder={props.placeholder}
+        value={props.value}
         onChange={(event) => props.onChange(event)}
       />
     </>

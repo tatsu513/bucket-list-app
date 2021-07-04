@@ -1,0 +1,23 @@
+@import '../common';
+
+.item {
+  width: 100%;
+  margin-bottom: 16px;
+
+  &__half {
+    width: 50%;
+    margin-right: 16px;
+  }
+
+  &__old {
+    font-size: 14px;
+    margin-top: 20px;
+    color: $text-gray;
+  }
+}
+
+.itemFlex {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}

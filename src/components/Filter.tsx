@@ -2,7 +2,6 @@ import { useCallback, useState } from 'react';
 import styles from '../assets/styles/modules/Filter.module.scss';
 import { StarBorderRounded } from '@material-ui/icons';
 import { SelectBox, TextField } from './forms';
-import { FloatButton } from 'src/components/buttons/';
 
 const Filter = () => {
   const [content, setContent] = useState('');
@@ -54,7 +53,11 @@ const Filter = () => {
         </div>
         <div className={styles.filterItem}>
           <div className={styles.selectFiled}>
-            <SelectBox label="ステータス" value={status} select={inputStatus} />
+            <SelectBox
+              label="ステータス"
+              value={status}
+              onChange={inputStatus}
+            />
           </div>
         </div>
         <div className={styles.filterItem}>
@@ -62,11 +65,10 @@ const Filter = () => {
             <SelectBox
               label="カテゴリ"
               value={category}
-              select={selectedCategory}
+              onChange={selectedCategory}
             />
           </div>
         </div>
-        <FloatButton />
       </div>
     </div>
   );

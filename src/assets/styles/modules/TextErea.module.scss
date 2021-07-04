@@ -1,0 +1,16 @@
+@import '../common';
+
+.label {
+  display: inline-block;
+  margin-bottom: 8px;
+  color: #646464;
+  font-size: 12px;
+}
+
+.textErea {
+  width: 100%;
+  padding: 16px;
+  border: 1px solid #c4c4c4;
+  border-radius: 4px;
+  resize: none;
+}

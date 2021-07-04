@@ -3,11 +3,11 @@ import styles from '../../assets/styles/modules/SelectBox.module.scss';
 interface Props {
   id?: string;
   label: string;
-  select: (event: React.ChangeEvent<HTMLSelectElement>) => void;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   value: string;
 }
 
-const SelectBox = (props: Props) => {
+const SelectBox: React.VFC<Props> = (props) => {
   return (
     <>
       <label className={styles.label}>{props.label}</label>
@@ -15,7 +15,7 @@ const SelectBox = (props: Props) => {
         <select
           className={styles.selectBox}
           value={props.value}
-          onChange={(event) => props.select(event)}
+          onChange={(event) => props.onChange(event)}
         >
           <option>1</option>
           <option>2</option>
