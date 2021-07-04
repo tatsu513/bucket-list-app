@@ -2,7 +2,48 @@ rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
     match /{document=**} {
-      allow read, write: if false;
+      allow read, write: if true;
     }
+
+    // function isAnyAuthenticated() {
+    //   return request.auth != null;
+    // }
+
+    // function isUserAuthenticated(userId) {
+    //   return isAnyAuthenticated() && userId == request.auth.uid;
+    // }
+
+    // match /users/{userId} {
+    //   allow create if isUserAuthenticated(userId)
+    //     && request.resource.data.name is string && request.resource.data.name.size() <= 20
+    //     && (!('iconUrl' in request.resource.data) || (request.resource.data.iconUrl is string && request.resource.data.iconUrl.size() <= 1000)
+    //     && request.resource.data.birthday is timestamp
+    //     && request.resource.data.createdAt == request.time
+    //   ;
+    //   allow update if isUserAuthenticated(userId) && request.resource.data.updatedAt == request.time;
+    //   allow get isUserAuthenticated(userId);
+
+    //   match /todos/{todoID} {
+    //     allow create if isUserAuthenticated(userId)
+    //       && request.resource.data.title is string && request.resource.data.title.size() <= 100
+    //       && (!('note' in request.resource.data) || (request.resource.data.nate is string && request.resource.data.note.size() <= 1000))
+    //       && request.resource.data.isCompleted == false
+    //       && (!('limitDate' in request.resource.data) || request.resource.data.limitDate is timestamp)
+    //       && request.resource.data.category is string && request.resource.data.category.size() <= 10
+    //       && request.resource.data.priority is int
+    //       && request.resource.data.createdAt is request.time
+    //       && (!('completedAt' in request.resource.data) || request.resource.data.completedAt == null)
+    //     ;
+    //     allow update isUserAuthenticated(userId)
+    //       && request.resource.data.title is string && request.resource.data.title.size() <= 100
+    //       && (!('note' in request.resource.data) || (request.resource.data.nate is string && request.resource.data.note.size() <= 1000))
+    //       && (request.resource.data.isCompleted == true && request.resource.data.completedAt == request.time)
+    //         || (request.resource.data.isCompleted == false && request.resource.data.completedAt == null)
+    //       && (!('limitDate' in request.resource.data) || request.resource.data.limitDate is timestamp)
+    //       && request.resource.data.category is string && request.resource.data.category.size() <= 10
+    //       && request.resource.data.priority is int
+    //       && request.resource.data.createdAt is request.time
+    //   }
+    // }
   }
 }

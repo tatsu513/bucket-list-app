@@ -1,0 +1,23 @@
+users:
+  documentId: rondom
+  name: string?
+  iconUrl: string?
+  birthday: Date
+  createdAt: timestamp
+  updatedAt: timestamp
+
+  todos:
+    documentId: rondom
+    title: string
+    note: string?
+    isCompleted: Boolean
+    limitDate: Date?
+    category: categoryId
+    priority: Number
+    createdAt: timestamp
+    completedAt: timestamp
+    updatedAt: timestamp
+
+  categories:
+    documentId: rondom
+    name: string
