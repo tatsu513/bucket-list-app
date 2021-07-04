@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core/';
 import Dialog from '@material-ui/core/Dialog';
 import { SelectBox, TextField, TextErea } from 'src/components/forms';
+import { PrimayButton } from 'src/components/buttons';
 
 interface Props {
   title: string;
@@ -92,7 +93,7 @@ const AddModal: React.VFC<Props> = (props) => {
         <Button color="primary" onClick={props.close}>
           キャンセル
         </Button>
-        <Button color="primary">追加する</Button>
+        <PrimayButton text={'追加'} />
       </DialogActions>
     </Dialog>
   );

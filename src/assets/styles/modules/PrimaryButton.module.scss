@@ -1,0 +1,15 @@
+@import '../common';
+
+.primaryButton {
+  height: 40px;
+  line-height: 40px;
+  padding: 0 16px;
+  background-color: $primary;
+  border-radius: 4px;
+  color: #fff;
+  transition: all 300ms ease;
+
+  &:hover {
+    background-color: $primary-dark;
+  }
+}
