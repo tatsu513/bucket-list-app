@@ -5,11 +5,10 @@ import {
   DialogContent,
   DialogActions,
   DialogContentText,
-  Button,
 } from '@material-ui/core/';
 import Dialog from '@material-ui/core/Dialog';
 import { SelectBox, TextField, TextErea } from 'src/components/forms';
-import { PrimayButton } from 'src/components/buttons';
+import { PrimayButton, ThirdaryButton } from 'src/components/buttons';
 
 interface Props {
   title: string;
@@ -52,7 +51,6 @@ const AddModal: React.VFC<Props> = (props) => {
       <DialogContent>
         <DialogContentText>
           バケットリストに追加したい内容を入力してください。
-          <br />
           設定した内容はいつでも変更することが可能です。
         </DialogContentText>
         <div className={styles.item}>
@@ -90,9 +88,7 @@ const AddModal: React.VFC<Props> = (props) => {
         </div>
       </DialogContent>
       <DialogActions>
-        <Button color="primary" onClick={props.close}>
-          キャンセル
-        </Button>
+        <ThirdaryButton text={'キャンセル'} onClick={props.close} />
         <PrimayButton text={'追加'} />
       </DialogActions>
     </Dialog>
