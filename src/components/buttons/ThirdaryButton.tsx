@@ -1,4 +1,4 @@
-import styles from 'src/assets/styles/modules/thirdaryButton.module.scss';
+import styles from 'src/assets/styles/modules/ThirdaryButton.module.scss';
 
 interface Props {
   text: string;
@@ -7,7 +7,7 @@ interface Props {
 
 const ThirdaryButton: React.VFC<Props> = (props) => {
   return (
-    <button className={styles.thirdaryButton} onClick={props.onClick}>
+    <button className={styles.ThirdaryButton} onClick={props.onClick}>
       {props.text}
     </button>
   );
