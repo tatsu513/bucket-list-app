@@ -16,6 +16,22 @@
   }
 }
 
+.itemStar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 8px;
+
+  &__label {
+    color: #646464;
+    font-size: 12px;
+  }
+}
+
+.star {
+  color: $secondary;
+}
+
 .itemFlex {
   display: flex;
   align-items: center;

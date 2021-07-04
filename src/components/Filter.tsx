@@ -47,6 +47,7 @@ const Filter = () => {
               label={'内容'}
               placeholder={'内容を入力'}
               type={'text'}
+              value={content}
               onChange={inputContent}
             />
           </div>

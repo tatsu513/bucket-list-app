@@ -9,6 +9,7 @@ import {
 import Dialog from '@material-ui/core/Dialog';
 import { SelectBox, TextField, TextErea } from 'src/components/forms';
 import { PrimayButton, ThirdaryButton } from 'src/components/buttons';
+import { StarBorderRounded } from '@material-ui/icons';
 
 interface Props {
   title: string;
@@ -53,6 +54,16 @@ const AddModal: React.VFC<Props> = (props) => {
           バケットリストに追加したい内容を入力してください。
           設定した内容はいつでも変更することが可能です。
         </DialogContentText>
+        <div className={`${styles.item} ${styles.itemStar}`}>
+          <div className={styles.itemStar__label}>重要度：</div>
+          <div className={styles.filed}>
+            {[...Array(3)].map((_, i) => (
+              <span className={styles.star} key={i}>
+                <StarBorderRounded style={{ fontSize: 28 }} />
+              </span>
+            ))}
+          </div>
+        </div>
         <div className={styles.item}>
           <TextField
             label={'内容'}
