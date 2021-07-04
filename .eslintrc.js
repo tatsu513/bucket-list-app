@@ -25,6 +25,7 @@ module.exports = {
     'no-use-before-define': 'off',
     '@typescript-eslint/no-use-before-define': ['error'],
     'prettier/prettier': 'error',
+    'react/prop-types': 'off',
   },
   settings: {
     react: {
