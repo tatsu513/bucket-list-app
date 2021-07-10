@@ -7,7 +7,12 @@
   background-color: $primary;
   border-radius: 4px;
   color: #fff;
+  text-align: center;
   transition: all 300ms ease;
+
+  &.full {
+    width: 100%;
+  }
 
   &:hover {
     background-color: $primary-dark;
