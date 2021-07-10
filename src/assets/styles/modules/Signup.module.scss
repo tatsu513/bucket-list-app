@@ -1,0 +1,23 @@
+.container {
+  width: 400px;
+  margin: 0 auto;
+  padding-top: 40px;
+}
+
+.title {
+  margin-bottom: 40px;
+  font-size: 18px;
+  text-align: center;
+}
+
+.item {
+  margin-bottom: 16px;
+
+  &.button {
+    margin: 32px 0 8px;
+  }
+
+  &.textLink {
+    text-align: right;
+  }
+}
