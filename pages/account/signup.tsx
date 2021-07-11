@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react';
 import styles from 'src/assets/styles/modules/Signup.module.scss';
-import { TextField } from 'src/components/forms';
+import { TextField, Radio } from 'src/components/forms';
 import { PrimayButton } from 'src/components/buttons';
 import { TextLink } from 'src/components/index';
 
@@ -9,6 +9,24 @@ const Signup: React.VFC = () => {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [birthday, setBirthday] = useState('');
+  const genders = [
+    {
+      id: 'a',
+      value: 'a',
+      label: '未選択',
+    },
+    {
+      id: 'b',
+      value: 'b',
+      label: '女性',
+    },
+    {
+      id: 'c',
+      value: 'c',
+      label: '男性',
+    },
+  ];
+  const [selectedGender, setSelectedGender] = useState(genders[0].value);
   const inputEmail = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(event.currentTarget.value);
@@ -30,6 +48,13 @@ const Signup: React.VFC = () => {
   const inputBirthday = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setBirthday(event.currentTarget.value);
+    },
+    [],
+  );
+  const selectGender = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      console.log(event.currentTarget.value);
+      setSelectedGender(event.currentTarget.value);
     },
     [],
   );
@@ -71,6 +96,22 @@ const Signup: React.VFC = () => {
           value={birthday}
           onChange={inputBirthday}
         />
+      </div>
+      <div className={styles.item}>
+        {genders.map((gender) => {
+          return (
+            <span key={gender.id} className={styles.radioItem}>
+              <Radio
+                id={gender.id}
+                value={gender.value}
+                selectedValue={selectedGender}
+                label={gender.label}
+                name={'gender'}
+                onChange={selectGender}
+              />
+            </span>
+          );
+        })}
       </div>
       <div className={`${styles.item} ${styles.button}`}>
         <PrimayButton text={'サインイン'} fullWidth={true} />

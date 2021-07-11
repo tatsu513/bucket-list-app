@@ -20,4 +20,13 @@
   &.textLink {
     text-align: right;
   }
+
+  .radioItem {
+    display: inline-block;
+    margin-right: 16px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
 }
