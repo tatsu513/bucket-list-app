@@ -41,7 +41,7 @@ const Signin = () => {
         />
       </div>
       <div className={`${styles.item} ${styles.button}`}>
-        <PrimayButton text={'サインイン'} fullWidth={true} />
+        <PrimayButton text={'サインインん'} fullWidth={true} />
       </div>
       <div className={`${styles.item} ${styles.textLink}`}>
         <TextLink href={'/account/signup'} text={'新規登録'} />
