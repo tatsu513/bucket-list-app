@@ -1,12 +1,18 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import styles from 'src/assets/styles/modules/SignIn.module.scss';
 import { TextField } from 'src/components/forms';
 import { PrimayButton } from 'src/components/buttons';
 import { TextLink } from 'src/components';
+import { useRouter } from 'next/router';
+import { auth } from 'src/firebase';
 
 const Signin = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const disabled = email === '' || password === '';
+
   const inputEmail = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(event.currentTarget.value);
@@ -19,6 +25,23 @@ const Signin = () => {
     },
     [],
   );
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      user && router.push('/');
+    });
+  }, []);
+
+  const signIn = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    await auth
+      .signInWithEmailAndPassword(email, password)
+      .then(() => {
+        router.push('/');
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>サインイン</h2>
@@ -41,7 +64,12 @@ const Signin = () => {
         />
       </div>
       <div className={`${styles.item} ${styles.button}`}>
-        <PrimayButton text={'サインイン'} fullWidth={true} />
+        <PrimayButton
+          text={'サインイン'}
+          fullWidth={true}
+          disabled={disabled}
+          onClick={signIn}
+        />
       </div>
       <div className={`${styles.item} ${styles.textLink}`}>
         <TextLink href={'/account/signup'} text={'新規登録'} />
