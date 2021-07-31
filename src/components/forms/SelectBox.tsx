@@ -1,8 +1,9 @@
+import { Options } from 'src/types/common';
 import styles from '../../assets/styles/modules/SelectBox.module.scss';
-
 interface Props {
   id?: string;
   label: string;
+  options: Options[];
   onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   value: string;
 }
@@ -17,9 +18,11 @@ const SelectBox: React.VFC<Props> = (props) => {
           value={props.value}
           onChange={(event) => props.onChange(event)}
         >
-          <option>1</option>
-          <option>2</option>
-          <option>3</option>
+          {props.options.map((option, index) => (
+            <option key={index} value={option.id}>
+              {option.name}
+            </option>
+          ))}
         </select>
       </div>
     </>

@@ -4,7 +4,7 @@ import { TextField } from 'src/components/forms';
 import { PrimayButton } from 'src/components/buttons';
 import { TextLink } from 'src/components';
 import { useRouter } from 'next/router';
-import { auth } from 'src/firebase';
+import { auth, db } from 'src/firebase';
 
 const Signin = () => {
   const router = useRouter();
@@ -35,8 +35,19 @@ const Signin = () => {
     event.preventDefault();
     await auth
       .signInWithEmailAndPassword(email, password)
-      .then(() => {
-        router.push('/');
+      .then((result) => {
+        const user = result.user;
+        if (user) {
+          const uid = user.uid;
+          db.collection('users')
+            .doc(uid)
+            .get()
+            .then((snapshot) => {
+              const data = snapshot.data();
+              console.log(data);
+            });
+          router.push('/');
+        }
       })
       .catch((error) => {
         alert(error.message);

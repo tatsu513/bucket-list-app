@@ -1,32 +1,31 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import styles from 'src/assets/styles/modules/Signup.module.scss';
 import { TextField, Radio } from 'src/components/forms';
 import { PrimayButton } from 'src/components/buttons';
 import { TextLink } from 'src/components/index';
+import { auth, db, FirebaseTimestamp } from 'src/firebase';
+import { useRouter } from 'next/router';
+
+interface gender {
+  id: string;
+  genderType: string;
+}
 
 const Signup: React.VFC = () => {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [birthday, setBirthday] = useState('');
-  const genders = [
-    {
-      id: 'a',
-      value: 'a',
-      label: '未選択',
-    },
-    {
-      id: 'b',
-      value: 'b',
-      label: '女性',
-    },
-    {
-      id: 'c',
-      value: 'c',
-      label: '男性',
-    },
-  ];
-  const [selectedGender, setSelectedGender] = useState(genders[0].value);
+  const [dateBirthDay, setDateBirthday] = useState<Date | null>(null);
+  const [gender, setGender] = useState('');
+  const [genders, setGenders] = useState<gender[] | never[]>([]);
+  const [selectedGender, setSelectedGender] = useState('');
+
+  const isInvalidDate = (date: Date) => {
+    return Number.isNaN(date.getDate());
+  };
+
   const inputEmail = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setEmail(event.currentTarget.value);
@@ -47,17 +46,82 @@ const Signup: React.VFC = () => {
   );
   const inputBirthday = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = event.currentTarget.value;
+      if (value.match(/\d{8}/)) {
+        const split = value.match(/^(\d{4})?[/-]?(\d{2})[/-]?(\d{2})$/);
+        if (split) {
+          const date = new Date(`${split[1]}-${split[2]}-${split[3]}`);
+          setDateBirthday(isInvalidDate(date) ? null : date);
+        }
+      }
       setBirthday(event.currentTarget.value);
     },
     [],
   );
+
   const selectGender = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      console.log(event.currentTarget.value);
       setSelectedGender(event.currentTarget.value);
+      setGender(event.currentTarget.value);
     },
     [],
   );
+
+  const signUp = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    await auth
+      .createUserWithEmailAndPassword(email, password)
+      .then((result) => {
+        const user = result.user;
+        if (user) {
+          const uid = user.uid;
+          const timestamp = FirebaseTimestamp.now();
+
+          const initialData = {
+            birthday: dateBirthDay,
+            createdAt: timestamp,
+            email: email,
+            gender: gender,
+            role: 'customer',
+            uid: uid,
+            updatedAt: timestamp,
+            username: username,
+          };
+          db.collection('users')
+            .doc(uid)
+            .set(initialData)
+            .then(() => {
+              router.push('/');
+            });
+        }
+      })
+      .catch((error) => {
+        alert(error.message);
+      });
+  };
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      user && router.push('/');
+    });
+  }, []);
+
+  useEffect(() => {
+    db.collection('genders')
+      .orderBy('order', 'asc')
+      .get()
+      .then((snapshots) => {
+        const list: gender[] = [];
+        snapshots.forEach((snapshot) => {
+          const data = snapshot.data();
+          list.push({
+            id: data.id,
+            genderType: data.genderType,
+          });
+        });
+        setGenders(list);
+      });
+  }, []);
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>新規登録</h2>
@@ -90,9 +154,9 @@ const Signup: React.VFC = () => {
       </div>
       <div className={styles.item}>
         <TextField
-          label={'誕生日'}
+          label={'誕生日（例：2000年10月1日 → 20001001）'}
           placeholder={'誕生日を入力'}
-          type={'text'}
+          type={'number'}
           value={birthday}
           onChange={inputBirthday}
         />
@@ -103,9 +167,8 @@ const Signup: React.VFC = () => {
             <span key={gender.id} className={styles.radioItem}>
               <Radio
                 id={gender.id}
-                value={gender.value}
                 selectedValue={selectedGender}
-                label={gender.label}
+                label={gender.genderType}
                 name={'gender'}
                 onChange={selectGender}
               />
@@ -114,10 +177,10 @@ const Signup: React.VFC = () => {
         })}
       </div>
       <div className={`${styles.item} ${styles.button}`}>
-        <PrimayButton text={'サインイン'} fullWidth={true} />
+        <PrimayButton text={'新規登録'} fullWidth={true} onClick={signUp} />
       </div>
       <div className={`${styles.item} ${styles.textLink}`}>
-        <TextLink href={'/account/signup'} text={'サインイン'} />
+        <TextLink href={'/account/signin'} text={'サインイン'} />
       </div>
     </div>
   );

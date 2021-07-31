@@ -23,6 +23,17 @@
   cursor: pointer;
 }
 
+.menus {
+  display: flex;
+  align-items: center;
+}
+
+.signout {
+  margin-right: 16px;
+  color: #fff;
+  cursor: pointer;
+}
+
 .hamburgerBox {
   width: 72px;
   height: 72px;

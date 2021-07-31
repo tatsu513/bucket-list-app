@@ -2,11 +2,17 @@ import { useCallback, useState } from 'react';
 import styles from '../assets/styles/modules/Filter.module.scss';
 import { StarBorderRounded } from '@material-ui/icons';
 import { SelectBox, TextField } from './forms';
+import { Options } from 'src/types/common';
 
-const Filter = () => {
+interface Props {
+  status: Options[];
+  categories: Options[];
+}
+
+const Filter: React.VFC<Props> = (props) => {
   const [content, setContent] = useState('');
   const [status, setStatus] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('completed');
 
   const inputContent = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -57,6 +63,7 @@ const Filter = () => {
             <SelectBox
               label="ステータス"
               value={status}
+              options={props.status}
               onChange={inputStatus}
             />
           </div>
@@ -66,6 +73,7 @@ const Filter = () => {
             <SelectBox
               label="カテゴリ"
               value={category}
+              options={props.categories}
               onChange={selectedCategory}
             />
           </div>
