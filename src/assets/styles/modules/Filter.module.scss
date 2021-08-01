@@ -43,7 +43,12 @@
   display: inline-block;
   height: 30px;
   width: 30px;
+  margin-right: 4px;
   color: $secondary;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
 }
 
 .filterBox {

@@ -94,7 +94,6 @@ const home = () => {
             updatedAt: data.updatedAt,
           });
         });
-        console.log(list);
         setItems(list);
       });
   }, [currentUser]);

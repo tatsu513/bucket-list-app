@@ -17,7 +17,7 @@
 }
 
 .star {
-  width: 104px;
+  width: 116px;
 }
 
 .cellHead {
@@ -48,6 +48,11 @@
   vertical-align: middle;
 }
 
+.cellStatusIconBox {
+  margin: 0 auto;
+  width: 50%;
+}
+
 .cellBody {
   text-align: left;
 
@@ -68,6 +73,16 @@
   font-size: 18px;
 }
 
+.cellStarIconBox {
+  display: flex;
+  justify-content: center;
+}
+
 .cellStarIcon {
-  color: $secondary;
+  margin-right: 4px;
+  width: 24px;
+
+  &:last-of-type {
+    margin-right: 0;
+  }
 }

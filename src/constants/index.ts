@@ -1,4 +1,6 @@
-export const itemsHeader = [
+import { ItemHeader } from 'src/types';
+
+export const itemsHeader: ItemHeader[] = [
   {
     id: 1,
     key: 'status',

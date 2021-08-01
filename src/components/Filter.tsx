@@ -42,7 +42,7 @@ const Filter: React.VFC<Props> = (props) => {
           <div className={styles.filed}>
             {[...Array(3)].map((_, i) => (
               <span className={styles.star} key={i}>
-                <StarBorderRounded style={{ fontSize: 32 }} />
+                <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/298/star_2b50.png" />
               </span>
             ))}
           </div>

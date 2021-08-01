@@ -17,3 +17,10 @@ export interface Item {
   title: string;
   updatedAt: Date;
 }
+
+export interface ItemHeader {
+  id: number;
+  key: string;
+  name: string;
+  alignment: 'center' | 'left' | 'right';
+}

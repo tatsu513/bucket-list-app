@@ -2,6 +2,8 @@ import React from 'react';
 import styles from '../assets/styles/modules/List.module.scss';
 import { StarRounded, AssignmentTurnedIn } from '@material-ui/icons';
 import { Item } from 'src/types';
+import { itemsHeader } from 'src/constants';
+import { convertDate, getYear } from 'src/plugins/dayjs';
 
 interface Props {
   items: Item[];
@@ -19,40 +21,62 @@ const List: React.VFC<Props> = (props) => {
       </colgroup>
       <thead>
         <tr>
-          <th className={styles.cellHead}>ステータス</th>
-          <th className={`${styles.cellHead} ${styles.cellHeadBody}`}>内容</th>
-          <th className={styles.cellHead}>期限</th>
-          <th className={styles.cellHead}>カテゴリ</th>
-          <th className={styles.cellHead}>重要度</th>
+          {itemsHeader.map((header) => (
+            <th
+              className={styles.cellHead}
+              style={{ textAlign: header.alignment }}
+              key={header.id}
+            >
+              {header.name}
+            </th>
+          ))}
         </tr>
       </thead>
       <tbody>
-        <tr className={styles.tableRow}>
-          <td className={`${styles.cell} ${styles.cellCheck}`}>
-            <AssignmentTurnedIn style={{ fontSize: 24 }} />
-          </td>
-          <td className={`${styles.cell} ${styles.cellBody}`}>
-            <div className={styles.cellBodyTitle}>50歳で仕事を辞める</div>
-            <span className={styles.cellBodyText}>設定日：2021/6/10</span>
-            <span className={styles.cellBodyText}>達成日：2021/8/10</span>
-          </td>
-          <td className={`${styles.cell} ${styles.cellLimit}`}>
-            <div className={styles.cellLimitOld}>50歳</div>
-            <div className={styles.cellLimitYear}>（2040）</div>
-          </td>
-          <td className={`${styles.cell} ${styles.cellCategory}`}>
-            １２３４５６７８９０
-          </td>
-          <td className={`${styles.cell} ${styles.cellStar}`}>
-            <div className={styles.cellStarIconBox}>
-              {[...Array(3)].map((_, i) => (
-                <span className={styles.cellStarIcon} key={i}>
-                  <StarRounded style={{ fontSize: 24 }} />
-                </span>
-              ))}
-            </div>
-          </td>
-        </tr>
+        {props.items.map((item) => (
+          <tr className={styles.tableRow} key={item.itemId}>
+            <td className={`${styles.cell} ${styles.cellCheck}`}>
+              {(() => {
+                if (item.status === '完了') {
+                  return (
+                    <div className={styles.cellStatusIconBox}>
+                      <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/298/party-popper_1f389.png" />
+                    </div>
+                  );
+                } else {
+                  return null;
+                }
+              })()}
+            </td>
+            <td className={`${styles.cell} ${styles.cellBody}`}>
+              <div className={styles.cellBodyTitle}>{item.title}</div>
+              <span className={styles.cellBodyText}>
+                設定日：{convertDate(item.createdAt)}
+              </span>
+              <span className={styles.cellBodyText}>
+                達成日：{convertDate(item.completedAt)}
+              </span>
+            </td>
+            <td className={`${styles.cell} ${styles.cellLimit}`}>
+              <div className={styles.cellLimitOld}>{item.age}歳</div>
+              <div className={styles.cellLimitYear}>{`(${getYear(
+                item.limitDate,
+              )})`}</div>
+            </td>
+            <td className={`${styles.cell} ${styles.cellCategory}`}>
+              {item.category}
+            </td>
+            <td className={`${styles.cell} ${styles.cellStar}`}>
+              <div className={styles.cellStarIconBox}>
+                {[...Array(item.priority)].map((_, i) => (
+                  <span className={styles.cellStarIcon} key={i}>
+                    <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/298/star_2b50.png" />
+                  </span>
+                ))}
+              </div>
+            </td>
+          </tr>
+        ))}
       </tbody>
     </table>
   );
