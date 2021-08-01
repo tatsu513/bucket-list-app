@@ -104,7 +104,12 @@ const home = () => {
       <div className={styles.container}>
         <List items={items} />
       </div>
-      <AddModal open={isOpen} close={closeModal} title={'リストに追加'} />
+      <AddModal
+        open={isOpen}
+        close={closeModal}
+        title={'リストに追加'}
+        categories={categories}
+      />
       <FloatButton text={'リストに追加'} onClick={openModal} />
     </>
   );

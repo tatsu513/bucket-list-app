@@ -23,13 +23,19 @@
   margin-bottom: 8px;
 
   &__label {
+    margin-right: 8px;
     color: #646464;
     font-size: 12px;
   }
-}
 
-.star {
-  color: $secondary;
+  .starFiled {
+    display: flex;
+  }
+
+  .star {
+    margin-right: 4px;
+    width: 32px;
+  }
 }
 
 .itemFlex {
