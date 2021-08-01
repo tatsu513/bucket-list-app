@@ -1,8 +1,8 @@
 import { useCallback, useState } from 'react';
 import styles from '../assets/styles/modules/Filter.module.scss';
-import { StarBorderRounded } from '@material-ui/icons';
 import { SelectBox, TextField } from './forms';
 import { Options } from 'src/types';
+import Stars from './Stars';
 
 interface Props {
   status: Options[];
@@ -40,11 +40,7 @@ const Filter: React.VFC<Props> = (props) => {
         <div className={`${styles.filterItem} ${styles.filterImportant}`}>
           <label className={styles.label}>重要度</label>
           <div className={styles.filed}>
-            {[...Array(3)].map((_, i) => (
-              <span className={styles.star} key={i}>
-                <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/298/star_2b50.png" />
-              </span>
-            ))}
+            <Stars />
           </div>
         </div>
         <div className={styles.filterItem}>

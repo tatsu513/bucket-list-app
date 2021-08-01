@@ -9,9 +9,8 @@ import {
 import Dialog from '@material-ui/core/Dialog';
 import { SelectBox, TextField, TextErea } from 'src/components/forms';
 import { PrimayButton, ThirdaryButton } from 'src/components/buttons';
-import { StarBorderRounded } from '@material-ui/icons';
 import { Options } from 'src/types';
-
+import { Stars } from 'src/components';
 interface Props {
   title: string;
   open: boolean;
@@ -74,11 +73,7 @@ const AddModal: React.VFC<Props> = (props) => {
         <div className={`${styles.item} ${styles.itemStar}`}>
           <div className={styles.itemStar__label}>重要度：</div>
           <div className={`${styles.filed} ${styles.starFiled}`}>
-            {[...Array(3)].map((_, i) => (
-              <span className={styles.star} key={i}>
-                <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/298/star_2b50.png" />
-              </span>
-            ))}
+            <Stars />
           </div>
         </div>
         <div className={styles.item}>
