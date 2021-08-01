@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 import styles from '../assets/styles/modules/Filter.module.scss';
 import { StarBorderRounded } from '@material-ui/icons';
 import { SelectBox, TextField } from './forms';
-import { Options } from 'src/types/common';
+import { Options } from 'src/types';
 
 interface Props {
   status: Options[];

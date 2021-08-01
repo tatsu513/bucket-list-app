@@ -1,8 +1,13 @@
 import React from 'react';
 import styles from '../assets/styles/modules/List.module.scss';
 import { StarRounded, AssignmentTurnedIn } from '@material-ui/icons';
+import { Item } from 'src/types';
 
-const List = () => {
+interface Props {
+  items: Item[];
+}
+
+const List: React.VFC<Props> = (props) => {
   return (
     <table className={styles.table}>
       <colgroup>

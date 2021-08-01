@@ -6,7 +6,7 @@ import styles from 'src/assets/styles/modules/Home.module.scss';
 import { AddModal } from 'src/components/modals';
 import { auth, db } from 'src/firebase';
 import { useRouter } from 'next/router';
-import { Options } from 'src/types/common';
+import { Item, Options } from 'src/types';
 
 const home = () => {
   const router = useRouter();
@@ -14,6 +14,8 @@ const home = () => {
   const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
   const [status, setStatus] = useState<Options[] | never[]>([]);
   const [categories, setCategories] = useState<Options[] | never[]>([]);
+  const [items, setItems] = useState<Item[] | never[]>([]);
+  const usersRef = db.collection('users');
 
   const openModal = () => {
     setIsOpen(true);
@@ -48,7 +50,7 @@ const home = () => {
 
   useEffect(() => {
     if (!currentUser) return;
-    db.collection('users')
+    usersRef
       .doc(currentUser.uid)
       .collection('categories')
       .orderBy('order', 'asc')
@@ -67,11 +69,41 @@ const home = () => {
       });
   }, [currentUser]);
 
+  useEffect(() => {
+    if (!currentUser) return;
+    usersRef
+      .doc(currentUser.uid)
+      .collection('items')
+      .orderBy('order', 'asc')
+      .get()
+      .then((snapshots) => {
+        const list: Item[] = [];
+        snapshots.forEach((snapshot) => {
+          const data = snapshot.data();
+          list.push({
+            age: data.age,
+            category: data.category,
+            completedAt: data.completedAt,
+            createdAt: data.createdAt,
+            itemId: data.itemId,
+            limitDate: data.limitDate,
+            order: data.order,
+            priority: data.priority,
+            status: data.status,
+            title: data.title,
+            updatedAt: data.updatedAt,
+          });
+        });
+        console.log(list);
+        setItems(list);
+      });
+  }, [currentUser]);
+
   return (
     <>
       <Filter status={status} categories={categories} />
       <div className={styles.container}>
-        <List />
+        <List items={items} />
       </div>
       <AddModal open={isOpen} close={closeModal} title={'リストに追加'} />
       <FloatButton text={'リストに追加'} onClick={openModal} />

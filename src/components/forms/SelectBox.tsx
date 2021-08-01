@@ -1,4 +1,4 @@
-import { Options } from 'src/types/common';
+import { Options } from 'src/types';
 import styles from '../../assets/styles/modules/SelectBox.module.scss';
 interface Props {
   id?: string;
