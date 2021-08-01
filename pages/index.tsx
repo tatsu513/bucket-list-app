@@ -47,7 +47,6 @@ const home = () => {
   }, []);
 
   useEffect(() => {
-    console.log(currentUser);
     if (!currentUser) return;
     db.collection('users')
       .doc(currentUser.uid)
