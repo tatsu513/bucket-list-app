@@ -33,50 +33,58 @@ const List: React.VFC<Props> = (props) => {
         </tr>
       </thead>
       <tbody>
-        {props.items.map((item) => (
-          <tr className={styles.tableRow} key={item.itemId}>
-            <td className={`${styles.cell} ${styles.cellCheck}`}>
-              {(() => {
-                if (item.status === '完了') {
-                  return (
-                    <div className={styles.cellStatusIconBox}>
-                      <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/298/party-popper_1f389.png" />
-                    </div>
-                  );
-                } else {
-                  return null;
-                }
-              })()}
-            </td>
-            <td className={`${styles.cell} ${styles.cellBody}`}>
-              <div className={styles.cellBodyTitle}>{item.title}</div>
-              <span className={styles.cellBodyText}>
-                設定日：{convertDate(item.createdAt)}
-              </span>
-              <span className={styles.cellBodyText}>
-                達成日：{convertDate(item.completedAt)}
-              </span>
-            </td>
-            <td className={`${styles.cell} ${styles.cellLimit}`}>
-              <div className={styles.cellLimitOld}>{item.age}歳</div>
-              <div className={styles.cellLimitYear}>{`(${getYear(
-                item.limitDate,
-              )})`}</div>
-            </td>
-            <td className={`${styles.cell} ${styles.cellCategory}`}>
-              {item.category}
-            </td>
-            <td className={`${styles.cell} ${styles.cellStar}`}>
-              <div className={styles.cellStarIconBox}>
-                {[...Array(item.priority)].map((_, i) => (
-                  <span className={styles.cellStarIcon} key={i}>
-                    <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/298/star_2b50.png" />
-                  </span>
-                ))}
-              </div>
+        {props.items.length > 0 &&
+          props.items.map((item) => (
+            <tr className={styles.tableRow} key={item.itemId}>
+              <td className={`${styles.cell} ${styles.cellCheck}`}>
+                {(() => {
+                  if (item.status === '完了') {
+                    return (
+                      <div className={styles.cellStatusIconBox}>
+                        <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/298/party-popper_1f389.png" />
+                      </div>
+                    );
+                  } else {
+                    return null;
+                  }
+                })()}
+              </td>
+              <td className={`${styles.cell} ${styles.cellBody}`}>
+                <div className={styles.cellBodyTitle}>{item.title}</div>
+                <span className={styles.cellBodyText}>
+                  設定日：{convertDate(item.createdAt)}
+                </span>
+                <span className={styles.cellBodyText}>
+                  達成日：{convertDate(item.completedAt)}
+                </span>
+              </td>
+              <td className={`${styles.cell} ${styles.cellLimit}`}>
+                <div className={styles.cellLimitOld}>{item.age}歳</div>
+                <div className={styles.cellLimitYear}>{`(${getYear(
+                  item.limitDate,
+                )})`}</div>
+              </td>
+              <td className={`${styles.cell} ${styles.cellCategory}`}>
+                {item.category}
+              </td>
+              <td className={`${styles.cell} ${styles.cellStar}`}>
+                <div className={styles.cellStarIconBox}>
+                  {[...Array(item.priority)].map((_, i) => (
+                    <span className={styles.cellStarIcon} key={i}>
+                      <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/298/star_2b50.png" />
+                    </span>
+                  ))}
+                </div>
+              </td>
+            </tr>
+          ))}
+        {props.items.length === 0 && (
+          <tr className={styles.tableRow}>
+            <td className={styles.cell} colSpan={5}>
+              リストが登録されていません
             </td>
           </tr>
-        ))}
+        )}
       </tbody>
     </table>
   );
