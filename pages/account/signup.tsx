@@ -5,11 +5,7 @@ import { PrimayButton } from 'src/components/buttons';
 import { TextLink } from 'src/components/index';
 import { auth, db, FirebaseTimestamp } from 'src/firebase';
 import { useRouter } from 'next/router';
-
-interface gender {
-  id: string;
-  genderType: string;
-}
+import { Gender } from 'src/types';
 
 const Signup: React.VFC = () => {
   const router = useRouter();
@@ -19,7 +15,7 @@ const Signup: React.VFC = () => {
   const [birthday, setBirthday] = useState('');
   const [dateBirthDay, setDateBirthday] = useState<Date | null>(null);
   const [gender, setGender] = useState('');
-  const [genders, setGenders] = useState<gender[] | never[]>([]);
+  const [genders, setGenders] = useState<Gender[] | never[]>([]);
   const [selectedGender, setSelectedGender] = useState('');
 
   const isInvalidDate = (date: Date) => {
@@ -53,6 +49,8 @@ const Signup: React.VFC = () => {
           const date = new Date(`${split[1]}-${split[2]}-${split[3]}`);
           setDateBirthday(isInvalidDate(date) ? null : date);
         }
+      } else {
+        setDateBirthday(null);
       }
       setBirthday(event.currentTarget.value);
     },
@@ -63,9 +61,35 @@ const Signup: React.VFC = () => {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setSelectedGender(event.currentTarget.value);
       setGender(event.currentTarget.value);
+      console.log(event.currentTarget.value);
     },
     [],
   );
+
+  const getAge = (birthday: Date | null) => {
+    if (!birthday) return;
+    const today = new Date();
+    const thisYearBirthday = new Date(
+      today.getFullYear(),
+      birthday.getMonth(),
+      birthday.getDate(),
+    );
+
+    let diff = today.getFullYear() - birthday.getFullYear();
+    return today < thisYearBirthday ? diff-- : diff;
+  };
+
+  const isValidateInputs = () => {
+    const isInvalidEmail = email === '' || !/@/.test(email);
+    const isInvalidBirthday = !dateBirthDay;
+    return (
+      isInvalidEmail ||
+      password === '' ||
+      username === '' ||
+      isInvalidBirthday ||
+      gender === ''
+    );
+  };
 
   const signUp = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
@@ -76,8 +100,10 @@ const Signup: React.VFC = () => {
         if (user) {
           const uid = user.uid;
           const timestamp = FirebaseTimestamp.now();
+          const age = getAge(dateBirthDay);
 
           const initialData = {
+            age: age,
             birthday: dateBirthDay,
             createdAt: timestamp,
             email: email,
@@ -111,11 +137,11 @@ const Signup: React.VFC = () => {
       .orderBy('order', 'asc')
       .get()
       .then((snapshots) => {
-        const list: gender[] = [];
+        const list: Gender[] = [];
         snapshots.forEach((snapshot) => {
           const data = snapshot.data();
           list.push({
-            id: data.id,
+            genderId: data.genderId,
             genderType: data.genderType,
           });
         });
@@ -164,9 +190,9 @@ const Signup: React.VFC = () => {
       <div className={styles.item}>
         {genders.map((gender) => {
           return (
-            <span key={gender.id} className={styles.radioItem}>
+            <span key={gender.genderId} className={styles.radioItem}>
               <Radio
-                id={gender.id}
+                id={gender.genderId}
                 selectedValue={selectedGender}
                 label={gender.genderType}
                 name={'gender'}
@@ -177,7 +203,12 @@ const Signup: React.VFC = () => {
         })}
       </div>
       <div className={`${styles.item} ${styles.button}`}>
-        <PrimayButton text={'新規登録'} fullWidth={true} onClick={signUp} />
+        <PrimayButton
+          text={'登録'}
+          fullWidth={true}
+          disabled={isValidateInputs()}
+          onClick={signUp}
+        />
       </div>
       <div className={`${styles.item} ${styles.textLink}`}>
         <TextLink href={'/account/signin'} text={'サインイン'} />

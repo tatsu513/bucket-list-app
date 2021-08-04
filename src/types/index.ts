@@ -4,6 +4,11 @@ export interface Options {
   order: number;
 }
 
+export interface Gender {
+  genderId: string;
+  genderType: string;
+}
+
 export interface Item {
   age: number;
   category: string;

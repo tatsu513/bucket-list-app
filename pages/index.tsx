@@ -50,9 +50,7 @@ const home = () => {
 
   useEffect(() => {
     if (!currentUser) return;
-    usersRef
-      .doc(currentUser.uid)
-      .collection('categories')
+    db.collection('categories')
       .orderBy('order', 'asc')
       .get()
       .then((snapshots) => {
