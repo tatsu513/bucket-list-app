@@ -11,7 +11,10 @@ import { SelectBox, TextField, TextErea } from 'src/components/forms';
 import { PrimayButton, ThirdaryButton } from 'src/components/buttons';
 import { Options } from 'src/types';
 import { Stars } from 'src/components';
+import { getToday, getDateFrom8Digit } from 'src/util/convertDate';
+import { getFeatureAge } from 'src/util/convertAge';
 interface Props {
+  age: number;
   title: string;
   open: boolean;
   categories: Options[];
@@ -19,11 +22,21 @@ interface Props {
 }
 
 const AddModal: React.VFC<Props> = (props) => {
+  const [priority, setPriority] = useState(1);
   const [body, setBody] = useState('');
-  const [limitDate, setLimitDate] = useState('');
+  const [limitDate, setLimitDate] = useState(getToday());
   const [dateLimitDate, setDateLimitDate] = useState<Date | null>(null);
+  const [displayAge, setDisplayAge] = useState<number>(props.age);
   const [category, setCategory] = useState('');
   const [notes, setNotes] = useState('');
+
+  const selectedPriority = useCallback(
+    (priority: number) => {
+      setPriority(priority);
+    },
+    [setPriority],
+  );
+
   const inputBody = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setBody(event.currentTarget.value);
@@ -42,18 +55,13 @@ const AddModal: React.VFC<Props> = (props) => {
     },
     [setBody],
   );
-  const isInvalidDate = (date: Date) => {
-    return Number.isNaN(date.getDate());
-  };
   const inputLimitDate = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.currentTarget.value;
       if (value.match(/\d{8}/)) {
-        const split = value.match(/^(\d{4})?[/-]?(\d{2})[/-]?(\d{2})$/);
-        if (split) {
-          const date = new Date(`${split[1]}-${split[2]}-${split[3]}`);
-          setDateLimitDate(isInvalidDate(date) ? null : date);
-        }
+        const newDate = getDateFrom8Digit(value);
+        setDateLimitDate(newDate);
+        if (newDate) setDisplayAge(getFeatureAge(newDate, props.age));
       }
       setLimitDate(event.currentTarget.value);
     },
@@ -73,7 +81,7 @@ const AddModal: React.VFC<Props> = (props) => {
         <div className={`${styles.item} ${styles.itemStar}`}>
           <div className={styles.itemStar__label}>重要度：</div>
           <div className={`${styles.filed} ${styles.starFiled}`}>
-            <Stars />
+            <Stars priority={priority} onClick={selectedPriority} />
           </div>
         </div>
         <div className={styles.item}>
@@ -95,7 +103,7 @@ const AddModal: React.VFC<Props> = (props) => {
               onChange={inputLimitDate}
             />
           </div>
-          <span className={styles.item__old}>あなたの年齢：50歳</span>
+          <span className={styles.item__old}>あなたの年齢：{displayAge}歳</span>
         </div>
         <div className={`${styles.item} ${styles.itemHalf}`}>
           <div className={styles.item__half}>

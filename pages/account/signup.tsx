@@ -6,6 +6,7 @@ import { TextLink } from 'src/components/index';
 import { auth, db, FirebaseTimestamp } from 'src/firebase';
 import { useRouter } from 'next/router';
 import { Gender } from 'src/types';
+import { getAge } from 'src/util/convertAge';
 
 const Signup: React.VFC = () => {
   const router = useRouter();
@@ -66,19 +67,6 @@ const Signup: React.VFC = () => {
     [],
   );
 
-  const getAge = (birthday: Date | null) => {
-    if (!birthday) return;
-    const today = new Date();
-    const thisYearBirthday = new Date(
-      today.getFullYear(),
-      birthday.getMonth(),
-      birthday.getDate(),
-    );
-
-    let diff = today.getFullYear() - birthday.getFullYear();
-    return today < thisYearBirthday ? diff-- : diff;
-  };
-
   const isValidateInputs = () => {
     const isInvalidEmail = email === '' || !/@/.test(email);
     const isInvalidBirthday = !dateBirthDay;
@@ -101,6 +89,8 @@ const Signup: React.VFC = () => {
           const uid = user.uid;
           const timestamp = FirebaseTimestamp.now();
           const age = getAge(dateBirthDay);
+
+          if (!age) return false;
 
           const initialData = {
             age: age,

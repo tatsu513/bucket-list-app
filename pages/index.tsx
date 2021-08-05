@@ -11,6 +11,7 @@ import { Item, Options } from 'src/types';
 const home = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
+  const [user, setUser] = useState<any>(null);
   const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
   const [status, setStatus] = useState<Options[] | never[]>([]);
   const [categories, setCategories] = useState<Options[] | never[]>([]);
@@ -69,6 +70,16 @@ const home = () => {
 
   useEffect(() => {
     if (!currentUser) return;
+    db.collection('users')
+      .doc(currentUser.uid)
+      .get()
+      .then((snapshots) => {
+        setUser(snapshots.data());
+      });
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (!currentUser) return;
     usersRef
       .doc(currentUser.uid)
       .collection('items')
@@ -103,6 +114,7 @@ const home = () => {
         <List items={items} />
       </div>
       <AddModal
+        age={user ? user.age : 0}
         open={isOpen}
         close={closeModal}
         title={'リストに追加'}
