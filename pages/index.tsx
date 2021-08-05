@@ -16,6 +16,7 @@ const home = () => {
   const [status, setStatus] = useState<Options[] | never[]>([]);
   const [categories, setCategories] = useState<Options[] | never[]>([]);
   const [items, setItems] = useState<Item[] | never[]>([]);
+  const [priority, setPriority] = useState(3);
   const usersRef = db.collection('users');
 
   const openModal = () => {
@@ -24,6 +25,21 @@ const home = () => {
   const closeModal = useCallback(() => {
     setIsOpen(false);
   }, [setIsOpen]);
+
+  const selectedPriority = useCallback(
+    (selectedPriority: number) => {
+      const oldValue = priority;
+      if (selectedPriority - oldValue <= 0) {
+        if (selectedPriority !== 1) {
+          setPriority(selectedPriority - 1);
+        }
+      } else {
+        setPriority(selectedPriority);
+      }
+      console.log(priority);
+    },
+    [setPriority, priority],
+  );
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -109,7 +125,12 @@ const home = () => {
 
   return (
     <>
-      <Filter status={status} categories={categories} />
+      <Filter
+        status={status}
+        categories={categories}
+        priority={priority}
+        onClick={selectedPriority}
+      />
       <div className={styles.container}>
         <List items={items} />
       </div>

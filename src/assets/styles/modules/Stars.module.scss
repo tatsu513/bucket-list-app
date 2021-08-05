@@ -1,5 +1,8 @@
 @import '../common';
 
+.starBox {
+  height: 30px;
+}
 .star {
   display: inline-block;
   height: 30px;
@@ -9,6 +12,9 @@
   cursor: pointer;
 
   &.nonActive {
+    width: 24px;
+    position: relative;
+    top: -2px;
     opacity: .5;
   }
 

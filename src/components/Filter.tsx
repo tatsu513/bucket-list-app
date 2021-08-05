@@ -7,6 +7,8 @@ import Stars from './Stars';
 interface Props {
   status: Options[];
   categories: Options[];
+  priority: number;
+  onClick: (priority: number) => void;
 }
 
 const Filter: React.VFC<Props> = (props) => {
@@ -40,7 +42,7 @@ const Filter: React.VFC<Props> = (props) => {
         <div className={`${styles.filterItem} ${styles.filterImportant}`}>
           <label className={styles.label}>重要度</label>
           <div className={styles.filed}>
-            <Stars />
+            <Stars priority={props.priority} onClick={props.onClick} />
           </div>
         </div>
         <div className={styles.filterItem}>

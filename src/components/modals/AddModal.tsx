@@ -31,10 +31,18 @@ const AddModal: React.VFC<Props> = (props) => {
   const [notes, setNotes] = useState('');
 
   const selectedPriority = useCallback(
-    (priority: number) => {
-      setPriority(priority);
+    (selectedPriority: number) => {
+      const oldValue = priority;
+      if (selectedPriority - oldValue <= 0) {
+        if (selectedPriority !== 1) {
+          setPriority(selectedPriority - 1);
+        }
+      } else {
+        setPriority(selectedPriority);
+      }
+      console.log(priority);
     },
-    [setPriority],
+    [setPriority, priority],
   );
 
   const inputBody = useCallback(
@@ -80,9 +88,7 @@ const AddModal: React.VFC<Props> = (props) => {
         </DialogContentText>
         <div className={`${styles.item} ${styles.itemStar}`}>
           <div className={styles.itemStar__label}>重要度：</div>
-          <div className={`${styles.filed} ${styles.starFiled}`}>
-            <Stars priority={priority} onClick={selectedPriority} />
-          </div>
+          <Stars priority={priority} onClick={selectedPriority} />
         </div>
         <div className={styles.item}>
           <TextField
