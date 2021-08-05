@@ -1,6 +1,5 @@
 import React from 'react';
 import styles from '../assets/styles/modules/List.module.scss';
-import { StarRounded, AssignmentTurnedIn } from '@material-ui/icons';
 import { Item } from 'src/types';
 import { itemsHeader } from 'src/constants';
 import { convertDate, getYear } from 'src/plugins/dayjs';
@@ -79,7 +78,7 @@ const List: React.VFC<Props> = (props) => {
             </tr>
           ))}
         {props.items.length === 0 && (
-          <tr className={styles.tableRow}>
+          <tr className={`${styles.tableRow} ${styles.tableBlank}`}>
             <td className={styles.cell} colSpan={5}>
               リストが登録されていません
             </td>

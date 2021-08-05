@@ -39,6 +39,14 @@
   &:hover {
     background-color: $grey;
   }
+
+  &.tableBlank {
+    cursor: default;
+
+    &:hover {
+      background-color: #fff;
+    }
+  }
 }
 
 .cell {
