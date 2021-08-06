@@ -13,6 +13,7 @@ import { Options } from 'src/types';
 import { Stars } from 'src/components';
 import { getToday, getDateFrom8Digit } from 'src/util/convertDate';
 import { getFeatureAge } from 'src/util/convertAge';
+import { getUniqueId, getIdByName } from 'src/util/common';
 import { db, FirebaseTimestamp } from 'src/firebase';
 interface Props {
   age: number;
@@ -20,6 +21,7 @@ interface Props {
   title: string;
   open: boolean;
   categories: Options[];
+  status: Options[];
   close: () => void;
 }
 
@@ -80,7 +82,7 @@ const AddModal: React.VFC<Props> = (props) => {
     const initialData = {
       completedAt: null,
       createdAt: FirebaseTimestamp.now(),
-      itemId: 'aaa',
+      itemId: getUniqueId(),
       limitAge: displayAge,
       limitDate: dateLimitDate,
       memo: memo,
@@ -95,8 +97,8 @@ const AddModal: React.VFC<Props> = (props) => {
       .collection('items')
       .doc()
       .set(initialData)
-      .then((snapshots) => {
-        console.log(snapshots);
+      .then(() => {
+        props.close();
       });
     console.log(initialData);
   };
@@ -109,7 +111,12 @@ const AddModal: React.VFC<Props> = (props) => {
           設定した内容はいつでも変更することが可能です。
         </DialogContentText>
         <div className={`${styles.item} ${styles.itemStar}`}>
-          <div className={styles.itemStar__label}>重要度：</div>
+          <div
+            className={styles.itemStar__label}
+            onClick={() => getIdByName(props.status, '未完了')}
+          >
+            重要度：
+          </div>
           <Stars priority={priority} onClick={selectedPriority} />
         </div>
         <div className={styles.item}>

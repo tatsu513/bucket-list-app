@@ -10,7 +10,7 @@ export interface Gender {
 }
 
 export interface Item {
-  age: number;
+  limitAge: number;
   category: string;
   completedAt: Date | null;
   createdAt: Date;

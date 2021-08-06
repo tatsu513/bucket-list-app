@@ -58,7 +58,7 @@ const List: React.VFC<Props> = (props) => {
                 </span>
               </td>
               <td className={`${styles.cell} ${styles.cellLimit}`}>
-                <div className={styles.cellLimitOld}>{item.age}歳</div>
+                <div className={styles.cellLimitOld}>{item.limitAge}歳</div>
                 <div className={styles.cellLimitYear}>{`(${getYear(
                   item.limitDate,
                 )})`}</div>

@@ -105,7 +105,7 @@ const home = () => {
         snapshots.forEach((snapshot) => {
           const data = snapshot.data();
           list.push({
-            age: data.age,
+            limitAge: data.limitAge,
             category: data.category,
             completedAt: data.completedAt,
             createdAt: data.createdAt,
@@ -140,6 +140,7 @@ const home = () => {
         close={closeModal}
         title={'リストに追加'}
         categories={categories}
+        status={status}
       />
       <FloatButton text={'リストに追加'} onClick={openModal} />
     </>
