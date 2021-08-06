@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import styles from 'src/assets/styles/modules/AddModal.module.scss';
 import {
   DialogTitle,
@@ -30,9 +30,11 @@ const AddModal: React.VFC<Props> = (props) => {
   const [body, setBody] = useState('');
   const [limitDate, setLimitDate] = useState(getToday());
   const [dateLimitDate, setDateLimitDate] = useState<Date | null>(null);
-  const [displayAge, setDisplayAge] = useState<number>(props.age);
+  const [displayAge, setDisplayAge] = useState<number | null>(null);
   const [category, setCategory] = useState('');
   const [memo, setMemo] = useState('');
+
+  console.log('age', props.age);
 
   const selectedPriority = useCallback(
     (selectedPriority: number) => {
@@ -69,14 +71,17 @@ const AddModal: React.VFC<Props> = (props) => {
   const inputLimitDate = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const value = event.currentTarget.value;
-      if (value.match(/\d{8}/)) {
+      setLimitDate(value);
+      if (value.match(/\d.*/g) && value.length === 8) {
         const newDate = getDateFrom8Digit(value);
         setDateLimitDate(newDate);
         if (newDate) setDisplayAge(getFeatureAge(newDate, props.age));
+      } else {
+        setDateLimitDate(null);
+        setDisplayAge(null);
       }
-      setLimitDate(event.currentTarget.value);
     },
-    [],
+    [props.age, limitDate],
   );
   const addItem = () => {
     const initialData = {
@@ -100,8 +105,10 @@ const AddModal: React.VFC<Props> = (props) => {
       .then(() => {
         props.close();
       });
-    console.log(initialData);
   };
+  useEffect(() => {
+    setDisplayAge(props.age);
+  }, [props.age]);
   return (
     <Dialog open={props.open} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">リストに追加</DialogTitle>
