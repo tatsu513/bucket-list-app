@@ -62,7 +62,6 @@ const Signup: React.VFC = () => {
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setSelectedGender(event.currentTarget.value);
       setGender(event.currentTarget.value);
-      console.log(event.currentTarget.value);
     },
     [],
   );

@@ -13,8 +13,10 @@ import { Options } from 'src/types';
 import { Stars } from 'src/components';
 import { getToday, getDateFrom8Digit } from 'src/util/convertDate';
 import { getFeatureAge } from 'src/util/convertAge';
+import { db, FirebaseTimestamp } from 'src/firebase';
 interface Props {
   age: number;
+  uid: string;
   title: string;
   open: boolean;
   categories: Options[];
@@ -28,7 +30,7 @@ const AddModal: React.VFC<Props> = (props) => {
   const [dateLimitDate, setDateLimitDate] = useState<Date | null>(null);
   const [displayAge, setDisplayAge] = useState<number>(props.age);
   const [category, setCategory] = useState('');
-  const [notes, setNotes] = useState('');
+  const [memo, setMemo] = useState('');
 
   const selectedPriority = useCallback(
     (selectedPriority: number) => {
@@ -40,7 +42,6 @@ const AddModal: React.VFC<Props> = (props) => {
       } else {
         setPriority(selectedPriority);
       }
-      console.log(priority);
     },
     [setPriority, priority],
   );
@@ -57,9 +58,9 @@ const AddModal: React.VFC<Props> = (props) => {
     },
     [setCategory],
   );
-  const inputNotes = useCallback(
+  const inputMemo = useCallback(
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-      setNotes(event.currentTarget.value);
+      setMemo(event.currentTarget.value);
     },
     [setBody],
   );
@@ -76,7 +77,28 @@ const AddModal: React.VFC<Props> = (props) => {
     [],
   );
   const addItem = () => {
-    console.log('おおおおお');
+    const initialData = {
+      completedAt: null,
+      createdAt: FirebaseTimestamp.now(),
+      itemId: 'aaa',
+      limitAge: displayAge,
+      limitDate: dateLimitDate,
+      memo: memo,
+      order: 2,
+      priority: priority,
+      status: 'bbb',
+      title: body,
+      updatedAt: FirebaseTimestamp.now(),
+    };
+    db.collection('users')
+      .doc(props.uid)
+      .collection('items')
+      .doc()
+      .set(initialData)
+      .then((snapshots) => {
+        console.log(snapshots);
+      });
+    console.log(initialData);
   };
   return (
     <Dialog open={props.open} aria-labelledby="form-dialog-title">
@@ -126,8 +148,8 @@ const AddModal: React.VFC<Props> = (props) => {
             label={'備考'}
             placeholder={'備考を入力'}
             rows={5}
-            value={notes}
-            onChange={inputNotes}
+            value={memo}
+            onChange={inputMemo}
           />
         </div>
       </DialogContent>

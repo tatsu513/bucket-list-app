@@ -44,7 +44,6 @@ const Signin = () => {
             .get()
             .then((snapshot) => {
               const data = snapshot.data();
-              console.log(data);
             });
           router.push('/');
         }

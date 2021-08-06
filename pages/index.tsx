@@ -36,7 +36,6 @@ const home = () => {
       } else {
         setPriority(selectedPriority);
       }
-      console.log(priority);
     },
     [setPriority, priority],
   );
@@ -136,6 +135,7 @@ const home = () => {
       </div>
       <AddModal
         age={user ? user.age : 0}
+        uid={user ? user.uid : ''}
         open={isOpen}
         close={closeModal}
         title={'リストに追加'}
