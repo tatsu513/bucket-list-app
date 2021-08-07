@@ -2,7 +2,7 @@ import '../src/assets/styles/reset.css';
 import '../src/assets/styles/global.scss';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { Header, AccountHeader } from '../src/components';
+import { AccountHeader } from '../src/components';
 import { useRouter } from 'next/router';
 
 function MyApp({ Component, pageProps }: AppProps) {

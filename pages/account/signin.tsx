@@ -42,10 +42,9 @@ const Signin = () => {
           db.collection('users')
             .doc(uid)
             .get()
-            .then((snapshot) => {
-              const data = snapshot.data();
+            .then(() => {
+              router.push('/');
             });
-          router.push('/');
         }
       })
       .catch((error) => {

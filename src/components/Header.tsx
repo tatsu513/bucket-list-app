@@ -1,6 +1,6 @@
-import { useCallback } from 'react';
-import { auth } from 'src/firebase';
-import { useRouter } from 'next/router';
+// import { useCallback } from 'react';
+// import { auth } from 'src/firebase';
+// import { useRouter } from 'next/router';
 import styles from '../assets/styles/modules/Header.module.scss';
 
 interface Props {
@@ -8,17 +8,17 @@ interface Props {
 }
 
 const Header: React.VFC<Props> = (props) => {
-  const router = useRouter();
-  const singOut = useCallback(async () => {
-    await auth
-      .signOut()
-      .then(() => {
-        router.push('/account/signin');
-      })
-      .catch((error) => {
-        alert(error.message);
-      });
-  }, []);
+  // const router = useRouter();
+  // const singOut = useCallback(async () => {
+  //   await auth
+  //     .signOut()
+  //     .then(() => {
+  //       router.push('/account/signin');
+  //     })
+  //     .catch((error) => {
+  //       alert(error.message);
+  //     });
+  // }, []);
   return (
     <header className={styles.header}>
       <h1 className={styles.title}>100 BUCKET LIST</h1>
