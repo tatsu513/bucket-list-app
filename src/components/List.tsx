@@ -1,10 +1,12 @@
 import React from 'react';
 import styles from '../assets/styles/modules/List.module.scss';
-import { Item } from 'src/types';
+import { Item, Options } from 'src/types';
 import { itemsHeader } from 'src/constants';
 import { convertDate, getYear } from 'src/plugins/dayjs';
+import { getNameById } from 'src/util/common';
 
 interface Props {
+  categories: Options[];
   items: Item[];
 }
 
@@ -64,7 +66,7 @@ const List: React.VFC<Props> = (props) => {
                 )})`}</div>
               </td>
               <td className={`${styles.cell} ${styles.cellCategory}`}>
-                {item.category}
+                {getNameById(props.categories, item.category, 'category')}
               </td>
               <td className={`${styles.cell} ${styles.cellStar}`}>
                 <div className={styles.cellStarIconBox}>

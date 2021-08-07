@@ -132,7 +132,7 @@ const home = () => {
         onClick={selectedPriority}
       />
       <div className={styles.container}>
-        <List items={items} />
+        <List categories={categories} items={items} />
       </div>
       <AddModal
         age={user ? user.age : 0}
