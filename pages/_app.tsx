@@ -18,7 +18,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/unicorn_1f984.png"
         />
       </Head>
-      {isAccountPath ? <AccountHeader /> : <Header />}
+      {isAccountPath ? <AccountHeader /> : null}
       <main className={isAccountPath ? 'account' : 'home'}>
         <Component {...pageProps} />
       </main>
