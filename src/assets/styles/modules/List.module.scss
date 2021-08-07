@@ -17,11 +17,11 @@
 }
 
 .star {
-  width: 116px;
+  width: 96px;
 }
 
 .cellHead {
-  padding: 0 16px 8px;
+  padding: 0 8px 8px;
   font-size: 12px;
   font-weight: normal;
   border-bottom: 1px solid $line-gray;
@@ -50,7 +50,7 @@
 }
 
 .cell {
-  padding: 16px;
+  padding: 16px 8px;
   border-bottom: 1px solid $line-gray;
   text-align: center;
   vertical-align: middle;

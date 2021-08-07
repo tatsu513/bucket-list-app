@@ -8,15 +8,16 @@ import { getNameById } from 'src/util/common';
 interface Props {
   categories: Options[];
   items: Item[];
+  status: Options[];
 }
 
 const List: React.VFC<Props> = (props) => {
   return (
     <table className={styles.table}>
       <colgroup>
-        <col className={styles.status} />
         <col className="body" />
         <col className={styles.limit} />
+        <col className={styles.status} />
         <col className={styles.category} />
         <col className={styles.star} />
       </colgroup>
@@ -37,8 +38,25 @@ const List: React.VFC<Props> = (props) => {
         {props.items.length > 0 &&
           props.items.map((item) => (
             <tr className={styles.tableRow} key={item.itemId}>
+              <td className={`${styles.cell} ${styles.cellBody}`}>
+                <div className={styles.cellBodyTitle}>{item.title}</div>
+                <span className={styles.cellBodyText}>
+                  【設定日】{convertDate(item.createdAt)}
+                </span>
+                <span className={styles.cellBodyText}>
+                  【達成日】
+                  {convertDate(item.completedAt)}
+                </span>
+              </td>
+              <td className={`${styles.cell} ${styles.cellLimit}`}>
+                <div className={styles.cellLimitOld}>{item.limitAge}歳</div>
+                <div className={styles.cellLimitYear}>{`(${getYear(
+                  item.limitDate,
+                )})`}</div>
+              </td>
               <td className={`${styles.cell} ${styles.cellCheck}`}>
-                {(() => {
+                {getNameById(props.status, item.status, 'status')}
+                {/* {(() => {
                   if (item.status === '完了') {
                     return (
                       <div className={styles.cellStatusIconBox}>
@@ -48,22 +66,7 @@ const List: React.VFC<Props> = (props) => {
                   } else {
                     return null;
                   }
-                })()}
-              </td>
-              <td className={`${styles.cell} ${styles.cellBody}`}>
-                <div className={styles.cellBodyTitle}>{item.title}</div>
-                <span className={styles.cellBodyText}>
-                  設定日：{convertDate(item.createdAt)}
-                </span>
-                <span className={styles.cellBodyText}>
-                  達成日：{convertDate(item.completedAt)}
-                </span>
-              </td>
-              <td className={`${styles.cell} ${styles.cellLimit}`}>
-                <div className={styles.cellLimitOld}>{item.limitAge}歳</div>
-                <div className={styles.cellLimitYear}>{`(${getYear(
-                  item.limitDate,
-                )})`}</div>
+                })()} */}
               </td>
               <td className={`${styles.cell} ${styles.cellCategory}`}>
                 {getNameById(props.categories, item.category, 'category')}

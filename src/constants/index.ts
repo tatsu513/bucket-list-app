@@ -3,20 +3,20 @@ import { ItemHeader } from 'src/types';
 export const itemsHeader: ItemHeader[] = [
   {
     id: 1,
-    key: 'status',
-    name: 'ステータス',
-    alignment: 'center',
-  },
-  {
-    id: 2,
     key: 'title',
     name: '内容',
     alignment: 'left',
   },
   {
-    id: 3,
+    id: 2,
     key: 'limitDate',
     name: '期限',
+    alignment: 'center',
+  },
+  {
+    id: 3,
+    key: 'status',
+    name: '状態',
     alignment: 'center',
   },
   {
