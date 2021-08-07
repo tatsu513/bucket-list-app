@@ -1,5 +1,6 @@
 import styles from '../../assets/styles/modules/TextField.module.scss';
 interface Props {
+  disabled?: boolean;
   label: string;
   placeholder: string;
   type: string;
@@ -13,6 +14,7 @@ const TextField: React.VFC<Props> = (props) => {
       <label className={styles.label}>{props.label}</label>
       <input
         className={styles.textField}
+        disabled={props.disabled}
         type={props.type}
         placeholder={props.placeholder}
         value={props.value}

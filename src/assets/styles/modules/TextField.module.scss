@@ -14,4 +14,9 @@
   border: 1px solid #c4c4c4;
   border-radius: 4px;
   line-height: 40px;
+
+  &:disabled {
+    color: $disabled-text-grey;
+    background-color: $grey;
+  }
 }

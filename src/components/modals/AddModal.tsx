@@ -144,6 +144,7 @@ const AddModal: React.VFC<Props> = (props) => {
         <div className={`${styles.item} ${styles.itemFlex}`}>
           <div className={styles.item__half}>
             <TextField
+              disabled={afterSetFlag}
               label={'期限日（例：2030年10月1日 → 20301001）'}
               placeholder={'期限日を入力'}
               type={'number'}
