@@ -2,24 +2,29 @@ import { Options } from 'src/types';
 import styles from '../../assets/styles/modules/SelectBox.module.scss';
 interface Props {
   id?: string;
+  itemName: string;
   label: string;
   options: Options[];
-  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   value: string;
+  onChange: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 }
 
 const SelectBox: React.VFC<Props> = (props) => {
+  const idName = `${props.itemName}Id`;
   return (
     <>
       <label className={styles.label}>{props.label}</label>
       <div className={styles.selectBoxWrap}>
         <select
           className={styles.selectBox}
-          value={props.value}
+          defaultValue="default"
           onChange={(event) => props.onChange(event)}
         >
-          {props.options.map((option, index) => (
-            <option key={index} value={option.id}>
+          <option value="default" disabled>
+            カテゴリを選択
+          </option>
+          {props.options.map((option) => (
+            <option key={option[idName]} value={option[idName]}>
               {option.name}
             </option>
           ))}

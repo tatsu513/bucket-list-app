@@ -3,7 +3,7 @@ interface Timestamp {
   seconds: number;
 }
 export interface Options {
-  id: string;
+  [key: string]: string | number;
   name: string;
   order: number;
 }

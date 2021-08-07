@@ -27,7 +27,7 @@ interface Props {
 
 const AddModal: React.VFC<Props> = (props) => {
   const [priority, setPriority] = useState(1);
-  const [body, setBody] = useState('');
+  const [title, setTitle] = useState('');
   const [limitDate, setLimitDate] = useState(getToday());
   const [dateLimitDate, setDateLimitDate] = useState<Date | null>(null);
   const [displayAge, setDisplayAge] = useState<number | null>(null);
@@ -48,14 +48,15 @@ const AddModal: React.VFC<Props> = (props) => {
     [setPriority, priority],
   );
 
-  const inputBody = useCallback(
+  const inputTitle = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      setBody(event.currentTarget.value);
+      setTitle(event.currentTarget.value);
     },
-    [setBody],
+    [setTitle],
   );
   const selectCategory = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
+      console.log(event.currentTarget.value);
       setCategory(event.currentTarget.value);
     },
     [setCategory],
@@ -64,7 +65,7 @@ const AddModal: React.VFC<Props> = (props) => {
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {
       setMemo(event.currentTarget.value);
     },
-    [setBody],
+    [setMemo],
   );
   const inputLimitDate = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,7 +93,7 @@ const AddModal: React.VFC<Props> = (props) => {
       order: 2,
       priority: priority,
       status: 'bbb',
-      title: body,
+      title: title,
       updatedAt: FirebaseTimestamp.now(),
     };
     db.collection('users')
@@ -104,6 +105,10 @@ const AddModal: React.VFC<Props> = (props) => {
         props.close();
       });
   };
+  const isInvalidInputs = useCallback(() => {
+    return !priority || !title || !category;
+  }, [priority, title, category]);
+
   useEffect(() => {
     setDisplayAge(props.age);
   }, [props.age]);
@@ -129,8 +134,8 @@ const AddModal: React.VFC<Props> = (props) => {
             label={'内容'}
             placeholder={'内容を入力'}
             type={'text'}
-            value={body}
-            onChange={inputBody}
+            value={title}
+            onChange={inputTitle}
           />
         </div>
         <div className={`${styles.item} ${styles.itemFlex}`}>
@@ -148,9 +153,10 @@ const AddModal: React.VFC<Props> = (props) => {
         <div className={`${styles.item} ${styles.itemHalf}`}>
           <div className={styles.item__half}>
             <SelectBox
+              itemName={'category'}
               label={'カテゴリ'}
-              value={category}
               options={props.categories}
+              value={category}
               onChange={selectCategory}
             />
           </div>
@@ -167,7 +173,11 @@ const AddModal: React.VFC<Props> = (props) => {
       </DialogContent>
       <DialogActions>
         <ThirdaryButton text={'キャンセル'} onClick={props.close} />
-        <PrimayButton text={'追加'} onClick={addItem} />
+        <PrimayButton
+          text={'追加'}
+          disabled={isInvalidInputs()}
+          onClick={addItem}
+        />
       </DialogActions>
     </Dialog>
   );

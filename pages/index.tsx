@@ -55,7 +55,7 @@ const home = () => {
         snapshots.forEach((snapshot) => {
           const data = snapshot.data();
           list.push({
-            id: data.id,
+            statusId: data.statusId,
             name: data.name,
             order: data.order,
           });
@@ -74,7 +74,7 @@ const home = () => {
         snapshots.forEach((snapshot) => {
           const data = snapshot.data();
           list.push({
-            id: data.id,
+            categoryId: data.categoryId,
             name: data.name,
             order: data.order,
           });

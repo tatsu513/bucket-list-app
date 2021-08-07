@@ -59,6 +59,7 @@ const Filter: React.VFC<Props> = (props) => {
         <div className={styles.filterItem}>
           <div className={styles.selectFiled}>
             <SelectBox
+              itemName={'status'}
               label="ステータス"
               value={status}
               options={props.status}
@@ -69,6 +70,7 @@ const Filter: React.VFC<Props> = (props) => {
         <div className={styles.filterItem}>
           <div className={styles.selectFiled}>
             <SelectBox
+              itemName={'category'}
               label="カテゴリ"
               value={category}
               options={props.categories}
