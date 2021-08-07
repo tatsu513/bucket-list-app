@@ -2,12 +2,16 @@ const isInvalidDate = (date: Date) => {
   return Number.isNaN(date.getDate());
 };
 
+const convertTo8Digit = (date: Date) => {
+  const convertedDate = `${date.getFullYear()}${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
+  return convertedDate;
+};
+
 export const getToday = () => {
   const today = new Date();
-  const convertToday = `${today.getFullYear()}${(today.getMonth() + 1)
-    .toString()
-    .padStart(2, '0')}${today.getDate().toString().padStart(2, '0')}`;
-  return convertToday;
+  return convertTo8Digit(today);
 };
 
 export const getDateFrom8Digit = (value: string) => {
@@ -19,4 +23,13 @@ export const getDateFrom8Digit = (value: string) => {
   } else {
     return null;
   }
+};
+
+export const getDateAtCalc = (date8Digit: string, addNumber: number) => {
+  const convertedDate = getDateFrom8Digit(date8Digit);
+  const result = convertedDate!.setFullYear(
+    convertedDate!.getFullYear() + addNumber,
+  );
+  const resultToDate = new Date(result);
+  return convertTo8Digit(resultToDate);
 };

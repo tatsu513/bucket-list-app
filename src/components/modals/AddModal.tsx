@@ -11,7 +11,11 @@ import { CheckBox, SelectBox, TextField, TextErea } from 'src/components/forms';
 import { PrimayButton, ThirdaryButton } from 'src/components/buttons';
 import { Options } from 'src/types';
 import { Stars } from 'src/components';
-import { getToday, getDateFrom8Digit } from 'src/util/convertDate';
+import {
+  getToday,
+  getDateFrom8Digit,
+  getDateAtCalc,
+} from 'src/util/convertDate';
 import { getFeatureAge } from 'src/util/convertAge';
 import { getUniqueId, getIdByName } from 'src/util/common';
 import { db, FirebaseTimestamp } from 'src/firebase';
@@ -28,7 +32,7 @@ interface Props {
 const AddModal: React.VFC<Props> = (props) => {
   const [priority, setPriority] = useState(1);
   const [title, setTitle] = useState('');
-  const [limitDate, setLimitDate] = useState(getToday());
+  const [limitDate, setLimitDate] = useState(getDateAtCalc(getToday(), 1));
   const [dateLimitDate, setDateLimitDate] = useState<Date | null>(null);
   const [displayAge, setDisplayAge] = useState<number | null>(null);
   const [afterSetFlag, setAfterSetFlag] = useState(false);
@@ -115,7 +119,7 @@ const AddModal: React.VFC<Props> = (props) => {
   }, [priority, title, category, afterSetFlag, displayAge]);
 
   useEffect(() => {
-    setDisplayAge(props.age);
+    setDisplayAge(props.age + 1);
   }, [props.age]);
   return (
     <Dialog open={props.open} aria-labelledby="form-dialog-title">
