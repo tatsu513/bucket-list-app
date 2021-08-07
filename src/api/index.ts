@@ -8,19 +8,13 @@ import {
   User,
 } from 'src/types';
 
-const router = useRouter();
 const usersRef = db.collection('users');
 
 export const createUser = (
   uid: string,
   initialData: InitialDataForCreateUser,
 ) => {
-  db.collection('users')
-    .doc(uid)
-    .set(initialData)
-    .then(() => {
-      router.push('/');
-    });
+  db.collection('users').doc(uid).set(initialData);
 };
 
 export const getAllStatus = () => {

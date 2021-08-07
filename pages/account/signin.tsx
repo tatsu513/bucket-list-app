@@ -4,7 +4,7 @@ import { TextField } from 'src/components/forms';
 import { PrimayButton } from 'src/components/buttons';
 import { TextLink } from 'src/components';
 import { useRouter } from 'next/router';
-import { auth, db } from 'src/firebase';
+import { auth } from 'src/firebase';
 
 const Signin = () => {
   const router = useRouter();
