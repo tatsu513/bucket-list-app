@@ -1,0 +1,31 @@
+@import '../common';
+
+.checkbox {
+  display: none;
+}
+
+.checkbox + label {
+  padding-left: 24px;
+  position: relative;
+  cursor: pointer;
+}
+
+.checkbox + label:before {
+  content: '';
+  width: 14px;
+  height: 14px;
+  border: 2px solid $primary;
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.checkbox:checked + label:before {
+  width: 10px;
+  top: -4px;
+  left: 4px;
+  opacity: 1;
+  border-top-color: transparent;
+  border-left-color: transparent;
+  transform: rotate(45deg);
+}

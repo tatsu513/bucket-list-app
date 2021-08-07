@@ -7,7 +7,7 @@ import {
   DialogContentText,
 } from '@material-ui/core/';
 import Dialog from '@material-ui/core/Dialog';
-import { SelectBox, TextField, TextErea } from 'src/components/forms';
+import { CheckBox, SelectBox, TextField, TextErea } from 'src/components/forms';
 import { PrimayButton, ThirdaryButton } from 'src/components/buttons';
 import { Options } from 'src/types';
 import { Stars } from 'src/components';
@@ -31,6 +31,7 @@ const AddModal: React.VFC<Props> = (props) => {
   const [limitDate, setLimitDate] = useState(getToday());
   const [dateLimitDate, setDateLimitDate] = useState<Date | null>(null);
   const [displayAge, setDisplayAge] = useState<number | null>(null);
+  const [afterSetFlag, setAfterSetFlag] = useState(false);
   const [category, setCategory] = useState('');
   const [memo, setMemo] = useState('');
 
@@ -56,7 +57,6 @@ const AddModal: React.VFC<Props> = (props) => {
   );
   const selectCategory = useCallback(
     (event: React.ChangeEvent<HTMLSelectElement>) => {
-      console.log(event.currentTarget.value);
       setCategory(event.currentTarget.value);
     },
     [setCategory],
@@ -82,6 +82,9 @@ const AddModal: React.VFC<Props> = (props) => {
     },
     [props.age, limitDate],
   );
+  const handleAfterSetFlag = useCallback(() => {
+    setAfterSetFlag((prevState) => !prevState);
+  }, []);
   const addItem = () => {
     const initialData = {
       completedAt: null,
@@ -149,6 +152,14 @@ const AddModal: React.VFC<Props> = (props) => {
             />
           </div>
           <span className={styles.item__old}>あなたの年齢：{displayAge}歳</span>
+          <div className={styles.limitDateCheck}>
+            <CheckBox
+              checked={afterSetFlag}
+              id={'aaa'}
+              label={'あとで登録する'}
+              onChange={handleAfterSetFlag}
+            />
+          </div>
         </div>
         <div className={`${styles.item} ${styles.itemHalf}`}>
           <div className={styles.item__half}>

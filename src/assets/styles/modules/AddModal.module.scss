@@ -14,6 +14,11 @@
     margin-top: 20px;
     color: $text-gray;
   }
+
+  .limitDateCheck {
+    margin-top: 8px;
+    width: 100%;
+  }
 }
 
 .itemStar {
@@ -41,5 +46,6 @@
 .itemFlex {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   justify-content: flex-start;
 }
