@@ -87,15 +87,16 @@ const AddModal: React.VFC<Props> = (props) => {
   }, []);
   const addItem = () => {
     const initialData = {
+      category: category,
       completedAt: null,
       createdAt: FirebaseTimestamp.now(),
       itemId: getUniqueId(),
-      limitAge: displayAge,
-      limitDate: dateLimitDate,
+      limitAge: afterSetFlag ? null : displayAge,
+      limitDate: afterSetFlag ? null : dateLimitDate,
       memo: memo,
       order: 2,
       priority: priority,
-      status: 'bbb',
+      status: getIdByName(props.status, '未完了', 'status'),
       title: title,
       updatedAt: FirebaseTimestamp.now(),
     };
@@ -109,8 +110,9 @@ const AddModal: React.VFC<Props> = (props) => {
       });
   };
   const isInvalidInputs = useCallback(() => {
-    return !priority || !title || !category;
-  }, [priority, title, category]);
+    const inInvalidLimitDate = afterSetFlag ? false : !displayAge;
+    return !priority || !title || !category || inInvalidLimitDate;
+  }, [priority, title, category, afterSetFlag, displayAge]);
 
   useEffect(() => {
     setDisplayAge(props.age);

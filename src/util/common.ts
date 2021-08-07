@@ -9,7 +9,16 @@ export const getUniqueId = (myStrong?: number): string => {
   );
 };
 
-export const getIdByName = (items: Options[], name: string) => {
+export const getIdByName = (
+  items: Options[],
+  name: string,
+  itemName = 'id',
+) => {
   const target = items.find((item: Options) => item.name === name);
-  return target ? target.id : null;
+  return target ? target[`${itemName}Id`] : null;
+};
+
+export const getNameById = (items: Options[], id: string, itemName = 'id') => {
+  const target = items.find((item: Options) => item[`${itemName}Id`] === id);
+  return target ? target.name : null;
 };
