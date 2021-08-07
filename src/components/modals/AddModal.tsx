@@ -9,7 +9,7 @@ import {
 import Dialog from '@material-ui/core/Dialog';
 import { CheckBox, SelectBox, TextField, TextErea } from 'src/components/forms';
 import { PrimayButton, ThirdaryButton } from 'src/components/buttons';
-import { Options } from 'src/types';
+import { Item, Options } from 'src/types';
 import { Stars } from 'src/components';
 import {
   getToday,
@@ -19,6 +19,7 @@ import {
 import { getFeatureAge } from 'src/util/convertAge';
 import { getUniqueId, getIdByName } from 'src/util/common';
 import { db, FirebaseTimestamp } from 'src/firebase';
+import { createItem } from 'src/api';
 interface Props {
   age: number;
   uid: string;
@@ -90,7 +91,7 @@ const AddModal: React.VFC<Props> = (props) => {
     setAfterSetFlag((prevState) => !prevState);
   }, []);
   const addItem = () => {
-    const initialData = {
+    const initialData: Item = {
       category: category,
       completedAt: null,
       createdAt: FirebaseTimestamp.now(),
@@ -100,10 +101,11 @@ const AddModal: React.VFC<Props> = (props) => {
       memo: memo,
       order: 2,
       priority: priority,
-      status: getIdByName(props.status, '未完了', 'status'),
+      status: String(getIdByName(props.status, '未完了', 'status')),
       title: title,
       updatedAt: FirebaseTimestamp.now(),
     };
+    createItem(props.uid, initialData);
     db.collection('users')
       .doc(props.uid)
       .collection('items')

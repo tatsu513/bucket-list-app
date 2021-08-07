@@ -5,7 +5,7 @@ import { PrimayButton } from 'src/components/buttons';
 import { TextLink } from 'src/components/index';
 import { auth, db, FirebaseTimestamp } from 'src/firebase';
 import { useRouter } from 'next/router';
-import { Gender } from 'src/types';
+import { Gender, InitialDataForCreateUser } from 'src/types';
 import { getAge } from 'src/util/convertAge';
 
 const Signup: React.VFC = () => {
@@ -90,7 +90,7 @@ const Signup: React.VFC = () => {
 
           if (!age) return false;
 
-          const initialData = {
+          const initialData: InitialDataForCreateUser = {
             age: age,
             birthday: dateBirthDay,
             createdAt: timestamp,

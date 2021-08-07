@@ -15,7 +15,7 @@ export const getIdByName = (
   itemName = 'id',
 ) => {
   const target = items.find((item: Options) => item.name === name);
-  return target ? target[`${itemName}Id`] : null;
+  return target ? target[`${itemName}Id`] : '';
 };
 
 export const getNameById = (items: Options[], id: string, itemName = 'id') => {

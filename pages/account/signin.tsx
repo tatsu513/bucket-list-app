@@ -36,15 +36,7 @@ const Signin = () => {
       event.preventDefault();
       auth.signInWithEmailAndPassword(email, password).then((result) => {
         const user = result.user;
-        if (user) {
-          const uid = user.uid;
-          db.collection('users')
-            .doc(uid)
-            .get()
-            .then(() => {
-              router.push('/');
-            });
-        }
+        if (user) router.push('/');
       });
     } catch (error) {
       alert(error.message);

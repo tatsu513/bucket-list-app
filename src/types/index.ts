@@ -2,6 +2,18 @@ interface Timestamp {
   nanoseconds: number;
   seconds: number;
 }
+
+export interface InitialDataForCreateUser {
+  age: number;
+  birthday: Date | null;
+  createdAt: Timestamp;
+  email: string;
+  gender: string;
+  role: 'customer' | 'admin';
+  uid: string;
+  updatedAt: Timestamp;
+  username: string;
+}
 export interface Options {
   [key: string]: string | number;
   name: string;
@@ -26,17 +38,18 @@ export interface Gender {
 }
 
 export interface Item {
-  limitAge: number;
+  limitAge: number | null;
   category: string;
   completedAt: Date | null;
-  createdAt: Date;
+  createdAt: Timestamp;
   itemId: string;
   limitDate: Date | null;
   order: number;
   priority: number;
   status: string;
   title: string;
-  updatedAt: Date;
+  updatedAt: Timestamp;
+  memo: string;
 }
 
 export interface ItemHeader {

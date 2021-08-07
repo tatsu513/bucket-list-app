@@ -118,6 +118,7 @@ const home = () => {
             status: data.status,
             title: data.title,
             updatedAt: data.updatedAt,
+            memo: data.memo,
           });
         });
         setItems(list);
