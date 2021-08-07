@@ -34,8 +34,6 @@ const AddModal: React.VFC<Props> = (props) => {
   const [category, setCategory] = useState('');
   const [memo, setMemo] = useState('');
 
-  console.log('age', props.age);
-
   const selectedPriority = useCallback(
     (selectedPriority: number) => {
       const oldValue = priority;

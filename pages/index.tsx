@@ -6,12 +6,12 @@ import styles from 'src/assets/styles/modules/Home.module.scss';
 import { AddModal } from 'src/components/modals';
 import { auth, db } from 'src/firebase';
 import { useRouter } from 'next/router';
-import { Item, Options } from 'src/types';
+import { Item, Options, User } from 'src/types';
 
 const home = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<User | undefined>(undefined);
   const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
   const [status, setStatus] = useState<Options[] | never[]>([]);
   const [categories, setCategories] = useState<Options[] | never[]>([]);
@@ -89,7 +89,8 @@ const home = () => {
       .doc(currentUser.uid)
       .get()
       .then((snapshots) => {
-        setUser(snapshots.data());
+        const date = snapshots.data() as User;
+        setUser(date);
       });
   }, [currentUser]);
 

@@ -1,7 +1,23 @@
+interface Timestamp {
+  nanoseconds: number;
+  seconds: number;
+}
 export interface Options {
   id: string;
   name: string;
   order: number;
+}
+
+export interface User {
+  age: number;
+  birthday: Timestamp;
+  createdAt: Timestamp;
+  email: string;
+  gender: string;
+  role: 'customer' | 'admin';
+  uid: string;
+  updatedAt: Timestamp;
+  username: string;
 }
 
 export interface Gender {
