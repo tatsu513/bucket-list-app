@@ -32,10 +32,9 @@ const Signin = () => {
   }, []);
 
   const signIn = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    await auth
-      .signInWithEmailAndPassword(email, password)
-      .then((result) => {
+    try {
+      event.preventDefault();
+      auth.signInWithEmailAndPassword(email, password).then((result) => {
         const user = result.user;
         if (user) {
           const uid = user.uid;
@@ -46,10 +45,10 @@ const Signin = () => {
               router.push('/');
             });
         }
-      })
-      .catch((error) => {
-        alert(error.message);
       });
+    } catch (error) {
+      alert(error.message);
+    }
   };
   return (
     <div className={styles.container}>

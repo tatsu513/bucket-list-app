@@ -79,10 +79,9 @@ const Signup: React.VFC = () => {
   };
 
   const signUp = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    await auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((result) => {
+    try {
+      event.preventDefault();
+      auth.createUserWithEmailAndPassword(email, password).then((result) => {
         const user = result.user;
         if (user) {
           const uid = user.uid;
@@ -109,10 +108,10 @@ const Signup: React.VFC = () => {
               router.push('/');
             });
         }
-      })
-      .catch((error) => {
-        alert(error.message);
       });
+    } catch (error) {
+      alert(error.message);
+    }
   };
 
   useEffect(() => {
