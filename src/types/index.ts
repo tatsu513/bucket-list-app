@@ -3,17 +3,6 @@ interface Timestamp {
   seconds: number;
 }
 
-export interface InitialDataForCreateUser {
-  age: number;
-  birthday: Date | null;
-  createdAt: Timestamp;
-  email: string;
-  gender: string;
-  role: 'customer' | 'admin';
-  uid: string;
-  updatedAt: Timestamp;
-  username: string;
-}
 export interface Options {
   [key: string]: string | number;
   name: string;
@@ -22,7 +11,7 @@ export interface Options {
 
 export interface User {
   age: number;
-  birthday: Timestamp;
+  birthday: Timestamp | Date;
   createdAt: Timestamp;
   email: string;
   gender: string;

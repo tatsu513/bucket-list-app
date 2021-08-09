@@ -1,19 +1,10 @@
 import { db } from 'src/firebase';
-import {
-  Gender,
-  InitialDataForCreateUser,
-  Item,
-  Options,
-  User,
-} from 'src/types';
+import { Gender, Item, Options, User } from 'src/types';
 
 const usersRef = db.collection('users');
 
-export const createUser = (
-  uid: string,
-  initialData: InitialDataForCreateUser,
-) => {
-  db.collection('users').doc(uid).set(initialData);
+export const createUser = (uid: string, initialData: User) => {
+  return db.collection('users').doc(uid).set(initialData);
 };
 
 export const getAllStatus = () => {

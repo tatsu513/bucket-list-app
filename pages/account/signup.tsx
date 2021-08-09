@@ -3,11 +3,11 @@ import styles from 'src/assets/styles/modules/Signup.module.scss';
 import { TextField, Radio } from 'src/components/forms';
 import { PrimayButton } from 'src/components/buttons';
 import { TextLink } from 'src/components/index';
-import { auth, db, FirebaseTimestamp } from 'src/firebase';
+import { auth, FirebaseTimestamp } from 'src/firebase';
 import { useRouter } from 'next/router';
-import { Gender, InitialDataForCreateUser } from 'src/types';
+import { Gender, User } from 'src/types';
 import { getAge } from 'src/util/convertAge';
-import { getGenders } from 'src/api';
+import { createUser, getGenders } from 'src/api';
 
 const Signup: React.VFC = () => {
   const router = useRouter();
@@ -89,9 +89,9 @@ const Signup: React.VFC = () => {
           const timestamp = FirebaseTimestamp.now();
           const age = getAge(dateBirthDay);
 
-          if (!age) return false;
+          if (!age || !dateBirthDay) return;
 
-          const initialData: InitialDataForCreateUser = {
+          const initialData: User = {
             age: age,
             birthday: dateBirthDay,
             createdAt: timestamp,
@@ -102,12 +102,9 @@ const Signup: React.VFC = () => {
             updatedAt: timestamp,
             username: username,
           };
-          db.collection('users')
-            .doc(uid)
-            .set(initialData)
-            .then(() => {
-              router.push('/');
-            });
+          createUser(uid, initialData).then(() => {
+            router.push('/');
+          });
         }
       });
     } catch (error) {
