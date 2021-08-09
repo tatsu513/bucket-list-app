@@ -18,7 +18,7 @@ import {
 } from 'src/util/convertDate';
 import { getFeatureAge } from 'src/util/convertAge';
 import { getUniqueId, getIdByName } from 'src/util/common';
-import { db, FirebaseTimestamp } from 'src/firebase';
+import { FirebaseTimestamp } from 'src/firebase';
 import { createItem } from 'src/api';
 interface Props {
   age: number;
@@ -28,6 +28,7 @@ interface Props {
   categories: Options[];
   status: Options[];
   close: () => void;
+  toggleCreatedStatus: (flag: boolean) => void;
 }
 
 const AddModal: React.VFC<Props> = (props) => {
@@ -105,15 +106,10 @@ const AddModal: React.VFC<Props> = (props) => {
       title: title,
       updatedAt: FirebaseTimestamp.now(),
     };
-    createItem(props.uid, initialData);
-    db.collection('users')
-      .doc(props.uid)
-      .collection('items')
-      .doc()
-      .set(initialData)
-      .then(() => {
-        props.close();
-      });
+    createItem(props.uid, initialData).then(() => {
+      props.toggleCreatedStatus(true);
+      props.close();
+    });
   };
   const isInvalidInputs = useCallback(() => {
     const inInvalidLimitDate = afterSetFlag ? false : !displayAge;

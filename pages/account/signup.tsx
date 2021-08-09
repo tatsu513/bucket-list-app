@@ -7,6 +7,7 @@ import { auth, db, FirebaseTimestamp } from 'src/firebase';
 import { useRouter } from 'next/router';
 import { Gender, InitialDataForCreateUser } from 'src/types';
 import { getAge } from 'src/util/convertAge';
+import { getGenders } from 'src/api';
 
 const Signup: React.VFC = () => {
   const router = useRouter();
@@ -121,20 +122,7 @@ const Signup: React.VFC = () => {
   }, []);
 
   useEffect(() => {
-    db.collection('genders')
-      .orderBy('order', 'asc')
-      .get()
-      .then((snapshots) => {
-        const list: Gender[] = [];
-        snapshots.forEach((snapshot) => {
-          const data = snapshot.data();
-          list.push({
-            genderId: data.genderId,
-            genderType: data.genderType,
-          });
-        });
-        setGenders(list);
-      });
+    getGenders().then((genders) => setGenders(genders));
   }, []);
   return (
     <div className={styles.container}>

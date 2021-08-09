@@ -5,9 +5,10 @@ import { Filter, List } from '../src/components';
 import { FloatButton } from 'src/components/buttons/';
 import styles from 'src/assets/styles/modules/Home.module.scss';
 import { AddModal } from 'src/components/modals';
-import { auth, db } from 'src/firebase';
+import { auth } from 'src/firebase';
 import { useRouter } from 'next/router';
 import { Item, Options, User } from 'src/types';
+import { getAllStatus, getCategories, getItems, getUser } from 'src/api';
 
 const home = () => {
   const router = useRouter();
@@ -17,11 +18,12 @@ const home = () => {
   const [status, setStatus] = useState<Options[] | never[]>([]);
   const [categories, setCategories] = useState<Options[] | never[]>([]);
   const [items, setItems] = useState<Item[] | never[]>([]);
+  const [isCreatedItem, setIsCreatedItem] = useState(false);
   const [priority, setPriority] = useState(3);
-  const usersRef = db.collection('users');
 
   const openModal = () => {
     setIsOpen(true);
+    setIsCreatedItem(false);
   };
   const closeModal = useCallback(() => {
     setIsOpen(false);
@@ -41,89 +43,30 @@ const home = () => {
     [setPriority, priority],
   );
 
+  const toggleCreatedStatus = useCallback(
+    (flag: boolean) => {
+      setIsCreatedItem(flag);
+    },
+    [setIsCreatedItem],
+  );
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       user ? setCurrentUser(user) : router.push('/account/signin');
     });
-  }, []);
-
-  useEffect(() => {
-    db.collection('status')
-      .orderBy('order', 'asc')
-      .get()
-      .then((snapshots) => {
-        const list: Options[] = [];
-        snapshots.forEach((snapshot) => {
-          const data = snapshot.data();
-          list.push({
-            statusId: data.statusId,
-            name: data.name,
-            order: data.order,
-          });
-        });
-        setStatus(list);
-      });
+    getAllStatus().then((value) => setStatus(value));
+    getCategories().then((value) => setCategories(value));
   }, []);
 
   useEffect(() => {
     if (!currentUser) return;
-    db.collection('categories')
-      .orderBy('order', 'asc')
-      .get()
-      .then((snapshots) => {
-        const list: Options[] = [];
-        snapshots.forEach((snapshot) => {
-          const data = snapshot.data();
-          list.push({
-            categoryId: data.categoryId,
-            name: data.name,
-            order: data.order,
-          });
-        });
-        setCategories(list);
-      });
+    getUser(currentUser.uid).then((user) => setUser(user));
   }, [currentUser]);
 
   useEffect(() => {
     if (!currentUser) return;
-    db.collection('users')
-      .doc(currentUser.uid)
-      .get()
-      .then((snapshots) => {
-        const date = snapshots.data() as User;
-        setUser(date);
-      });
-  }, [currentUser]);
-
-  useEffect(() => {
-    if (!currentUser) return;
-    usersRef
-      .doc(currentUser.uid)
-      .collection('items')
-      .orderBy('order', 'asc')
-      .get()
-      .then((snapshots) => {
-        const list: Item[] = [];
-        snapshots.forEach((snapshot) => {
-          const data = snapshot.data();
-          list.push({
-            limitAge: data.limitAge,
-            category: data.category,
-            completedAt: data.completedAt,
-            createdAt: data.createdAt,
-            itemId: data.itemId,
-            limitDate: data.limitDate,
-            order: data.order,
-            priority: data.priority,
-            status: data.status,
-            title: data.title,
-            updatedAt: data.updatedAt,
-            memo: data.memo,
-          });
-        });
-        setItems(list);
-      });
-  }, [currentUser]);
+    getItems(currentUser.uid).then((items) => setItems(items));
+  }, [currentUser, isCreatedItem]);
 
   return (
     <>
@@ -145,6 +88,7 @@ const home = () => {
         title={'リストに追加'}
         categories={categories}
         status={status}
+        toggleCreatedStatus={toggleCreatedStatus}
       />
       <FloatButton text={'リストに追加'} onClick={openModal} />
     </>

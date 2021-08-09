@@ -1,5 +1,4 @@
 import { db } from 'src/firebase';
-import { useRouter } from 'next/router';
 import {
   Gender,
   InitialDataForCreateUser,
@@ -18,7 +17,8 @@ export const createUser = (
 };
 
 export const getAllStatus = () => {
-  db.collection('status')
+  return db
+    .collection('status')
     .orderBy('order', 'asc')
     .get()
     .then((snapshots) => {
@@ -36,7 +36,8 @@ export const getAllStatus = () => {
 };
 
 export const getCategories = () => {
-  db.collection('categories')
+  return db
+    .collection('categories')
     .orderBy('order', 'asc')
     .get()
     .then((snapshots) => {
@@ -54,7 +55,7 @@ export const getCategories = () => {
 };
 
 export const getUser = (uid: string) => {
-  usersRef
+  return usersRef
     .doc(uid)
     .get()
     .then((snapshots) => {
@@ -64,7 +65,8 @@ export const getUser = (uid: string) => {
 };
 
 export const getGenders = () => {
-  db.collection('genders')
+  return db
+    .collection('genders')
     .orderBy('order', 'asc')
     .get()
     .then((snapshots) => {
@@ -81,7 +83,7 @@ export const getGenders = () => {
 };
 
 export const getItems = (uid: string) => {
-  usersRef
+  return usersRef
     .doc(uid)
     .collection('items')
     .orderBy('order', 'asc')
@@ -110,5 +112,12 @@ export const getItems = (uid: string) => {
 };
 
 export const createItem = (uid: string, initialData: Item) => {
-  usersRef.doc(uid).collection('items').doc().set(initialData);
+  return usersRef
+    .doc(uid)
+    .collection('items')
+    .doc()
+    .set(initialData)
+    .then(() => {
+      return true;
+    });
 };
