@@ -2,7 +2,7 @@ const isInvalidDate = (date: Date) => {
   return Number.isNaN(date.getDate());
 };
 
-const convertTo8Digit = (date: Date) => {
+export const convertTo8Digit = (date: Date) => {
   const convertedDate = `${date.getFullYear()}${(date.getMonth() + 1)
     .toString()
     .padStart(2, '0')}${date.getDate().toString().padStart(2, '0')}`;
@@ -27,8 +27,9 @@ export const getDateFrom8Digit = (value: string) => {
 
 export const getDateAtCalc = (date8Digit: string, addNumber: number) => {
   const convertedDate = getDateFrom8Digit(date8Digit);
-  const result = convertedDate!.setFullYear(
-    convertedDate!.getFullYear() + addNumber,
+  if (!convertedDate) return;
+  const result = convertedDate.setFullYear(
+    convertedDate.getFullYear() + addNumber,
   );
   const resultToDate = new Date(result);
   return convertTo8Digit(resultToDate);

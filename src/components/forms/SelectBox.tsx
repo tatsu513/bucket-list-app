@@ -10,6 +10,7 @@ interface Props {
 }
 
 const SelectBox: React.VFC<Props> = (props) => {
+  console.log(props.value);
   const idName = `${props.itemName}Id`;
   return (
     <>
@@ -17,7 +18,7 @@ const SelectBox: React.VFC<Props> = (props) => {
       <div className={styles.selectBoxWrap}>
         <select
           className={styles.selectBox}
-          defaultValue="default"
+          defaultValue={props.value || 'default'}
           onChange={(event) => props.onChange(event)}
         >
           <option value="default" disabled>

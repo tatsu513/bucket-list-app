@@ -32,7 +32,7 @@ export interface Item {
   completedAt: Date | null;
   createdAt: Timestamp;
   itemId: string;
-  limitDate: Date | null;
+  limitDate: Date | Timestamp | null;
   order: number;
   priority: number;
   status: string;

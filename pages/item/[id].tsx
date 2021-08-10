@@ -10,6 +10,7 @@ import {
   SecondaryButton,
   PrimayButton,
 } from 'src/components/buttons';
+import { EditModal } from 'src/components/modals/';
 import styles from 'src/assets/styles/modules/[id].module.scss';
 import { convertDate } from 'src/plugins/dayjs';
 import { getNameById } from 'src/util/common';
@@ -20,6 +21,15 @@ const ItemDetail: React.VFC = () => {
   const [user, setUser] = useState<User | undefined>(undefined);
   const [item, setItem] = useState<Item | undefined>(undefined);
   const [categories, setCategories] = useState<Options[] | null>(null);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const closeModal = useCallback(() => {
+    setIsOpen(false);
+  }, [setIsOpen]);
+
+  const openModal = useCallback(() => {
+    setIsOpen(true);
+  }, [setIsOpen]);
 
   const deleteItemAction = useCallback(() => {
     if (!currentUser || !item) return;
@@ -65,7 +75,7 @@ const ItemDetail: React.VFC = () => {
                 <div className={styles.headControllerButton}>
                   <ThirdaryButton text={'削除'} onClick={deleteItemAction} />
                 </div>
-                <SecondaryButton text={'編集'} onClick={() => alert('編集')} />
+                <SecondaryButton text={'編集'} onClick={openModal} />
               </div>
             </div>
             <div className={styles.body}>
@@ -99,6 +109,15 @@ const ItemDetail: React.VFC = () => {
           </>
         )}
       </div>
+      {item && user && categories && (
+        <EditModal
+          categories={categories}
+          item={item}
+          user={user}
+          open={isOpen}
+          close={closeModal}
+        />
+      )}
     </>
   );
 };
