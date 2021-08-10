@@ -103,12 +103,14 @@ export const getItems = (uid: string) => {
 };
 
 export const createItem = (uid: string, initialData: Item) => {
-  return usersRef
-    .doc(uid)
-    .collection('items')
-    .doc()
-    .set(initialData)
-    .then(() => {
-      return true;
-    });
+  const itemRef = usersRef.doc(uid).collection('items').doc();
+  const gotId = itemRef.id;
+  initialData.itemId = gotId;
+  return itemRef.set(initialData).then(() => {
+    return true;
+  });
+};
+
+export const deleteItem = (uid: string, iid: string) => {
+  return db.collection('users').doc(uid).collection('items').doc(iid).delete();
 };

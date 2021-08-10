@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import firebase from 'firebase/app';
 import { Item, Options, User } from 'src/types';
 import { auth } from 'src/firebase';
-import { getCategories, getItems, getUser } from 'src/api';
+import { deleteItem, getCategories, getItems, getUser } from 'src/api';
 import { useRouter } from 'next/router';
 import { Header } from 'src/components';
 import {
@@ -21,6 +21,14 @@ const ItemDetail: React.VFC = () => {
   const [item, setItem] = useState<Item | undefined>(undefined);
   const [categories, setCategories] = useState<Options[] | null>(null);
 
+  const deleteItemAction = useCallback(() => {
+    if (!currentUser || !item) return;
+    console.log(item);
+    deleteItem(currentUser.uid, item.itemId).then(() => {
+      router.push('/');
+    });
+  }, [currentUser, item]);
+
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       user ? setCurrentUser(user) : router.push('/account/signin');
@@ -32,10 +40,10 @@ const ItemDetail: React.VFC = () => {
     getUser(currentUser.uid).then((user) => setUser(user));
     getItems(currentUser.uid).then((items) => {
       const itemId = router.query;
-      const item: Item | undefined = items.find(
+      const foundItem: Item | undefined = items.find(
         (item) => item.itemId === itemId.id,
       );
-      setItem(item);
+      setItem(foundItem);
     });
   }, [currentUser]);
   return (
@@ -55,7 +63,7 @@ const ItemDetail: React.VFC = () => {
               </div>
               <div className={styles.headController}>
                 <div className={styles.headControllerButton}>
-                  <ThirdaryButton text={'削除'} onClick={() => alert('削除')} />
+                  <ThirdaryButton text={'削除'} onClick={deleteItemAction} />
                 </div>
                 <SecondaryButton text={'編集'} onClick={() => alert('編集')} />
               </div>

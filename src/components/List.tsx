@@ -15,7 +15,6 @@ interface Props {
 const List: React.VFC<Props> = (props) => {
   const router = useRouter();
   const handleRowClick = (id: string) => {
-    alert(id);
     router.push(`/item/${id}`);
   };
   return (
