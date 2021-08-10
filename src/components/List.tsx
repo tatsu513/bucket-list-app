@@ -51,10 +51,10 @@ const List: React.VFC<Props> = (props) => {
               <td className={`${styles.cell} ${styles.cellBody}`}>
                 <div className={styles.cellBodyTitle}>{item.title}</div>
                 <span className={styles.cellBodyText}>
-                  【設定日】{convertDate(item.createdAt)}
+                  設定日：{convertDate(item.createdAt)}
                 </span>
                 <span className={styles.cellBodyText}>
-                  【達成日】
+                  達成日：
                   {convertDate(item.completedAt)}
                 </span>
               </td>
