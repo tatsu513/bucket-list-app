@@ -1,0 +1,52 @@
+@import '../common';
+
+.itemBox {
+  margin: 0 auto;
+  padding-top: 40px;
+  width: 842px;
+}
+
+.head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid $line-gray;
+}
+
+.headTitle {
+  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.dateItem {
+  display: inline-block;
+  margin-right: 8px;
+}
+
+.headController {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.headControllerButton {
+  margin-right: 8px;
+}
+
+.body {
+  margin: 24px 0 40px;
+}
+
+.bodyItem {
+  line-height: 40px;
+}
+
+.bodyItemLabel {
+  display: inline-block;
+  width: 100px;
+}
+
+.bodyButtonBox {
+  text-align: center;
+}

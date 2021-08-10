@@ -4,6 +4,7 @@ import { Item, Options } from 'src/types';
 import { itemsHeader } from 'src/constants';
 import { convertDate, getYear } from 'src/plugins/dayjs';
 import { getNameById } from 'src/util/common';
+import { useRouter } from 'next/router';
 
 interface Props {
   categories: Options[];
@@ -12,6 +13,11 @@ interface Props {
 }
 
 const List: React.VFC<Props> = (props) => {
+  const router = useRouter();
+  const handleRowClick = (id: string) => {
+    alert(id);
+    router.push(`/item/${id}`);
+  };
   return (
     <table className={styles.table}>
       <colgroup>
@@ -37,7 +43,11 @@ const List: React.VFC<Props> = (props) => {
       <tbody>
         {props.items.length > 0 &&
           props.items.map((item) => (
-            <tr className={styles.tableRow} key={item.itemId}>
+            <tr
+              className={styles.tableRow}
+              key={item.itemId}
+              onClick={() => handleRowClick(item.itemId)}
+            >
               <td className={`${styles.cell} ${styles.cellBody}`}>
                 <div className={styles.cellBodyTitle}>{item.title}</div>
                 <span className={styles.cellBodyText}>
@@ -53,7 +63,7 @@ const List: React.VFC<Props> = (props) => {
                   {item.limitAge || '-'}歳
                 </div>
                 <div className={styles.cellLimitYear}>
-                  {item.limitDate ? getYear(item.limitDate) : '-'}
+                  {item.limitDate ? `(${getYear(item.limitDate)})` : '-'}
                 </div>
               </td>
               <td className={`${styles.cell} ${styles.cellCheck}`}>
