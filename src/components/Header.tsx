@@ -2,6 +2,7 @@
 // import { auth } from 'src/firebase';
 // import { useRouter } from 'next/router';
 import styles from '../assets/styles/modules/Header.module.scss';
+import { Sidebar } from 'src/components';
 
 interface Props {
   username?: string;
@@ -30,6 +31,7 @@ const Header: React.VFC<Props> = (props) => {
           <span className={styles.bar} />
         </div>
       </div>
+      <Sidebar />
     </header>
   );
 };

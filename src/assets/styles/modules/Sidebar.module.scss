@@ -1,0 +1,11 @@
+@import '../common';
+
+.sidebarBox {
+  position: fixed;
+  top: 72px;
+  right: 0;
+  bottom: 0;
+  left: auto;
+  width: 324px;
+  background-color: $primary;
+}
