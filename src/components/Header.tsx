@@ -1,37 +1,44 @@
-// import { useCallback } from 'react';
-// import { auth } from 'src/firebase';
-// import { useRouter } from 'next/router';
+import { useCallback } from 'react';
 import styles from '../assets/styles/modules/Header.module.scss';
 import { Sidebar } from 'src/components';
+import { useState } from 'react';
 
 interface Props {
   username?: string;
 }
 
 const Header: React.VFC<Props> = (props) => {
-  // const router = useRouter();
-  // const singOut = useCallback(async () => {
-  //   await auth
-  //     .signOut()
-  //     .then(() => {
-  //       router.push('/account/signin');
-  //     })
-  //     .catch((error) => {
-  //       alert(error.message);
-  //     });
-  // }, []);
+  const [isOpenSidebar, setIsOpenSidebar] = useState(false);
+  const close = useCallback(() => {
+    setIsOpenSidebar(false);
+  }, []);
   return (
     <header className={styles.header}>
       <h1 className={styles.title}>100 BUCKET LIST</h1>
       <div className={styles.menus}>
         <h2 className={styles.signout}>{props.username}</h2>
-        <div className={styles.hamburgerBox}>
-          <span className={styles.bar} />
-          <span className={styles.bar} />
-          <span className={styles.bar} />
+        <div
+          className={styles.hamburgerBox}
+          onClick={() => setIsOpenSidebar(!isOpenSidebar)}
+        >
+          <span
+            className={`${styles.bar} ${styles.barTop} ${
+              isOpenSidebar && styles.isOpen
+            }`}
+          />
+          <span
+            className={`${styles.bar} ${styles.barMiddle} ${
+              isOpenSidebar && styles.isOpen
+            }`}
+          />
+          <span
+            className={`${styles.bar} ${styles.barBottom} ${
+              isOpenSidebar && styles.isOpen
+            }`}
+          />
         </div>
       </div>
-      <Sidebar />
+      <Sidebar isOpen={isOpenSidebar} close={close} />
     </header>
   );
 };

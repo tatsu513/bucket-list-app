@@ -59,6 +59,20 @@
   display: inline-block;
   margin-bottom: 8px;
   background-color: #fff;
+  opacity: 1;
+  transition: all 400ms ease-out;
+
+  &.barTop.isOpen {
+    transform: rotate(45deg) translate(6px, 8px);
+  }
+
+  &.barMiddle.isOpen {
+    opacity: 0;
+  }
+
+  &.barBottom.isOpen {
+    transform: rotate(-45deg) translate(6px, -8px);
+  }
 
   &:last-of-type {
     margin-bottom: 0;
