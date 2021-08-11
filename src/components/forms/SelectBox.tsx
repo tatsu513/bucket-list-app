@@ -10,7 +10,6 @@ interface Props {
 }
 
 const SelectBox: React.VFC<Props> = (props) => {
-  console.log(props.value);
   const idName = `${props.itemName}Id`;
   return (
     <>

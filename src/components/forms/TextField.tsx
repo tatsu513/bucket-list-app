@@ -4,7 +4,7 @@ interface Props {
   label: string;
   placeholder: string;
   type: string;
-  value: string;
+  value: string | null;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -17,7 +17,7 @@ const TextField: React.VFC<Props> = (props) => {
         disabled={props.disabled}
         type={props.type}
         placeholder={props.placeholder}
-        value={props.value}
+        value={props.value || ''}
         onChange={(event) => props.onChange(event)}
       />
     </>

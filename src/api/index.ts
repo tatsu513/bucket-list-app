@@ -1,5 +1,5 @@
 import { db } from 'src/firebase';
-import { Gender, Item, Options, User } from 'src/types';
+import { EditingItem, Gender, Item, Options, User } from 'src/types';
 
 const usersRef = db.collection('users');
 
@@ -109,6 +109,14 @@ export const createItem = (uid: string, initialData: Item) => {
   return itemRef.set(initialData).then(() => {
     return true;
   });
+};
+
+export const updateItem = (uid: string, iid: string, data: EditingItem) => {
+  return usersRef
+    .doc(uid)
+    .collection('items')
+    .doc(iid)
+    .set(data, { merge: true });
 };
 
 export const deleteItem = (uid: string, iid: string) => {

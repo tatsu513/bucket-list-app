@@ -33,7 +33,6 @@ const ItemDetail: React.VFC = () => {
 
   const deleteItemAction = useCallback(() => {
     if (!currentUser || !item) return;
-    console.log(item);
     deleteItem(currentUser.uid, item.itemId).then(() => {
       router.push('/');
     });
@@ -45,9 +44,14 @@ const ItemDetail: React.VFC = () => {
     });
     getCategories().then((value) => setCategories(value));
   }, []);
+
   useEffect(() => {
     if (!currentUser) return;
     getUser(currentUser.uid).then((user) => setUser(user));
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (!currentUser) return;
     getItems(currentUser.uid).then((items) => {
       const itemId = router.query;
       const foundItem: Item | undefined = items.find(
@@ -55,7 +59,7 @@ const ItemDetail: React.VFC = () => {
       );
       setItem(foundItem);
     });
-  }, [currentUser]);
+  }, [currentUser, isOpen]);
   return (
     <>
       <Header username={user?.username} />
@@ -86,7 +90,7 @@ const ItemDetail: React.VFC = () => {
                 </li>
                 <li className={styles.bodyItem}>
                   <span className={styles.bodyItemLabel}>期限</span>
-                  <span>{convertDate(item.completedAt)}</span>
+                  <span>{convertDate(item.limitDate)}</span>
                 </li>
                 <li className={styles.bodyItem}>
                   <span className={styles.bodyItemLabel}>カテゴリ</span>

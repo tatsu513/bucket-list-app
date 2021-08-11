@@ -41,6 +41,16 @@ export interface Item {
   memo: string;
 }
 
+export interface EditingItem {
+  category: string;
+  limitAge: number | null;
+  limitDate: Date | Timestamp | null;
+  memo: string;
+  priority: number;
+  title: string;
+  updatedAt: Timestamp;
+}
+
 export interface ItemHeader {
   id: number;
   key: string;

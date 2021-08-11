@@ -9,11 +9,13 @@ import {
 import Dialog from '@material-ui/core/Dialog';
 import { CheckBox, SelectBox, TextField, TextErea } from 'src/components/forms';
 import { PrimayButton, ThirdaryButton } from 'src/components/buttons';
-import { Item, Options, User } from 'src/types';
+import { EditingItem, Item, Options, User } from 'src/types';
 import { Stars } from 'src/components';
 import { getDateFrom8Digit, convertTo8Digit } from 'src/util/convertDate';
 import { getFeatureAge } from 'src/util/convertAge';
 import { convertDate } from 'src/plugins/dayjs';
+import { FirebaseTimestamp } from 'src/firebase';
+import { updateItem } from 'src/api';
 interface Props {
   categories: Options[];
   item: Item;
@@ -84,20 +86,34 @@ const EditModal: React.VFC<Props> = (props) => {
   const handleAfterSetFlag = useCallback(() => {
     setAfterSetFlag((prevState) => !prevState);
   }, []);
+
   const isInvalidInputs = useCallback(() => {
     const inInvalidLimitDate = afterSetFlag ? false : !displayAge;
-    console.log(inInvalidLimitDate);
     return !priority || !title || !category || inInvalidLimitDate;
   }, [priority, title, category, afterSetFlag, displayAge]);
 
+  const editItem = useCallback(() => {
+    const data: EditingItem = {
+      category: category,
+      limitAge: afterSetFlag ? null : displayAge,
+      limitDate: afterSetFlag ? null : dateLimitDate,
+      memo: memo,
+      priority: priority,
+      title: title,
+      updatedAt: FirebaseTimestamp.now(),
+    };
+    updateItem(props.user.uid, props.item.itemId, data).then(() => {
+      props.close();
+    });
+  }, [category, afterSetFlag, memo, priority, title]);
+
   useEffect(() => {
-    console.log(props.item.category);
     if (props.item.limitDate) {
       const convertDateType = new Date(convertDate(props.item.limitDate));
       setLimitDate(convertTo8Digit(convertDateType));
     }
     setDisplayAge(props.item.limitAge);
-  }, [props.user.age]);
+  }, [props.user.age, props.item.limitDate]);
   return (
     <Dialog open={props.open} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">リストに追加</DialogTitle>
@@ -170,7 +186,7 @@ const EditModal: React.VFC<Props> = (props) => {
         <PrimayButton
           text={'登録'}
           disabled={isInvalidInputs()}
-          onClick={() => alert('登録')}
+          onClick={editItem}
         />
       </DialogActions>
     </Dialog>

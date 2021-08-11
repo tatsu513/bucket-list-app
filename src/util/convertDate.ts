@@ -27,7 +27,7 @@ export const getDateFrom8Digit = (value: string) => {
 
 export const getDateAtCalc = (date8Digit: string, addNumber: number) => {
   const convertedDate = getDateFrom8Digit(date8Digit);
-  if (!convertedDate) return;
+  if (!convertedDate) return null;
   const result = convertedDate.setFullYear(
     convertedDate.getFullYear() + addNumber,
   );
