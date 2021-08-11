@@ -4,7 +4,7 @@ import { Item, Options, User } from 'src/types';
 import { auth } from 'src/firebase';
 import { deleteItem, getCategories, getItems, getUser } from 'src/api';
 import { useRouter } from 'next/router';
-import { Header } from 'src/components';
+import { FixedStars, Header } from 'src/components';
 import {
   ThirdaryButton,
   SecondaryButton,
@@ -84,9 +84,11 @@ const ItemDetail: React.VFC = () => {
             </div>
             <div className={styles.body}>
               <ul>
-                <li className={styles.bodyItem}>
+                <li className={`${styles.bodyItem} ${styles.bodyItemPriority}`}>
                   <span className={styles.bodyItemLabel}>重要度</span>
-                  <span className={styles.bodyItemText}>あああああ</span>
+                  <span className={styles.bodyItemText}>
+                    <FixedStars priority={item.priority} />
+                  </span>
                 </li>
                 <li className={styles.bodyItem}>
                   <span className={styles.bodyItemLabel}>期限</span>

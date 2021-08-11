@@ -43,6 +43,10 @@
   flex-wrap: wrap;
   padding-bottom: 24px;
   line-height: 1.5;
+
+  &.bodyItemPriority {
+    align-items: center;
+  }
 }
 
 .bodyItemLabel {
