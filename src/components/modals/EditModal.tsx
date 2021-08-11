@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react';
-import styles from 'src/assets/styles/modules/AddModal.module.scss';
+import styles from 'src/assets/styles/modules/EditModal.module.scss';
 import {
   DialogTitle,
   DialogContent,
@@ -105,7 +105,7 @@ const EditModal: React.VFC<Props> = (props) => {
     updateItem(props.user.uid, props.item.itemId, data).then(() => {
       props.close();
     });
-  }, [category, afterSetFlag, memo, priority, title]);
+  }, [category, afterSetFlag, memo, priority, title, limitDate]);
 
   useEffect(() => {
     if (props.item.limitDate) {

@@ -8,9 +8,11 @@
   left: 0;
   background-color: rgba(#000, 0);
   transition: all 100ms ease-out;
+  pointer-events: none;
 
   &.isOpen {
     background-color: rgba(#000, .6);
+    pointer-events: visible;
   }
 }
 

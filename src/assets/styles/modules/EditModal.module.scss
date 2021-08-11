@@ -1,0 +1,51 @@
+@import '../common';
+
+.item {
+  width: 100%;
+  margin-bottom: 16px;
+
+  &__half {
+    width: 50%;
+    margin-right: 16px;
+  }
+
+  &__old {
+    font-size: 14px;
+    margin-top: 20px;
+    color: $text-gray;
+  }
+
+  .limitDateCheck {
+    margin-top: 8px;
+    width: 100%;
+  }
+}
+
+.itemStar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 8px;
+
+  &__label {
+    margin-right: 8px;
+    color: #646464;
+    font-size: 12px;
+  }
+
+  .starFiled {
+    display: flex;
+  }
+
+  .star {
+    margin-right: 4px;
+    width: 32px;
+  }
+}
+
+.itemFlex {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}

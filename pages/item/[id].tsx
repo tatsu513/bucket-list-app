@@ -86,21 +86,23 @@ const ItemDetail: React.VFC = () => {
               <ul>
                 <li className={styles.bodyItem}>
                   <span className={styles.bodyItemLabel}>重要度</span>
-                  <span>あああああ</span>
+                  <span className={styles.bodyItemText}>あああああ</span>
                 </li>
                 <li className={styles.bodyItem}>
                   <span className={styles.bodyItemLabel}>期限</span>
-                  <span>{convertDate(item.limitDate)}</span>
+                  <span className={styles.bodyItemText}>
+                    {convertDate(item.limitDate)}
+                  </span>
                 </li>
                 <li className={styles.bodyItem}>
                   <span className={styles.bodyItemLabel}>カテゴリ</span>
-                  <span>
+                  <span className={styles.bodyItemText}>
                     {getNameById(categories, item.category, 'category')}
                   </span>
                 </li>
                 <li className={styles.bodyItem}>
                   <span className={styles.bodyItemLabel}>備考</span>
-                  <span>{item.memo}</span>
+                  <span className={styles.bodyItemText}>{item.memo}</span>
                 </li>
               </ul>
             </div>

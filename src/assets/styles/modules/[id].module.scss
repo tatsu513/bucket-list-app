@@ -39,12 +39,19 @@
 }
 
 .bodyItem {
-  line-height: 40px;
+  display: flex;
+  flex-wrap: wrap;
+  padding-bottom: 24px;
+  line-height: 1.5;
 }
 
 .bodyItemLabel {
   display: inline-block;
   width: 100px;
+}
+
+.bodyItemText {
+  width: calc(100% - 100px);
 }
 
 .bodyButtonBox {
