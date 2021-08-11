@@ -114,6 +114,7 @@ const EditModal: React.VFC<Props> = (props) => {
     }
     setDisplayAge(props.item.limitAge);
   }, [props.user.age, props.item.limitDate]);
+
   return (
     <Dialog open={props.open} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">リストに追加</DialogTitle>
