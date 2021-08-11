@@ -81,6 +81,7 @@ const AddModal: React.VFC<Props> = (props) => {
         const newDate = getDateFrom8Digit(value);
         setDateLimitDate(newDate);
         if (newDate) setDisplayAge(getFeatureAge(newDate, props.age));
+        console.log(newDate, props.age);
       } else {
         setDateLimitDate(null);
         setDisplayAge(null);
