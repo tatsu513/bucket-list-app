@@ -87,7 +87,7 @@ const ItemDetail: React.VFC = () => {
                 <li className={`${styles.bodyItem} ${styles.bodyItemPriority}`}>
                   <span className={styles.bodyItemLabel}>重要度</span>
                   <span className={styles.bodyItemText}>
-                    <FixedStars priority={item.priority} />
+                    <FixedStars priority={item.priority} size={30} />
                   </span>
                 </li>
                 <li className={styles.bodyItem}>

@@ -5,6 +5,7 @@ import { itemsHeader } from 'src/constants';
 import { convertDate, getYear } from 'src/plugins/dayjs';
 import { getNameById } from 'src/util/common';
 import { useRouter } from 'next/router';
+import { FixedStars } from '.';
 
 interface Props {
   categories: Options[];
@@ -30,7 +31,9 @@ const List: React.VFC<Props> = (props) => {
         <tr>
           {itemsHeader.map((header) => (
             <th
-              className={styles.cellHead}
+              className={`${styles.cellHead} ${
+                header.name === '重要度' ? styles.stars : ''
+              } ${header.name === '内容' ? styles.body : ''}`}
               style={{ textAlign: header.alignment }}
               key={header.id}
             >
@@ -47,7 +50,9 @@ const List: React.VFC<Props> = (props) => {
               key={item.itemId}
               onClick={() => handleRowClick(item.itemId)}
             >
-              <td className={`${styles.cell} ${styles.cellBody}`}>
+              <td
+                className={`${styles.cell} ${styles.cellBody} ${styles.cellBodyFirst}`}
+              >
                 <div className={styles.cellBodyTitle}>{item.title}</div>
                 <span className={styles.cellBodyText}>
                   設定日：{convertDate(item.createdAt)}
@@ -84,11 +89,7 @@ const List: React.VFC<Props> = (props) => {
               </td>
               <td className={`${styles.cell} ${styles.cellStar}`}>
                 <div className={styles.cellStarIconBox}>
-                  {[...Array(item.priority)].map((_, i) => (
-                    <span className={styles.cellStarIcon} key={i}>
-                      <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/298/star_2b50.png" />
-                    </span>
-                  ))}
+                  <FixedStars priority={item.priority} />
                 </div>
               </td>
             </tr>

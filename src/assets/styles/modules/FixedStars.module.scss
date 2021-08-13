@@ -1,22 +1,9 @@
 @import '../common';
-
-.starBox {
-  height: 24px;
-}
 .star {
   display: inline-block;
-  height: 24px;
-  width: 24px;
   margin-right: 4px;
   color: $secondary;
   cursor: pointer;
-
-  &.nonActive {
-    width: 24px;
-    position: relative;
-    top: -2px;
-    opacity: .5;
-  }
 
   &:last-of-type {
     margin-right: 0;

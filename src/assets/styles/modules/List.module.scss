@@ -17,7 +17,7 @@
 }
 
 .star {
-  width: 96px;
+  width: 104px;
 }
 
 .cellHead {
@@ -30,6 +30,14 @@
 
   &.cellHeadBody {
     text-align: left;
+  }
+
+  &.stars {
+    padding-right: 16px;
+  }
+
+  &.body {
+    padding-left: 16px;
   }
 }
 
@@ -54,6 +62,10 @@
   border-bottom: 1px solid $line-gray;
   text-align: center;
   vertical-align: middle;
+
+  &.cellStar {
+    padding-right: 16px;
+  }
 }
 
 .cellStatusIconBox {
@@ -63,6 +75,10 @@
 
 .cellBody {
   text-align: left;
+
+  &.cellBodyFirst {
+    padding-left: 16px;
+  }
 
   .cellBodyTitle {
     margin-bottom: 8px;
