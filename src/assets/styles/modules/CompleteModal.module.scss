@@ -1,0 +1,40 @@
+@import '../common'; 
+
+.leadText {
+  margin-bottom: 24px;
+  padding: 8px;
+  background-color: $secondary;
+
+  p {
+    margin: 0;
+    color: #fff;
+  }
+}
+
+.item {
+  width: 100%;
+  margin-bottom: 16px;
+
+  &__half {
+    width: 50%;
+    margin-right: 16px;
+  }
+
+  &__old {
+    font-size: 14px;
+    margin-top: 20px;
+    color: $text-gray;
+  }
+
+  .itemTitle {
+    color: $text-gray;
+    font-size: 12px;
+  }
+}
+
+.itemFlex {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}

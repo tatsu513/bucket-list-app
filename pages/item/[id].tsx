@@ -10,7 +10,7 @@ import {
   SecondaryButton,
   PrimayButton,
 } from 'src/components/buttons';
-import { EditModal } from 'src/components/modals/';
+import { CompleteModal, EditModal } from 'src/components/modals/';
 import styles from 'src/assets/styles/modules/[id].module.scss';
 import { convertDate } from 'src/plugins/dayjs';
 import { getNameById } from 'src/util/common';
@@ -22,6 +22,7 @@ const ItemDetail: React.VFC = () => {
   const [item, setItem] = useState<Item | undefined>(undefined);
   const [categories, setCategories] = useState<Options[] | null>(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenCompleteModal, setIsOpenCompleteModal] = useState(false);
 
   const closeModal = useCallback(() => {
     setIsOpen(false);
@@ -30,6 +31,14 @@ const ItemDetail: React.VFC = () => {
   const openModal = useCallback(() => {
     setIsOpen(true);
   }, [setIsOpen]);
+
+  const closeCompletModal = useCallback(() => {
+    setIsOpenCompleteModal(false);
+  }, [setIsOpenCompleteModal]);
+
+  const openComplatModal = useCallback(() => {
+    setIsOpenCompleteModal(true);
+  }, [setIsOpenCompleteModal]);
 
   const deleteItemAction = useCallback(() => {
     if (!currentUser || !item) return;
@@ -111,7 +120,7 @@ const ItemDetail: React.VFC = () => {
             <div className={styles.bodyButtonBox}>
               <PrimayButton
                 text={'アイテムを完了'}
-                onClick={() => alert('完了する')}
+                onClick={openComplatModal}
               />
             </div>
           </>
@@ -124,6 +133,14 @@ const ItemDetail: React.VFC = () => {
           user={user}
           open={isOpen}
           close={closeModal}
+        />
+      )}
+      {item && user && isOpenCompleteModal && (
+        <CompleteModal
+          item={item}
+          user={user}
+          open={isOpenCompleteModal}
+          close={closeCompletModal}
         />
       )}
     </>
