@@ -1,0 +1,35 @@
+@import '../common';
+
+.fileUploadBox {
+  text-align: center;
+  width: 100%;
+}
+
+.label {
+  display: inline-block;
+  padding: 40px 0;
+  position: relative;
+  width: 100%;
+  background: $back-grey;
+  border: 1px dashed $line-gray;
+}
+
+.input {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  width: 100%;
+  cursor: pointer;
+}
+
+.icon {
+  color: $text-gray;
+}
+
+.fileName {
+
+}
+

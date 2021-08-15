@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState, useEffect } from 'react';
 import styles from 'src/assets/styles/modules/CompleteModal.module.scss';
 import {
   Dialog,
@@ -8,8 +8,8 @@ import {
   DialogContentText,
 } from '@material-ui/core/';
 import { PrimayButton, ThirdaryButton } from 'src/components/buttons';
-import { TextField } from 'src/components/forms';
-import { getDateFrom8Digit, convertTo8Digit } from 'src/util/convertDate';
+import { FileUpload, TextField, TextErea } from 'src/components/forms';
+import { getDateFrom8Digit, getToday } from 'src/util/convertDate';
 import { getFeatureAge } from 'src/util/convertAge';
 import { Item, User } from 'src/types';
 
@@ -23,8 +23,26 @@ interface Props {
 const CompleteModal: React.VFC<Props> = (props) => {
   const [limitDate, setLimitDate] = useState('');
   const [dateLimitDate, setDateLimitDate] = useState<Date | null>(null);
-  const [displayAge, setDisplayAge] = useState<number | null>(
-    props.item.limitAge,
+  const [displayAge, setDisplayAge] = useState<number | null>(null);
+  const [comment, setComment] = useState('');
+  const [file, setFile] = useState<File | null>(null);
+  const [fileName, setFileName] = useState('');
+
+  const inputComment = useCallback(
+    (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+      setComment(event.currentTarget.value);
+    },
+    [setComment],
+  );
+
+  const selectFile = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (!event.target.files) return;
+      const selectedFile = event.target.files[0];
+      setFile(selectedFile);
+      setFileName(selectedFile.name);
+    },
+    [],
   );
 
   const inputLimitDate = useCallback(
@@ -34,6 +52,7 @@ const CompleteModal: React.VFC<Props> = (props) => {
       if (value.match(/\d.*/g) && value.length === 8) {
         const newDate = getDateFrom8Digit(value);
         setDateLimitDate(newDate);
+        console.log(newDate);
         if (newDate) setDisplayAge(getFeatureAge(newDate, props.user.age));
       } else {
         setDateLimitDate(null);
@@ -42,6 +61,11 @@ const CompleteModal: React.VFC<Props> = (props) => {
     },
     [props.user.age, limitDate],
   );
+
+  useEffect(() => {
+    setLimitDate(getToday());
+    setDisplayAge(getFeatureAge(new Date(), props.user.age));
+  }, []);
   return (
     <Dialog open={props.open} aria-labelledby="form-dialog-title">
       <DialogTitle id="form-dialog-title">リストに追加</DialogTitle>
@@ -65,6 +89,22 @@ const CompleteModal: React.VFC<Props> = (props) => {
         </div>
         <div className={styles.item}>
           <div className={styles.itemTitle}>達成記念写真</div>
+          <div className={styles.uploadWrap}>
+            {[...Array(3)].map((_, i) => (
+              <div className={styles.uploadItem} key={i}>
+                <FileUpload onChange={selectFile} />
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className={styles.item}>
+          <TextErea
+            label={'達成コメント'}
+            placeholder={'達成コメントを入力'}
+            rows={5}
+            value={comment}
+            onChange={inputComment}
+          />
         </div>
       </DialogContent>
       <DialogActions>

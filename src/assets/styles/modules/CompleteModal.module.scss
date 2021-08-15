@@ -1,4 +1,4 @@
-@import '../common'; 
+@import '../common';
 
 .leadText {
   margin-bottom: 24px;
@@ -27,6 +27,7 @@
   }
 
   .itemTitle {
+    margin-bottom: 8px;
     color: $text-gray;
     font-size: 12px;
   }
@@ -37,4 +38,13 @@
   align-items: center;
   flex-wrap: wrap;
   justify-content: flex-start;
+}
+
+.uploadWrap {
+  display: flex;
+  justify-content: space-between;
+
+  .uploadItem {
+    width: 32%;
+  }
 }
