@@ -27,3 +27,11 @@ export const getNameById = (
   const target = items.find((item: Options) => item[`${itemName}Id`] === id);
   return target ? target.name : null;
 };
+
+export const createRandomValue = () => {
+  const S = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  const N = 16;
+  return Array.from(crypto.getRandomValues(new Uint32Array(N)))
+    .map((n) => S[n % S.length])
+    .join('');
+};

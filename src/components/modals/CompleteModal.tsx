@@ -11,7 +11,9 @@ import { PrimayButton, ThirdaryButton } from 'src/components/buttons';
 import { FileUpload, TextField, TextErea } from 'src/components/forms';
 import { getDateFrom8Digit, getToday } from 'src/util/convertDate';
 import { getFeatureAge } from 'src/util/convertAge';
-import { Item, User } from 'src/types';
+import { Image, Item, User } from 'src/types';
+import { createRandomValue } from 'src/util/common';
+import { storage } from 'src/firebase';
 
 interface Props {
   item: Item;
@@ -25,8 +27,16 @@ const CompleteModal: React.VFC<Props> = (props) => {
   const [dateLimitDate, setDateLimitDate] = useState<Date | null>(null);
   const [displayAge, setDisplayAge] = useState<number | null>(null);
   const [comment, setComment] = useState('');
+  const [numberOfUploadErea, setNumberOfUploadErea] = useState(1);
   const [file, setFile] = useState<File | null>(null);
-  const [fileName, setFileName] = useState('');
+  const [images, setImages] = useState<Image[] | never[]>([]);
+
+  const addAploadErea = () => {
+    const numberOfImages = images.length;
+    if (numberOfUploadErea !== 3 && numberOfImages === numberOfUploadErea) {
+      setNumberOfUploadErea((prevState) => prevState + 1);
+    }
+  };
 
   const inputComment = useCallback(
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -36,13 +46,26 @@ const CompleteModal: React.VFC<Props> = (props) => {
   );
 
   const selectFile = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
+    (event: React.ChangeEvent<HTMLInputElement>, index: number) => {
       if (!event.target.files) return;
       const selectedFile = event.target.files[0];
+      const fileName = createRandomValue();
       setFile(selectedFile);
-      setFileName(selectedFile.name);
+
+      const uploadRef = storage.ref('images').child(fileName);
+      const uploadTask = uploadRef.put(selectedFile);
+
+      uploadTask.then(() => {
+        uploadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
+          const newImage = { id: fileName, path: downloadURL };
+          setImages((prevState) => {
+            prevState[index] = newImage;
+            return [...prevState];
+          });
+        });
+      });
     },
-    [],
+    [images, file],
   );
 
   const inputLimitDate = useCallback(
@@ -52,7 +75,6 @@ const CompleteModal: React.VFC<Props> = (props) => {
       if (value.match(/\d.*/g) && value.length === 8) {
         const newDate = getDateFrom8Digit(value);
         setDateLimitDate(newDate);
-        console.log(newDate);
         if (newDate) setDisplayAge(getFeatureAge(newDate, props.user.age));
       } else {
         setDateLimitDate(null);
@@ -61,6 +83,13 @@ const CompleteModal: React.VFC<Props> = (props) => {
     },
     [props.user.age, limitDate],
   );
+
+  const isShwoBlankErea = () => {
+    const numberOfImages = images.length;
+    const a = numberOfUploadErea === 1 && numberOfImages === numberOfUploadErea;
+    const b = numberOfUploadErea === 2 && numberOfImages !== numberOfUploadErea;
+    return a || b;
+  };
 
   useEffect(() => {
     setLimitDate(getToday());
@@ -90,11 +119,27 @@ const CompleteModal: React.VFC<Props> = (props) => {
         <div className={styles.item}>
           <div className={styles.itemTitle}>達成記念写真</div>
           <div className={styles.uploadWrap}>
-            {[...Array(3)].map((_, i) => (
+            {[...Array(numberOfUploadErea)].map((_, i) => (
               <div className={styles.uploadItem} key={i}>
-                <FileUpload onChange={selectFile} />
+                <FileUpload
+                  id={`upload-0${i}`}
+                  index={i}
+                  onChange={selectFile}
+                  path={images[i] ? images[i].path : '#'}
+                />
               </div>
             ))}
+            {numberOfUploadErea < 3 && images.length === numberOfUploadErea && (
+              <div
+                className={`${styles.uploadItem} ${styles.addUploadErea}`}
+                onClick={addAploadErea}
+              />
+            )}
+            {isShwoBlankErea() && (
+              <div
+                className={`${styles.uploadItem} ${styles.uploadItemDammy}`}
+              />
+            )}
           </div>
         </div>
         <div className={styles.item}>

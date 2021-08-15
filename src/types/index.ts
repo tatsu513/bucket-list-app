@@ -26,11 +26,17 @@ export interface Gender {
   genderType: string;
 }
 
+export interface Image {
+  id: string;
+  path: string;
+}
+
 export interface Item {
   limitAge: number | null;
   category: string;
   completedAt: Date | null;
   createdAt: Timestamp;
+  images?: Image[];
   itemId: string;
   limitDate: Date | Timestamp | null;
   order: number;

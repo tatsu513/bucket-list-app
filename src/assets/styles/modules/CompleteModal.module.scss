@@ -47,4 +47,28 @@
   .uploadItem {
     width: 32%;
   }
+
+  .addUploadErea {
+    position: relative;
+    cursor: pointer;
+
+    &::before {
+      height: 32px;
+      width: 32px;
+      content: '＋';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid $text-gray;
+      border-radius: 50%;
+      color: $text-gray;
+      font-size: 27px;
+      text-align: center;
+    }
+
+    &:hover {
+      background-color: $back-grey;
+    }
+  }
 }
