@@ -21,12 +21,6 @@ export const itemsHeader: ItemHeader[] = [
   },
   {
     id: 4,
-    key: 'category',
-    name: 'カテゴリ',
-    alignment: 'center',
-  },
-  {
-    id: 5,
     key: 'priority',
     name: '重要度',
     alignment: 'center',

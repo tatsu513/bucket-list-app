@@ -24,7 +24,6 @@ const List: React.VFC<Props> = (props) => {
         <col className="body" />
         <col className={styles.limit} />
         <col className={styles.status} />
-        <col className={styles.category} />
         <col className={styles.star} />
       </colgroup>
       <thead>
@@ -53,6 +52,11 @@ const List: React.VFC<Props> = (props) => {
               <td
                 className={`${styles.cell} ${styles.cellBody} ${styles.cellBodyFirst}`}
               >
+                <span
+                  className={`${styles.cellBodyText} ${styles.cellBodyCategory}`}
+                >
+                  {getNameById(props.categories, item.category, 'category')}
+                </span>
                 <div className={styles.cellBodyTitle}>{item.title}</div>
                 <span className={styles.cellBodyText}>
                   設定日：{convertDate(item.createdAt)}
@@ -71,21 +75,21 @@ const List: React.VFC<Props> = (props) => {
                 </div>
               </td>
               <td className={`${styles.cell} ${styles.cellCheck}`}>
-                {getNameById(props.status, item.status, 'status')}
-                {/* {(() => {
-                  if (item.status === '完了') {
+                {(() => {
+                  if (item.status === 'completed') {
                     return (
                       <div className={styles.cellStatusIconBox}>
                         <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/google/298/party-popper_1f389.png" />
                       </div>
                     );
                   } else {
-                    return null;
+                    return (
+                      <div className={styles.cellStatusIconBox}>
+                        <img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/120/google/298/man-running-light-skin-tone_1f3c3-1f3fb-200d-2642-fe0f.png" />
+                      </div>
+                    );
                   }
-                })()} */}
-              </td>
-              <td className={`${styles.cell} ${styles.cellCategory}`}>
-                {getNameById(props.categories, item.category, 'category')}
+                })()}
               </td>
               <td className={`${styles.cell} ${styles.cellStar}`}>
                 <div className={styles.cellStarIconBox}>

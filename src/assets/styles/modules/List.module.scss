@@ -81,7 +81,7 @@
   }
 
   .cellBodyTitle {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
     font-size: 18px;
   }
 
@@ -89,6 +89,10 @@
     display: inline-block;
     margin-right: 8px;
     color: $text-gray;
+  }
+  .cellBodyCategory {
+    margin: 0 0 8px 0;
+    color: $black;
   }
 }
 
