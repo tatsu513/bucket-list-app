@@ -1,4 +1,5 @@
 import { useCallback, useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import styles from 'src/assets/styles/modules/CompleteModal.module.scss';
 import {
   Dialog,
@@ -11,9 +12,11 @@ import { PrimayButton, ThirdaryButton } from 'src/components/buttons';
 import { FileUpload, TextField, TextErea } from 'src/components/forms';
 import { getDateFrom8Digit, getToday } from 'src/util/convertDate';
 import { getFeatureAge } from 'src/util/convertAge';
-import { Image, Item, User } from 'src/types';
+import { CompletedItem, FixedData, Image, Item, User } from 'src/types';
 import { createRandomValue } from 'src/util/common';
-import { storage } from 'src/firebase';
+import { FirebaseTimestamp, storage } from 'src/firebase';
+import { makeStyles } from '@material-ui/core/styles';
+import { completeItem } from 'src/api';
 
 interface Props {
   item: Item;
@@ -22,7 +25,15 @@ interface Props {
   close: () => void;
 }
 
+const useStyles = makeStyles(() => ({
+  paper: {
+    minWidth: '640px',
+  },
+}));
+
 const CompleteModal: React.VFC<Props> = (props) => {
+  const classes = useStyles();
+  const router = useRouter();
   const [limitDate, setLimitDate] = useState('');
   const [dateLimitDate, setDateLimitDate] = useState<Date | null>(null);
   const [displayAge, setDisplayAge] = useState<number | null>(null);
@@ -30,13 +41,6 @@ const CompleteModal: React.VFC<Props> = (props) => {
   const [numberOfUploadErea, setNumberOfUploadErea] = useState(1);
   const [file, setFile] = useState<File | null>(null);
   const [images, setImages] = useState<Image[] | never[]>([]);
-
-  const addAploadErea = () => {
-    const numberOfImages = images.length;
-    if (numberOfUploadErea !== 3 && numberOfImages === numberOfUploadErea) {
-      setNumberOfUploadErea((prevState) => prevState + 1);
-    }
-  };
 
   const inputComment = useCallback(
     (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -62,6 +66,9 @@ const CompleteModal: React.VFC<Props> = (props) => {
             prevState[index] = newImage;
             return [...prevState];
           });
+          if (images.length < 3) {
+            setNumberOfUploadErea(images.length + 1);
+          }
         });
       });
     },
@@ -84,19 +91,35 @@ const CompleteModal: React.VFC<Props> = (props) => {
     [props.user.age, limitDate],
   );
 
-  const isShwoBlankErea = () => {
-    const numberOfImages = images.length;
-    const a = numberOfUploadErea === 1 && numberOfImages === numberOfUploadErea;
-    const b = numberOfUploadErea === 2 && numberOfImages !== numberOfUploadErea;
-    return a || b;
-  };
+  const completeAction = useCallback(() => {
+    if (!dateLimitDate || !displayAge || !dateLimitDate) return;
+    const updateData: CompletedItem = {
+      completedAt: dateLimitDate,
+      images: images,
+      limitAge: props.item.limitAge ? props.item.limitAge : displayAge,
+      limitDate: props.item.limitDate ? props.item.limitDate : dateLimitDate,
+      status: 'completed',
+      comment: comment,
+      updatedAt: FirebaseTimestamp.now(),
+    };
+    const fixData: FixedData = { ...props.item, ...updateData };
+    completeItem(props.user.uid, props.item.itemId, fixData).then(() =>
+      router.push('/'),
+    );
+  }, [comment, images, limitDate, displayAge]);
 
   useEffect(() => {
     setLimitDate(getToday());
+    setDateLimitDate(getDateFrom8Digit(getToday()));
     setDisplayAge(getFeatureAge(new Date(), props.user.age));
   }, []);
+
   return (
-    <Dialog open={props.open} aria-labelledby="form-dialog-title">
+    <Dialog
+      classes={{ paper: classes.paper }}
+      open={props.open}
+      aria-labelledby="form-dialog-title"
+    >
       <DialogTitle id="form-dialog-title">リストに追加</DialogTitle>
       <DialogContent>
         <div className={styles.leadText}>
@@ -117,7 +140,7 @@ const CompleteModal: React.VFC<Props> = (props) => {
           <span className={styles.item__old}>あなたの年齢：{displayAge}歳</span>
         </div>
         <div className={styles.item}>
-          <div className={styles.itemTitle}>達成記念写真</div>
+          <div className={styles.itemTitle}>達成記念写真（最大3枚まで）</div>
           <div className={styles.uploadWrap}>
             {[...Array(numberOfUploadErea)].map((_, i) => (
               <div className={styles.uploadItem} key={i}>
@@ -129,17 +152,6 @@ const CompleteModal: React.VFC<Props> = (props) => {
                 />
               </div>
             ))}
-            {numberOfUploadErea < 3 && images.length === numberOfUploadErea && (
-              <div
-                className={`${styles.uploadItem} ${styles.addUploadErea}`}
-                onClick={addAploadErea}
-              />
-            )}
-            {isShwoBlankErea() && (
-              <div
-                className={`${styles.uploadItem} ${styles.uploadItemDammy}`}
-              />
-            )}
           </div>
         </div>
         <div className={styles.item}>
@@ -157,7 +169,7 @@ const CompleteModal: React.VFC<Props> = (props) => {
         <PrimayButton
           text={'アイテムを完了'}
           disabled={false}
-          onClick={() => alert('アイテムを完了')}
+          onClick={completeAction}
         />
       </DialogActions>
     </Dialog>

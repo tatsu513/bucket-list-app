@@ -42,10 +42,14 @@
 
 .uploadWrap {
   display: flex;
-  justify-content: space-between;
 
   .uploadItem {
     width: 32%;
+    margin-right: 2%;
+
+    &:nth-child(3) {
+      margin-right: 0;
+    }
   }
 
   .addUploadErea {

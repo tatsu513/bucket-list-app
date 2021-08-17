@@ -36,7 +36,6 @@ export interface Item {
   category: string;
   completedAt: Date | null;
   createdAt: Timestamp;
-  images?: Image[];
   itemId: string;
   limitDate: Date | Timestamp | null;
   order: number;
@@ -55,6 +54,33 @@ export interface EditingItem {
   priority: number;
   title: string;
   updatedAt: Timestamp;
+}
+
+export interface CompletedItem {
+  completedAt: Date;
+  images: Image[] | never[];
+  limitAge: number;
+  limitDate: Date | Timestamp;
+  status: 'completed';
+  comment: string;
+  updatedAt: Timestamp;
+}
+
+export interface FixedData {
+  limitAge: number;
+  category: string;
+  completedAt: Date;
+  createdAt: Timestamp;
+  images: Image[] | never[];
+  itemId: string;
+  limitDate: Date | Timestamp;
+  order: number;
+  priority: number;
+  status: 'completed';
+  title: string;
+  updatedAt: Timestamp;
+  memo: string;
+  comment: string;
 }
 
 export interface ItemHeader {
