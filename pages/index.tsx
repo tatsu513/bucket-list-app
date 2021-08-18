@@ -104,19 +104,19 @@ const home = () => {
             : items.filter((item) => {
                 return item.status === selectedStatus;
               });
-        const statusAndCategoryFilterItem =
+        const categoryFilterItem =
           selectedCategory === 'all'
             ? statusFilteringItem
             : statusFilteringItem.filter((item) => {
                 return item.category === selectedCategory;
               });
-        const allFilterItems =
+        const titleFilteringItem =
           title === ''
-            ? statusAndCategoryFilterItem
-            : statusAndCategoryFilterItem.filter((item) => {
+            ? categoryFilterItem
+            : categoryFilterItem.filter((item) => {
                 return item.title.toLowerCase().includes(title);
               });
-        return allFilterItems;
+        return titleFilteringItem;
       }
     };
     if (baseItems.length === 0) {
