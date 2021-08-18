@@ -1,5 +1,5 @@
 import styles from '../assets/styles/modules/Filter.module.scss';
-import { SelectBox, TextField } from './forms';
+import { CheckBox, SelectBox, TextField } from './forms';
 import { Options } from 'src/types';
 import { AddCircleOutline } from '@material-ui/icons';
 import { RemoveCircleOutline } from '@material-ui/icons';
@@ -8,6 +8,7 @@ import { useState } from 'react';
 
 interface Props {
   categories: Options[];
+  isAllpriority: boolean;
   priority: number;
   selectedCategory: string;
   selectedStatus: string;
@@ -17,6 +18,7 @@ interface Props {
   onSelectCategory: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   onSelectStatus: (event: React.ChangeEvent<HTMLSelectElement>) => void;
   onClick: (priority: number) => void;
+  onClickIsAllPriority: () => void;
 }
 
 const Filter: React.VFC<Props> = (props) => {
@@ -40,8 +42,18 @@ const Filter: React.VFC<Props> = (props) => {
         <div className={styles.content}>
           <div className={`${styles.filterItem} ${styles.filterImportant}`}>
             <label className={styles.label}>重要度</label>
-            <div className={styles.filed}>
-              <Stars priority={props.priority} onClick={props.onClick} />
+            <div className={styles.starsFiled}>
+              <div className={props.isAllpriority ? styles.starsWrap : ''}>
+                <Stars priority={props.priority} onClick={props.onClick} />
+              </div>
+              <div className={styles.priorityCheck}>
+                <CheckBox
+                  checked={props.isAllpriority}
+                  id={'all-priority'}
+                  label={'すべての重要度'}
+                  onChange={props.onClickIsAllPriority}
+                />
+              </div>
             </div>
           </div>
           <div className={styles.filterItem}>

@@ -24,6 +24,7 @@ const home = () => {
   const [baseItems, setBaseItems] = useState<Item[] | never[]>([]);
   const [isCreatedItem, setIsCreatedItem] = useState(false);
   const [priority, setPriority] = useState(3);
+  const [isAllpriority, setIsAllPriority] = useState(true);
 
   const openModal = () => {
     setIsOpen(true);
@@ -35,17 +36,14 @@ const home = () => {
 
   const selectedPriority = useCallback(
     (selectedPriority: number) => {
-      const oldValue = priority;
-      if (selectedPriority - oldValue <= 0) {
-        if (selectedPriority !== 1) {
-          setPriority(selectedPriority - 1);
-        }
-      } else {
-        setPriority(selectedPriority);
-      }
+      setPriority(selectedPriority);
     },
-    [setPriority, priority],
+    [setPriority],
   );
+
+  const handleIsAllPriority = useCallback(() => {
+    setIsAllPriority(!isAllpriority);
+  }, [isAllpriority]);
 
   const inputTitle = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,7 +92,8 @@ const home = () => {
       if (
         selectedStatus === 'all' &&
         selectedCategory === 'all' &&
-        title === ''
+        title === '' &&
+        isAllpriority
       ) {
         return items;
       } else {
@@ -116,7 +115,14 @@ const home = () => {
             : categoryFilterItem.filter((item) => {
                 return item.title.toLowerCase().includes(title);
               });
-        return titleFilteringItem;
+        console.log(titleFilteringItem);
+        const priorityFilteringItem = isAllpriority
+          ? titleFilteringItem
+          : titleFilteringItem.filter((item) => {
+              console.log(item.priority, priority);
+              return item.priority === priority;
+            });
+        return priorityFilteringItem;
       }
     };
     if (baseItems.length === 0) {
@@ -129,7 +135,15 @@ const home = () => {
       const filteringItems = getFilteringItems(baseItems);
       setItems(filteringItems);
     }
-  }, [currentUser, isCreatedItem, title, selectedStatus, selectedCategory]);
+  }, [
+    currentUser,
+    isCreatedItem,
+    title,
+    selectedStatus,
+    selectedCategory,
+    priority,
+    isAllpriority,
+  ]);
 
   return (
     <>
@@ -137,6 +151,7 @@ const home = () => {
       <Filter
         status={status}
         categories={categories}
+        isAllpriority={isAllpriority}
         priority={priority}
         selectedCategory={selectedCategory}
         selectedStatus={selectedStatus}
@@ -145,6 +160,7 @@ const home = () => {
         onSelectCategory={selectCategory}
         onSelectStatus={selectStatus}
         onClick={selectedPriority}
+        onClickIsAllPriority={handleIsAllPriority}
       />
       <div className={styles.container}>
         <List categories={categories} items={items} status={status} />
