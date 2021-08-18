@@ -15,9 +15,13 @@ const home = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [user, setUser] = useState<User | undefined>(undefined);
   const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
+  const [title, setTitle] = useState('');
   const [status, setStatus] = useState<Options[] | never[]>([]);
+  const [selectedStatus, setSelectedStatus] = useState('incomplete');
   const [categories, setCategories] = useState<Options[] | never[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState('all');
   const [items, setItems] = useState<Item[] | never[]>([]);
+  const [baseItems, setBaseItems] = useState<Item[] | never[]>([]);
   const [isCreatedItem, setIsCreatedItem] = useState(false);
   const [priority, setPriority] = useState(3);
 
@@ -43,6 +47,27 @@ const home = () => {
     [setPriority, priority],
   );
 
+  const inputTitle = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setTitle(event.target.value);
+    },
+    [setTitle],
+  );
+
+  const selectStatus = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      setSelectedStatus(event.target.value);
+    },
+    [setSelectedStatus],
+  );
+
+  const selectCategory = useCallback(
+    (event: React.ChangeEvent<HTMLSelectElement>) => {
+      setSelectedCategory(event.target.value);
+    },
+    [setSelectedCategory],
+  );
+
   const toggleCreatedStatus = useCallback(
     (flag: boolean) => {
       setIsCreatedItem(flag);
@@ -65,8 +90,46 @@ const home = () => {
 
   useEffect(() => {
     if (!currentUser) return;
-    getItems(currentUser.uid).then((items) => setItems(items));
-  }, [currentUser, isCreatedItem]);
+    const getFilteringItems = (items: Item[]) => {
+      if (
+        selectedStatus === 'all' &&
+        selectedCategory === 'all' &&
+        title === ''
+      ) {
+        return items;
+      } else {
+        const statusFilteringItem =
+          selectedStatus === 'all'
+            ? items
+            : items.filter((item) => {
+                return item.status === selectedStatus;
+              });
+        const statusAndCategoryFilterItem =
+          selectedCategory === 'all'
+            ? statusFilteringItem
+            : statusFilteringItem.filter((item) => {
+                return item.category === selectedCategory;
+              });
+        const allFilterItems =
+          title === ''
+            ? statusAndCategoryFilterItem
+            : statusAndCategoryFilterItem.filter((item) => {
+                return item.title.toLowerCase().includes(title);
+              });
+        return allFilterItems;
+      }
+    };
+    if (baseItems.length === 0) {
+      getItems(currentUser.uid).then((items) => {
+        setBaseItems(items);
+        const filteringItems = getFilteringItems(items);
+        setItems(filteringItems);
+      });
+    } else {
+      const filteringItems = getFilteringItems(baseItems);
+      setItems(filteringItems);
+    }
+  }, [currentUser, isCreatedItem, title, selectedStatus, selectedCategory]);
 
   return (
     <>
@@ -75,6 +138,12 @@ const home = () => {
         status={status}
         categories={categories}
         priority={priority}
+        selectedCategory={selectedCategory}
+        selectedStatus={selectedStatus}
+        title={title}
+        onInputTitle={inputTitle}
+        onSelectCategory={selectCategory}
+        onSelectStatus={selectStatus}
         onClick={selectedPriority}
       />
       <div className={styles.container}>
