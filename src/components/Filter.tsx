@@ -29,13 +29,15 @@ const Filter: React.VFC<Props> = (props) => {
         className={`${styles.controller} ${!isOpen && styles.isClose}`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        絞り込み
-        <span className={styles.controllerIcon}>
-          {isOpen ? (
-            <RemoveCircleOutline fontSize={'inherit'} />
-          ) : (
-            <AddCircleOutline fontSize={'inherit'} />
-          )}
+        <span className={styles.controllerButton}>
+          絞り込み
+          <span className={styles.controllerIcon}>
+            {isOpen ? (
+              <RemoveCircleOutline fontSize={'inherit'} />
+            ) : (
+              <AddCircleOutline fontSize={'inherit'} />
+            )}
+          </span>
         </span>
       </div>
       <div className={`${styles.contentBox} ${!isOpen && styles.isClose}`}>

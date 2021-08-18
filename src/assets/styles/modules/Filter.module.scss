@@ -7,14 +7,18 @@
 }
 
 .controller {
-  display: flex;
-  margin-bottom: 16px;
-  align-items: center;
-  width: 120px;
+  margin: 0 auto 16px;
+  width: 100%;
+  max-width: 1200px;
   cursor: pointer;
   font-size: 18px;
-  font-weight: 600;
   transition: all 200ms ease;
+
+  .controllerButton {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+  }
 
   &.isClose {
     margin-bottom: 0;
