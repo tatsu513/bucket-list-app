@@ -1,4 +1,5 @@
 export { default as AccountHeader } from './AccountHeader';
+export { default as Chip } from './Chip';
 export { default as Filter } from './Filter';
 export { default as FixedStars } from './FixedStars';
 export { default as Header } from './Header';

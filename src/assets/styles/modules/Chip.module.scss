@@ -1,0 +1,26 @@
+@import '../common';
+
+.chip {
+  display: inline-block;
+  padding: 0 4px 0 12px;
+  background-color: $primary-light;
+  border-radius: 14px;
+}
+
+.contentWrap {
+  display: flex;
+  align-items: center;
+  color: $primary;
+}
+
+.chipText {
+  display: inline-block;
+  margin-right: 8px;
+  line-height: 28px;
+}
+
+.chipIcon {
+  height: 20px;
+  cursor: pointer;
+  font-size: 20px
+}

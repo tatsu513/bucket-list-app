@@ -1,0 +1,58 @@
+@import '../common';
+
+.settingWrapper {
+  margin: 0 auto;
+  padding-top: 24px;
+  width: 800px;
+}
+
+.pageTitle {
+  display: flex;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.pageTitleIcon {
+  height: 21px;
+}
+
+.pageTitleText {
+  margin-left: 4px;
+  font-size: 20px;
+}
+
+.contentWrap {
+  padding: 24px;
+}
+
+.subTitle {
+  font-size: 16px;
+  margin-bottom: 8px;
+}
+
+.exText {
+  margin-bottom: 16px;
+  color: $text-gray;
+}
+
+.inpuErea {
+  display: flex;
+  margin-bottom: 32px;
+}
+
+.inpuEreaField {
+  width: 250px;
+  margin-right: 16px;
+}
+
+.inputCount {
+  margin-top: 8px;
+  font-size: 12px;
+  text-align: right;
+}
+
+.chipBox {
+  display: inline-block;
+  margin-right: 8px;
+  margin-bottom: 8px;
+}

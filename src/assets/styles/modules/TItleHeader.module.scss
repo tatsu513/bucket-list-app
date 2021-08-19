@@ -1,0 +1,33 @@
+@import '../common';
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px;
+  width: 100%;
+  background-color: $back-grey-light;
+  border-bottom: 1px solid $line-gray;
+  cursor: pointer;
+}
+
+.titleText {
+  font-size: 20px;
+}
+
+.titleIcon {
+  height: 26px;
+  color: $black;
+  font-size: 26px;
+}
+
+.contents {
+  max-height: 0;
+  overflow: hidden;
+  color: $text-gray;
+  transition: all 400ms ease;
+
+  &.isOpen {
+    max-height: 500px;
+  }
+}

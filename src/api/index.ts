@@ -65,8 +65,8 @@ export const getUser = (uid: string) => {
     .doc(uid)
     .get()
     .then((snapshots) => {
-      const date = snapshots.data() as User;
-      return date;
+      const data = snapshots.data() as User;
+      return data;
     });
 };
 
