@@ -115,7 +115,6 @@ const home = () => {
             : categoryFilterItem.filter((item) => {
                 return item.title.toLowerCase().includes(title);
               });
-        console.log(titleFilteringItem);
         const priorityFilteringItem = isAllpriority
           ? titleFilteringItem
           : titleFilteringItem.filter((item) => {
@@ -167,12 +166,13 @@ const home = () => {
       </div>
       <AddModal
         age={user ? user.age : 0}
+        categories={categories}
+        itemLength={baseItems.length}
         uid={user ? user.uid : ''}
         open={isOpen}
-        close={closeModal}
         title={'リストに追加'}
-        categories={categories}
         status={status}
+        close={closeModal}
         toggleCreatedStatus={toggleCreatedStatus}
       />
       <FloatButton text={'リストに追加'} onClick={openModal} />

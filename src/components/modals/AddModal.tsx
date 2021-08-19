@@ -22,10 +22,11 @@ import { FirebaseTimestamp } from 'src/firebase';
 import { createItem } from 'src/api';
 interface Props {
   age: number;
+  categories: Options[];
+  itemLength: number;
   uid: string;
   title: string;
   open: boolean;
-  categories: Options[];
   status: Options[];
   close: () => void;
   toggleCreatedStatus: (flag: boolean) => void;
@@ -101,7 +102,7 @@ const AddModal: React.VFC<Props> = (props) => {
       limitAge: afterSetFlag ? null : displayAge,
       limitDate: afterSetFlag ? null : dateLimitDate,
       memo: memo,
-      order: 2,
+      order: props.itemLength + 1,
       priority: priority,
       status: String(getIdByName(props.status, '未完了', 'status')),
       title: title,
