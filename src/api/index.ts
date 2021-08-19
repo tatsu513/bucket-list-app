@@ -16,7 +16,7 @@ const createCategories = async (uid: string) => {
 export const addCategory = (uid: string, data: Options) => {
   const categoryRef = usersRef.doc(uid).collection('categories').doc();
   const id = categoryRef.id;
-  data.id = id;
+  data.categoryId = id;
   return categoryRef.set(data);
 };
 
@@ -26,6 +26,10 @@ export const createUser = (uid: string, initialData: User) => {
     .doc(uid)
     .set(initialData)
     .then(() => createCategories(uid));
+};
+
+export const deleteCategory = (uid: string, cid: string) => {
+  return usersRef.doc(uid).collection('categories').doc(cid).delete();
 };
 
 export const getAllStatus = () => {

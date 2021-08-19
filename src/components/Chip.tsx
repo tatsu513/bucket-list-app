@@ -3,6 +3,8 @@ import { RemoveCircle } from '@material-ui/icons';
 
 interface Props {
   text: string;
+  id: string;
+  onClick: (id: string) => void;
 }
 
 const Chip: React.VFC<Props> = (props) => {
@@ -10,7 +12,10 @@ const Chip: React.VFC<Props> = (props) => {
     <div className={styles.chip}>
       <div className={styles.contentWrap}>
         <span className={styles.chipText}>{props.text}</span>
-        <span className={styles.chipIcon}>
+        <span
+          className={styles.chipIcon}
+          onClick={() => props.onClick(props.id)}
+        >
           <RemoveCircle fontSize={'inherit'} />
         </span>
       </div>

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import firebase from 'firebase/app';
 import styles from 'src/assets/styles/modules/Setting.module.scss';
 import { Chip, Header } from 'src/components';
-import { addCategory, getCategories, getUser } from 'src/api';
+import { addCategory, deleteCategory, getCategories, getUser } from 'src/api';
 import { Options, User } from 'src/types';
 import { auth } from 'src/firebase';
 import { TitleHeader } from 'src/components/settings/';
@@ -25,10 +25,14 @@ const Setting = () => {
     [],
   );
 
+  const characterCount = (text: string) => {
+    return text.length;
+  };
+
   const addAction = useCallback(() => {
     if (!user) return;
     const data = {
-      id: '',
+      categoryId: '',
       name: newCategory,
       order: categories.length + 1,
     };
@@ -36,6 +40,13 @@ const Setting = () => {
       getCategories(user.uid).then((value) => setCategories(value));
     });
   }, [newCategory, categories]);
+
+  const removeCateory = useCallback((cid: string) => {
+    if (!user) return;
+    deleteCategory(user.uid, cid).then(() => {
+      getCategories(user.uid).then((value) => setCategories(value));
+    });
+  }, []);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -65,14 +76,24 @@ const Setting = () => {
               value={newCategory}
               onChange={inputCategory}
             />
-            <div className={styles.inputCount}>0/10 文字</div>
+            <div className={styles.inputCount}>
+              {characterCount(newCategory)}/10 文字
+            </div>
           </div>
-          <PrimayButton text={'追加'} onClick={addAction} />
+          <PrimayButton
+            disabled={newCategory.length > 10}
+            text={'追加'}
+            onClick={addAction}
+          />
         </div>
         <h4 className={styles.subTitle}>設定済みのカテゴリ</h4>
         {categories.map((category, i) => (
           <div className={styles.chipBox} key={i}>
-            <Chip text={category.name} />
+            <Chip
+              id={String(category.categoryId)}
+              text={category.name}
+              onClick={removeCateory}
+            />
           </div>
         ))}
       </>
