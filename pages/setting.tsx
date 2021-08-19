@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import firebase from 'firebase/app';
 import styles from 'src/assets/styles/modules/Setting.module.scss';
 import { Chip, Header } from 'src/components';
-import { getCategories, getUser } from 'src/api';
+import { addCategory, getCategories, getUser } from 'src/api';
 import { Options, User } from 'src/types';
 import { auth } from 'src/firebase';
 import { TitleHeader } from 'src/components/settings/';
@@ -24,6 +24,18 @@ const Setting = () => {
     },
     [],
   );
+
+  const addAction = useCallback(() => {
+    if (!user) return;
+    const data = {
+      id: '',
+      name: newCategory,
+      order: categories.length + 1,
+    };
+    addCategory(user.uid, data).then(() => {
+      getCategories(user.uid).then((value) => setCategories(value));
+    });
+  }, [newCategory, categories]);
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -55,7 +67,7 @@ const Setting = () => {
             />
             <div className={styles.inputCount}>0/10 文字</div>
           </div>
-          <PrimayButton text={'追加'} onClick={() => alert('追加')} />
+          <PrimayButton text={'追加'} onClick={addAction} />
         </div>
         <h4 className={styles.subTitle}>設定済みのカテゴリ</h4>
         {categories.map((category, i) => (

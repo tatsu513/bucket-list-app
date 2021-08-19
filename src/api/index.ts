@@ -13,6 +13,13 @@ const createCategories = async (uid: string) => {
   return await batch.commit();
 };
 
+export const addCategory = (uid: string, data: Options) => {
+  const categoryRef = usersRef.doc(uid).collection('categories').doc();
+  const id = categoryRef.id;
+  data.id = id;
+  return categoryRef.set(data);
+};
+
 export const createUser = (uid: string, initialData: User) => {
   return db
     .collection('users')
