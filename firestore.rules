@@ -16,7 +16,7 @@ service cloud.firestore {
       }
     }
 
-    match /genders/{gendersId} {
+    match /genders/{genderId} {
       allow read;
       allow write;
     }

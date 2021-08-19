@@ -1,10 +1,24 @@
+import { defaultCategories } from 'src/constants';
 import { db } from 'src/firebase';
 import { EditingItem, FixedData, Gender, Item, Options, User } from 'src/types';
 
 const usersRef = db.collection('users');
 
+const createCategories = async (uid: string) => {
+  const batch = db.batch();
+  const categoriesRef = usersRef.doc(uid).collection('categories');
+  await defaultCategories.map((category) => {
+    batch.set(categoriesRef.doc(), { ...category });
+  });
+  return await batch.commit();
+};
+
 export const createUser = (uid: string, initialData: User) => {
-  return db.collection('users').doc(uid).set(initialData);
+  return db
+    .collection('users')
+    .doc(uid)
+    .set(initialData)
+    .then(() => createCategories(uid));
 };
 
 export const getAllStatus = () => {
@@ -26,8 +40,9 @@ export const getAllStatus = () => {
     });
 };
 
-export const getCategories = () => {
-  return db
+export const getCategories = (uid: string) => {
+  return usersRef
+    .doc(uid)
     .collection('categories')
     .orderBy('order', 'asc')
     .get()

@@ -78,12 +78,12 @@ const home = () => {
       user ? setCurrentUser(user) : router.push('/account/signin');
     });
     getAllStatus().then((value) => setStatus(value));
-    getCategories().then((value) => setCategories(value));
   }, []);
 
   useEffect(() => {
     if (!currentUser) return;
     getUser(currentUser.uid).then((user) => setUser(user));
+    getCategories(currentUser.uid).then((value) => setCategories(value));
   }, [currentUser]);
 
   useEffect(() => {

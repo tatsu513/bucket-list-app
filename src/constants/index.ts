@@ -26,3 +26,26 @@ export const itemsHeader: ItemHeader[] = [
     alignment: 'center',
   },
 ];
+
+export const defaultCategories = [
+  {
+    categoryId: 'business',
+    name: '仕事',
+    order: 1,
+  },
+  {
+    categoryId: 'private',
+    name: 'プライベート',
+    order: 1,
+  },
+  {
+    categoryId: 'family',
+    name: '家族',
+    order: 1,
+  },
+  {
+    categoryId: 'friend',
+    name: '友人',
+    order: 1,
+  },
+];

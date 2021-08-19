@@ -37,13 +37,11 @@ const Sidebar: React.VFC<Props> = (props) => {
             </span>
             <span className={styles.textBox}>設定</span>
           </li>
-          <li className={styles.sidebarItem}>
+          <li className={styles.sidebarItem} onClick={() => singOut()}>
             <span className={styles.iconBox}>
               <ExitToApp />
             </span>
-            <span className={styles.textBox} onClick={() => singOut()}>
-              サインアウト
-            </span>
+            <span className={styles.textBox}>サインアウト</span>
           </li>
         </ul>
       </div>
