@@ -51,12 +51,13 @@ const ItemDetail: React.VFC = () => {
     auth.onAuthStateChanged((user) => {
       user ? setCurrentUser(user) : router.push('/account/signin');
     });
-    getCategories().then((value) => setCategories(value));
   }, []);
 
   useEffect(() => {
     if (!currentUser) return;
-    getUser(currentUser.uid).then((user) => setUser(user));
+    const uid = currentUser.uid;
+    getUser(uid).then((user) => setUser(user));
+    getCategories(uid).then((value) => setCategories(value));
   }, [currentUser]);
 
   useEffect(() => {
