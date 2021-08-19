@@ -11,6 +11,7 @@
   height: 40px;
   width: 100%;
   padding: 0 16px;
+  background-color: #fff;
   border: 1px solid #c4c4c4;
   border-radius: 4px;
   line-height: 40px;
@@ -18,5 +19,10 @@
   &:disabled {
     color: $disabled-text-grey;
     background-color: $grey;
+  }
+
+  &.isError {
+    border-color: $error;
+    background-color: $error-light;
   }
 }

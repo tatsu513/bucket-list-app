@@ -42,7 +42,7 @@ const Setting = () => {
   }, [newCategory, categories]);
 
   const removeCateory = useCallback((cid: string) => {
-    if (!user) return;
+    if (!user || categories.length === 1) return;
     deleteCategory(user.uid, cid).then(() => {
       getCategories(user.uid).then((value) => setCategories(value));
     });
@@ -71,6 +71,7 @@ const Setting = () => {
           <div className={styles.inpuEreaField}>
             <TextField
               label={''}
+              isError={newCategory.length > 10}
               placeholder={'追加するカテゴリを入力'}
               type={'text'}
               value={newCategory}
