@@ -1,0 +1,36 @@
+@import '../common';
+
+.profileBox {
+  display: flex;
+}
+
+.profileImageBox {
+  margin-right: 24px;
+  width: 200px;
+}
+
+.profileImage {
+  display: inline-block;
+  font-size: 200px;
+}
+
+.profileContent {
+  width: calc(100% - 224px)
+}
+
+.title {
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid $line-gray;
+  color: $text-gray;
+  font-weight: normal;
+}
+
+.body {
+  margin-bottom: 24px;
+  font-size: 20px;
+}
+
+.controller {
+  text-align: center;
+}

@@ -1,5 +1,5 @@
 import styles from 'src/assets/styles/modules/Sidebar.module.scss';
-import { Settings, ExitToApp } from '@material-ui/icons';
+import { Settings, ExitToApp, Person } from '@material-ui/icons';
 import { useCallback } from 'react';
 import { auth } from 'src/firebase';
 import { useRouter } from 'next/router';
@@ -31,7 +31,19 @@ const Sidebar: React.VFC<Props> = (props) => {
         onClick={(event) => event.stopPropagation()}
       >
         <ul>
-          <li className={styles.sidebarItem}>
+          <li
+            className={styles.sidebarItem}
+            onClick={() => router.push('/profile')}
+          >
+            <span className={styles.iconBox}>
+              <Person />
+            </span>
+            <span className={styles.textBox}>プロフィール</span>
+          </li>
+          <li
+            className={styles.sidebarItem}
+            onClick={() => router.push('/setting')}
+          >
             <span className={styles.iconBox}>
               <Settings />
             </span>
