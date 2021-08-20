@@ -18,9 +18,10 @@ const ModalWrapper: React.VFC<Props> = (props) => {
   const classes = useStyles();
   return (
     <Dialog
-      className={classes.paper}
+      classes={{ paper: classes.paper }}
       open={props.open}
       aria-labelledby="form-dialog-title"
+      maxWidth={'lg'}
     >
       <DialogTitle>{props.title}</DialogTitle>
       {props.children}

@@ -1,0 +1,28 @@
+.item {
+  margin-bottom: 16px;
+
+  &.button {
+    margin: 32px 0 8px;
+  }
+
+  &.textLink {
+    text-align: right;
+  }
+
+  .radioItem {
+    display: inline-block;
+    margin-right: 16px;
+
+    &:last-of-type {
+      margin-right: 0;
+    }
+  }
+}
+
+.label {
+  display: inline-block;
+  margin-bottom: 8px;
+  width: 100%;
+  color: #646464;
+  font-size: 12px;
+}

@@ -2,8 +2,19 @@ import styles from 'src/assets/styles/modules/Profile.module.scss';
 import { Header, PageTitle, PageWrapper } from 'src/components';
 import { Person, Face } from '@material-ui/icons';
 import { SecondaryButton } from 'src/components/buttons';
+import { useState } from 'react';
+import { ProfileEditModal } from 'src/components/modals';
+import { useCallback } from 'react';
 
 const Profile: React.VFC = () => {
+  const [isOpenModal, setIsOpenModal] = useState(false);
+
+  const openModal = useCallback(() => {
+    setIsOpenModal(true);
+  }, []);
+  const closeModal = useCallback(() => {
+    setIsOpenModal(false);
+  }, []);
   return (
     <PageWrapper>
       <Header />
@@ -28,13 +39,11 @@ const Profile: React.VFC = () => {
             <dd className={styles.body}>男性</dd>
           </dl>
           <div className={styles.controller}>
-            <SecondaryButton
-              text={'編集する'}
-              onClick={() => alert('編集する')}
-            />
+            <SecondaryButton text={'編集する'} onClick={openModal} />
           </div>
         </div>
       </div>
+      <ProfileEditModal open={isOpenModal} close={closeModal} />
     </PageWrapper>
   );
 };
