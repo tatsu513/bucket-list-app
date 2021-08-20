@@ -2,12 +2,11 @@ import { useCallback, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import styles from 'src/assets/styles/modules/CompleteModal.module.scss';
 import {
-  Dialog,
-  DialogTitle,
   DialogContent,
   DialogActions,
   DialogContentText,
 } from '@material-ui/core/';
+import { ModalWrapper } from './';
 import { PrimayButton, ThirdaryButton } from 'src/components/buttons';
 import { FileUpload, TextField, TextErea } from 'src/components/forms';
 import { getDateFrom8Digit, getToday } from 'src/util/convertDate';
@@ -15,7 +14,6 @@ import { getFeatureAge } from 'src/util/convertAge';
 import { CompletedItem, FixedData, Image, Item, User } from 'src/types';
 import { createRandomValue } from 'src/util/common';
 import { FirebaseTimestamp, storage } from 'src/firebase';
-import { makeStyles } from '@material-ui/core/styles';
 import { completeItem } from 'src/api';
 
 interface Props {
@@ -25,14 +23,7 @@ interface Props {
   close: () => void;
 }
 
-const useStyles = makeStyles(() => ({
-  paper: {
-    minWidth: '640px',
-  },
-}));
-
 const CompleteModal: React.VFC<Props> = (props) => {
-  const classes = useStyles();
   const router = useRouter();
   const [limitDate, setLimitDate] = useState('');
   const [dateLimitDate, setDateLimitDate] = useState<Date | null>(null);
@@ -115,12 +106,7 @@ const CompleteModal: React.VFC<Props> = (props) => {
   }, []);
 
   return (
-    <Dialog
-      classes={{ paper: classes.paper }}
-      open={props.open}
-      aria-labelledby="form-dialog-title"
-    >
-      <DialogTitle id="form-dialog-title">リストに追加</DialogTitle>
+    <ModalWrapper open={props.open} title={'アイテムを完了'}>
       <DialogContent>
         <div className={styles.leadText}>
           <DialogContentText>
@@ -172,7 +158,7 @@ const CompleteModal: React.VFC<Props> = (props) => {
           onClick={completeAction}
         />
       </DialogActions>
-    </Dialog>
+    </ModalWrapper>
   );
 };
 

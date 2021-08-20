@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import styles from 'src/assets/styles/modules/AddModal.module.scss';
 import {
-  DialogTitle,
   DialogContent,
   DialogActions,
   DialogContentText,
 } from '@material-ui/core/';
-import Dialog from '@material-ui/core/Dialog';
+import { ModalWrapper } from './';
 import { CheckBox, SelectBox, TextField, TextErea } from 'src/components/forms';
 import { PrimayButton, ThirdaryButton } from 'src/components/buttons';
 import { Item, Options } from 'src/types';
@@ -122,8 +121,7 @@ const AddModal: React.VFC<Props> = (props) => {
     setDisplayAge(props.age + 1);
   }, [props.age]);
   return (
-    <Dialog open={props.open} aria-labelledby="form-dialog-title">
-      <DialogTitle id="form-dialog-title">リストに追加</DialogTitle>
+    <ModalWrapper open={props.open} title={'リストに追加'}>
       <DialogContent>
         <DialogContentText>
           バケットリストに追加したい内容を入力してください。
@@ -197,7 +195,7 @@ const AddModal: React.VFC<Props> = (props) => {
           onClick={addItem}
         />
       </DialogActions>
-    </Dialog>
+    </ModalWrapper>
   );
 };
 

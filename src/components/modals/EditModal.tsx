@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import styles from 'src/assets/styles/modules/EditModal.module.scss';
 import {
-  DialogTitle,
   DialogContent,
   DialogActions,
   DialogContentText,
 } from '@material-ui/core/';
-import Dialog from '@material-ui/core/Dialog';
+import { ModalWrapper } from './';
 import { CheckBox, SelectBox, TextField, TextErea } from 'src/components/forms';
 import { PrimayButton, ThirdaryButton } from 'src/components/buttons';
 import { EditingItem, Item, Options, User } from 'src/types';
@@ -116,8 +115,7 @@ const EditModal: React.VFC<Props> = (props) => {
   }, [props.user.age, props.item.limitDate]);
 
   return (
-    <Dialog open={props.open} aria-labelledby="form-dialog-title">
-      <DialogTitle id="form-dialog-title">リストに追加</DialogTitle>
+    <ModalWrapper open={props.open} title={'リストを編集'}>
       <DialogContent>
         <DialogContentText>
           項目の編集を行います。変更後登録ボタンを押下して完了してください。
@@ -190,7 +188,7 @@ const EditModal: React.VFC<Props> = (props) => {
           onClick={editItem}
         />
       </DialogActions>
-    </Dialog>
+    </ModalWrapper>
   );
 };
 
