@@ -57,8 +57,8 @@ const Profile: React.VFC = () => {
             <Face fontSize={'inherit'} />
           </span>
         </div>
-        <div className={styles.profileContent}>
-          {user && (
+        {user && (
+          <div className={styles.profileContent}>
             <dl>
               <dt className={styles.title}>ユーザーネーム</dt>
               <dd className={styles.body}>{user.username}</dd>
@@ -71,21 +71,21 @@ const Profile: React.VFC = () => {
                 {getNameById(genders, user.gender, 'gender')}
               </dd>
             </dl>
-          )}
-          <div className={styles.controller}>
-            <SecondaryButton text={'プロフィール編集'} onClick={openModal} />
+            <div className={styles.controller}>
+              <SecondaryButton text={'プロフィール編集'} onClick={openModal} />
+            </div>
+            <dl>
+              <dt className={styles.title}>メールアドレス</dt>
+              <dd className={styles.body}>{user.email}</dd>
+            </dl>
+            <div className={styles.controller}>
+              <SecondaryButton
+                text={'メールアドレス変更'}
+                onClick={openChangeMailModal}
+              />
+            </div>
           </div>
-          <dl>
-            <dt className={styles.title}>メールアドレス</dt>
-            <dd className={styles.body}>0285mashiko@gmail.com</dd>
-          </dl>
-          <div className={styles.controller}>
-            <SecondaryButton
-              text={'メールアドレス変更'}
-              onClick={openChangeMailModal}
-            />
-          </div>
-        </div>
+        )}
       </div>
       <ProfileEditModal open={isOpenModal} close={closeModal} />
       <MailEditModal
