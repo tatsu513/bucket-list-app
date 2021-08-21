@@ -93,7 +93,7 @@ const Signup: React.VFC = () => {
 
           const initialData: User = {
             age: age,
-            birthday: dateBirthDay,
+            birthday: FirebaseTimestamp.fromDate(dateBirthDay),
             createdAt: timestamp,
             email: email,
             gender: gender,

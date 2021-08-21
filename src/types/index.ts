@@ -10,6 +10,12 @@ export interface Options {
   order: number;
 }
 
+export interface ChangeEmailParams {
+  oldEmail: string;
+  email: string;
+  password: string;
+}
+
 export interface User {
   age: number;
   birthday: firebase.firestore.Timestamp;

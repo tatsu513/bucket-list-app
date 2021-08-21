@@ -42,22 +42,23 @@ const Profile: React.VFC = () => {
     getGenders().then((genders) => setGenders(genders));
   }, []);
   useEffect(() => {
-    if (!currentUser) return;
+    if (!currentUser || isOpenModal || isOpenChangeMailModal) return;
     getUser(currentUser.uid).then((user) => setUser(user));
-  }, [currentUser]);
+    setCurrentUser(auth.currentUser);
+  }, [currentUser, isOpenModal, isOpenChangeMailModal]);
   return (
     <PageWrapper>
       <Header />
       <PageTitle title={'プロフィール'}>
         <Person fontSize={'inherit'} />
       </PageTitle>
-      <div className={styles.profileBox}>
-        <div className={styles.profileImageBox}>
-          <span className={styles.profileImage}>
-            <Face fontSize={'inherit'} />
-          </span>
-        </div>
-        {user && (
+      {user && (
+        <div className={styles.profileBox}>
+          <div className={styles.profileImageBox}>
+            <span className={styles.profileImage}>
+              <Face fontSize={'inherit'} />
+            </span>
+          </div>
           <div className={styles.profileContent}>
             <dl>
               <dt className={styles.title}>ユーザーネーム</dt>
@@ -76,7 +77,7 @@ const Profile: React.VFC = () => {
             </div>
             <dl>
               <dt className={styles.title}>メールアドレス</dt>
-              <dd className={styles.body}>{user.email}</dd>
+              <dd className={styles.body}>{currentUser?.email}</dd>
             </dl>
             <div className={styles.controller}>
               <SecondaryButton
@@ -85,13 +86,18 @@ const Profile: React.VFC = () => {
               />
             </div>
           </div>
-        )}
-      </div>
-      <ProfileEditModal open={isOpenModal} close={closeModal} />
-      <MailEditModal
-        open={isOpenChangeMailModal}
-        close={closeChangeMailModal}
-      />
+        </div>
+      )}
+      {user && (
+        <>
+          <ProfileEditModal user={user} open={isOpenModal} close={closeModal} />
+          <MailEditModal
+            email={user.email}
+            open={isOpenChangeMailModal}
+            close={closeChangeMailModal}
+          />
+        </>
+      )}
     </PageWrapper>
   );
 };

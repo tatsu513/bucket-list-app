@@ -1,6 +1,14 @@
 import { defaultCategories } from 'src/constants';
+import firebase from 'firebase/app';
 import { db } from 'src/firebase';
-import { EditingItem, FixedData, Item, Options, User } from 'src/types';
+import {
+  ChangeEmailParams,
+  EditingItem,
+  FixedData,
+  Item,
+  Options,
+  User,
+} from 'src/types';
 
 const usersRef = db.collection('users');
 
@@ -26,6 +34,19 @@ export const createUser = (uid: string, initialData: User) => {
     .doc(uid)
     .set(initialData)
     .then(() => createCategories(uid));
+};
+
+export const changeEmail = async (
+  user: firebase.User,
+  data: ChangeEmailParams,
+) => {
+  console.log(data);
+  const credential = firebase.auth.EmailAuthProvider.credential(
+    data.oldEmail,
+    data.password,
+  );
+  await user.reauthenticateWithCredential(credential);
+  return user.updateEmail(data.email);
 };
 
 export const deleteCategory = (uid: string, cid: string) => {
@@ -79,6 +100,10 @@ export const getUser = (uid: string) => {
       const data = snapshots.data() as User;
       return data;
     });
+};
+
+export const updateUser = (uid: string, data: User) => {
+  return usersRef.doc(uid).set(data);
 };
 
 export const getGenders = () => {

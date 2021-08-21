@@ -1,24 +1,32 @@
 import styles from 'src/assets/styles/modules/ProfileEditModal.module.scss';
 import { ModalWrapper } from './';
+import { useRouter } from 'next/router';
 import { DialogContent, DialogActions } from '@material-ui/core/';
 import { PrimayButton, ThirdaryButton } from '../buttons';
 import { Radio, TextField } from '../forms';
 import { useEffect, useState, useCallback } from 'react';
-import { getGenders } from 'src/api';
-import { Options } from 'src/types';
+import { getGenders, updateUser } from 'src/api';
+import { Options, User } from 'src/types';
+import { FirebaseTimestamp } from 'src/firebase';
+import { convertTo8Digit, getDateFrom8Digit } from 'src/util/convertDate';
 
 interface Props {
   open: boolean;
   close: () => void;
+  user: User;
 }
 
 const ProfileEditModal: React.VFC<Props> = (props) => {
-  const [username, setUsername] = useState('');
-  const [birthday, setBirthday] = useState('');
+  const router = useRouter();
+
+  const [username, setUsername] = useState(props.user.username);
+  const [birthday, setBirthday] = useState(
+    convertTo8Digit(new Date(props.user.birthday.toDate())),
+  );
   const [dateBirthDay, setDateBirthday] = useState<Date | null>(null);
-  const [gender, setGender] = useState('');
+  const [gender, setGender] = useState(props.user.gender);
   const [genders, setGenders] = useState<Options[] | never[]>([]);
-  const [selectedGender, setSelectedGender] = useState('');
+  const [selectedGender, setSelectedGender] = useState(props.user.gender);
 
   const inputUsername = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -29,23 +37,42 @@ const ProfileEditModal: React.VFC<Props> = (props) => {
   const inputBirthday = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setBirthday(event.target.value);
+      if (event.target.value.length === 8) {
+        setDateBirthday(getDateFrom8Digit(event.target.value));
+      } else {
+        setDateBirthday(null);
+      }
     },
-    [username],
+    [birthday, dateBirthDay],
   );
   const selectGender = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setSelectedGender(event.currentTarget.value);
       setGender(event.currentTarget.value);
     },
-    [],
+    [gender],
   );
   const isValidateInputs = () => {
-    const isInvalidBirthday = !dateBirthDay;
-    return username === '' || isInvalidBirthday || gender === '';
+    return username === '' || !dateBirthDay || gender === '';
   };
+  const updateAction = useCallback(() => {
+    if (!dateBirthDay) return;
+    const data = {
+      username: username,
+      birthday: FirebaseTimestamp.fromDate(dateBirthDay),
+      gender: gender,
+    };
+    updateUser(props.user.uid, { ...props.user, ...data }).then(() => {
+      props.close();
+    });
+  }, [username, birthday, gender]);
   useEffect(() => {
     getGenders().then((genders) => setGenders(genders));
   }, []);
+  useEffect(() => {
+    const dateValue = convertTo8Digit(new Date(props.user.birthday.toDate()));
+    setDateBirthday(getDateFrom8Digit(dateValue));
+  }, [props.user]);
   return (
     <ModalWrapper open={props.open} title={'プロフィールを編集'}>
       <DialogContent>
@@ -89,7 +116,7 @@ const ProfileEditModal: React.VFC<Props> = (props) => {
         <PrimayButton
           disabled={isValidateInputs()}
           text={'保存'}
-          onClick={() => alert('保存')}
+          onClick={updateAction}
         />
       </DialogActions>
     </ModalWrapper>
