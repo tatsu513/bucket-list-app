@@ -1,10 +1,6 @@
 import styles from 'src/assets/styles/modules/ProfileEditModal.module.scss';
 import { ModalWrapper } from './';
-import {
-  DialogContent,
-  DialogActions,
-  DialogContentText,
-} from '@material-ui/core/';
+import { DialogContent, DialogActions } from '@material-ui/core/';
 import { PrimayButton, ThirdaryButton } from '../buttons';
 import { Radio, TextField } from '../forms';
 import { useEffect, useState, useCallback } from 'react';

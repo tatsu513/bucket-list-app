@@ -3,17 +3,24 @@ import { Header, PageTitle, PageWrapper } from 'src/components';
 import { Person, Face } from '@material-ui/icons';
 import { SecondaryButton } from 'src/components/buttons';
 import { useState } from 'react';
-import { ProfileEditModal } from 'src/components/modals';
+import { MailEditModal, ProfileEditModal } from 'src/components/modals';
 import { useCallback } from 'react';
 
 const Profile: React.VFC = () => {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenChangeMailModal, setIsOpenChangeMailModal] = useState(false);
 
   const openModal = useCallback(() => {
     setIsOpenModal(true);
   }, []);
   const closeModal = useCallback(() => {
     setIsOpenModal(false);
+  }, []);
+  const openChangeMailModal = useCallback(() => {
+    setIsOpenChangeMailModal(true);
+  }, []);
+  const closeChangeMailModal = useCallback(() => {
+    setIsOpenChangeMailModal(false);
   }, []);
   return (
     <PageWrapper>
@@ -33,17 +40,29 @@ const Profile: React.VFC = () => {
             <dd className={styles.body}>たっつん</dd>
             <dt className={styles.title}>生年月日</dt>
             <dd className={styles.body}>1990/05/13</dd>
-            <dt className={styles.title}>メールアドレス</dt>
-            <dd className={styles.body}>0285mashiko@gmail.com</dd>
             <dt className={styles.title}>性別</dt>
             <dd className={styles.body}>男性</dd>
           </dl>
           <div className={styles.controller}>
-            <SecondaryButton text={'編集する'} onClick={openModal} />
+            <SecondaryButton text={'プロフィール編集'} onClick={openModal} />
+          </div>
+          <dl>
+            <dt className={styles.title}>メールアドレス</dt>
+            <dd className={styles.body}>0285mashiko@gmail.com</dd>
+          </dl>
+          <div className={styles.controller}>
+            <SecondaryButton
+              text={'メールアドレス変更'}
+              onClick={openChangeMailModal}
+            />
           </div>
         </div>
       </div>
       <ProfileEditModal open={isOpenModal} close={closeModal} />
+      <MailEditModal
+        open={isOpenChangeMailModal}
+        close={closeChangeMailModal}
+      />
     </PageWrapper>
   );
 };
