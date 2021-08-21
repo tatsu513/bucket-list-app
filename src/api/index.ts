@@ -1,6 +1,6 @@
 import { defaultCategories } from 'src/constants';
 import { db } from 'src/firebase';
-import { EditingItem, FixedData, Gender, Item, Options, User } from 'src/types';
+import { EditingItem, FixedData, Item, Options, User } from 'src/types';
 
 const usersRef = db.collection('users');
 
@@ -87,12 +87,13 @@ export const getGenders = () => {
     .orderBy('order', 'asc')
     .get()
     .then((snapshots) => {
-      const list: Gender[] = [];
+      const list: Options[] = [];
       snapshots.forEach((snapshot) => {
         const data = snapshot.data();
         list.push({
           genderId: data.genderId,
-          genderType: data.genderType,
+          name: data.name,
+          order: 1,
         });
       });
       return list;

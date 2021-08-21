@@ -5,7 +5,7 @@ import { PrimayButton, ThirdaryButton } from '../buttons';
 import { Radio, TextField } from '../forms';
 import { useEffect, useState, useCallback } from 'react';
 import { getGenders } from 'src/api';
-import { Gender } from 'src/types';
+import { Options } from 'src/types';
 
 interface Props {
   open: boolean;
@@ -17,7 +17,7 @@ const ProfileEditModal: React.VFC<Props> = (props) => {
   const [birthday, setBirthday] = useState('');
   const [dateBirthDay, setDateBirthday] = useState<Date | null>(null);
   const [gender, setGender] = useState('');
-  const [genders, setGenders] = useState<Gender[] | never[]>([]);
+  const [genders, setGenders] = useState<Options[] | never[]>([]);
   const [selectedGender, setSelectedGender] = useState('');
 
   const inputUsername = useCallback(
@@ -73,9 +73,9 @@ const ProfileEditModal: React.VFC<Props> = (props) => {
             return (
               <span key={gender.genderId} className={styles.radioItem}>
                 <Radio
-                  id={gender.genderId}
+                  id={String(gender.genderId)}
                   selectedValue={selectedGender}
-                  label={gender.genderType}
+                  label={gender.name}
                   name={'gender'}
                   onChange={selectGender}
                 />
@@ -86,7 +86,11 @@ const ProfileEditModal: React.VFC<Props> = (props) => {
       </DialogContent>
       <DialogActions>
         <ThirdaryButton text={'キャンセル'} onClick={props.close} />
-        <PrimayButton text={'保存'} onClick={() => alert('保存')} />
+        <PrimayButton
+          disabled={isValidateInputs()}
+          text={'保存'}
+          onClick={() => alert('保存')}
+        />
       </DialogActions>
     </ModalWrapper>
   );

@@ -9,6 +9,13 @@ export const convertTo8Digit = (date: Date) => {
   return convertedDate;
 };
 
+export const convertToDisplayDate = (date: Date) => {
+  const convertedDate = `${date.getFullYear()}/${(date.getMonth() + 1)
+    .toString()
+    .padStart(2, '0')}/${date.getDate().toString().padStart(2, '0')}`;
+  return convertedDate;
+};
+
 export const getToday = () => {
   const today = new Date();
   return convertTo8Digit(today);

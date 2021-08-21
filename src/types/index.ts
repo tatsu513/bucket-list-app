@@ -1,3 +1,4 @@
+import firebase from 'firebase/app';
 interface Timestamp {
   nanoseconds: number;
   seconds: number;
@@ -11,19 +12,14 @@ export interface Options {
 
 export interface User {
   age: number;
-  birthday: Timestamp | Date;
-  createdAt: Timestamp;
+  birthday: firebase.firestore.Timestamp;
+  createdAt: firebase.firestore.Timestamp;
   email: string;
   gender: string;
   role: 'customer' | 'admin';
   uid: string;
-  updatedAt: Timestamp;
+  updatedAt: firebase.firestore.Timestamp;
   username: string;
-}
-
-export interface Gender {
-  genderId: string;
-  genderType: string;
 }
 
 export interface Image {

@@ -5,7 +5,7 @@ import { PrimayButton } from 'src/components/buttons';
 import { TextLink } from 'src/components/index';
 import { auth, FirebaseTimestamp } from 'src/firebase';
 import { useRouter } from 'next/router';
-import { Gender, User } from 'src/types';
+import { Options, User } from 'src/types';
 import { getAge } from 'src/util/convertAge';
 import { createUser, getGenders } from 'src/api';
 
@@ -17,7 +17,7 @@ const Signup: React.VFC = () => {
   const [birthday, setBirthday] = useState('');
   const [dateBirthDay, setDateBirthday] = useState<Date | null>(null);
   const [gender, setGender] = useState('');
-  const [genders, setGenders] = useState<Gender[] | never[]>([]);
+  const [genders, setGenders] = useState<Options[] | never[]>([]);
   const [selectedGender, setSelectedGender] = useState('');
 
   const isInvalidDate = (date: Date) => {
@@ -165,9 +165,9 @@ const Signup: React.VFC = () => {
           return (
             <span key={gender.genderId} className={styles.radioItem}>
               <Radio
-                id={gender.genderId}
+                id={String(gender.genderId)}
                 selectedValue={selectedGender}
-                label={gender.genderType}
+                label={gender.name}
                 name={'gender'}
                 onChange={selectGender}
               />
