@@ -1,6 +1,5 @@
 import styles from 'src/assets/styles/modules/ProfileEditModal.module.scss';
 import { ModalWrapper } from './';
-import { useRouter } from 'next/router';
 import { DialogContent, DialogActions } from '@material-ui/core/';
 import { PrimayButton, ThirdaryButton } from '../buttons';
 import { Radio, TextField } from '../forms';
@@ -17,8 +16,6 @@ interface Props {
 }
 
 const ProfileEditModal: React.VFC<Props> = (props) => {
-  const router = useRouter();
-
   const [username, setUsername] = useState(props.user.username);
   const [birthday, setBirthday] = useState(
     convertTo8Digit(new Date(props.user.birthday.toDate())),
