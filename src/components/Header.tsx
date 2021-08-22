@@ -20,7 +20,9 @@ const Header: React.VFC<Props> = (props) => {
         100 BUCKET LIST
       </h1>
       <div className={styles.menus}>
-        <h2 className={styles.signout}>{props.username}</h2>
+        <h2 className={styles.signout} onClick={() => router.push('/profile')}>
+          {props.username && `${props.username} さん`}
+        </h2>
         <div
           className={styles.hamburgerBox}
           onClick={() => setIsOpenSidebar(!isOpenSidebar)}

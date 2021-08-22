@@ -83,7 +83,7 @@ const Profile: React.VFC = () => {
   }, [currentUser, isOpenModal, isOpenChangeMailModal]);
   return (
     <PageWrapper>
-      <Header />
+      <Header username={user?.username} />
       <PageTitle title={'プロフィール'}>
         <Person fontSize={'inherit'} />
       </PageTitle>
