@@ -5,6 +5,7 @@ import { AddCircleOutline } from '@material-ui/icons';
 import { RemoveCircleOutline } from '@material-ui/icons';
 import Stars from './Stars';
 import { useState } from 'react';
+import { getNameById } from 'src/util/common';
 
 interface Props {
   categories: Options[];
@@ -37,6 +38,21 @@ const Filter: React.VFC<Props> = (props) => {
             ) : (
               <AddCircleOutline fontSize={'inherit'} />
             )}
+          </span>
+          <span className={styles.filteringInfo}>
+            【重要度】{props.isAllpriority ? 'すべて' : props.priority}
+            【タイトル】{props.title === '' ? '-' : props.title}【ステータス】
+            {props.selectedStatus === 'all'
+              ? 'すべて'
+              : getNameById(props.status, props.selectedStatus, 'status')}
+            【カテゴリ】
+            {props.selectedCategory === 'all'
+              ? 'すべて'
+              : getNameById(
+                  props.categories,
+                  props.selectedCategory,
+                  'category',
+                )}
           </span>
         </span>
       </div>
