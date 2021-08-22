@@ -18,17 +18,10 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
   const [user, setUser] = useState<User | undefined>(undefined);
-  const [image, setImage] = useState('');
 
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
-      console.log(user);
-      if (!user) {
-        router.push('/account/signin');
-      } else {
-        setCurrentUser(user);
-        setImage(user.photoURL ? user.photoURL : '');
-      }
+      user ? setCurrentUser(user) : router.push('/account/signin');
     });
   }, []);
 
