@@ -4,7 +4,7 @@ import { Item, Options, User } from 'src/types';
 import { auth } from 'src/firebase';
 import { deleteItem, getCategories, getItems, getUser } from 'src/api';
 import { useRouter } from 'next/router';
-import { FixedStars, Header } from 'src/components';
+import { FixedStars } from 'src/components';
 import {
   ThirdaryButton,
   SecondaryButton,
@@ -72,7 +72,6 @@ const ItemDetail: React.VFC = () => {
   }, [currentUser, isOpen]);
   return (
     <>
-      <Header username={user?.username} />
       <div className={styles.itemBox}>
         {item && (
           <>

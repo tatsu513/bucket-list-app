@@ -1,14 +1,41 @@
 import '../src/assets/styles/reset.css';
 import '../src/assets/styles/global.scss';
+import firebase from 'firebase/app';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
-import { AccountHeader } from '../src/components';
-import { useRouter } from 'next/router';
+import { AccountHeader, Header } from '../src/components';
+import { auth } from 'src/firebase';
+import { getUser } from 'src/api';
+import { User } from 'src/types';
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const router = useRouter();
   const path = useRouter().pathname;
   const basePath = path.match(/(?<=\/).*(?=\/)/g);
   const isAccountPath = basePath && basePath[0] === 'account';
+
+  const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
+  const [user, setUser] = useState<User | undefined>(undefined);
+  const [image, setImage] = useState('');
+
+  useEffect(() => {
+    auth.onAuthStateChanged((user) => {
+      console.log(user);
+      if (!user) {
+        router.push('/account/signin');
+      } else {
+        setCurrentUser(user);
+        setImage(user.photoURL ? user.photoURL : '');
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (!currentUser) return;
+    getUser(currentUser.uid).then((user) => setUser(user));
+  }, [currentUser]);
   return (
     <div>
       <Head>
@@ -18,7 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/unicorn_1f984.png"
         />
       </Head>
-      {isAccountPath ? <AccountHeader /> : null}
+      {isAccountPath ? <AccountHeader /> : <Header username={user?.username} />}
       <main className={isAccountPath ? 'account' : 'home'}>
         <Component {...pageProps} />
       </main>

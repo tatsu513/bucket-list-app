@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/router';
 import firebase from 'firebase/app';
 import styles from 'src/assets/styles/modules/Setting.module.scss';
-import { Chip, Header, PageTitle } from 'src/components';
+import { Chip, PageTitle } from 'src/components';
 import { addCategory, deleteCategory, getCategories, getUser } from 'src/api';
 import { Options, User } from 'src/types';
 import { auth } from 'src/firebase';
@@ -102,7 +102,6 @@ const Setting = () => {
   };
   return (
     <div className={styles.settingWrapper}>
-      <Header username={user?.username} />
       <PageTitle title={'設定'}>
         <Settings />
       </PageTitle>

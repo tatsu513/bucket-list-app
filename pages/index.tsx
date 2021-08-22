@@ -1,6 +1,5 @@
 import { useState, useCallback, useEffect } from 'react';
 import firebase from 'firebase/app';
-import { Header } from '../src/components';
 import { Filter, List } from '../src/components';
 import { FloatButton } from 'src/components/buttons/';
 import styles from 'src/assets/styles/modules/Home.module.scss';
@@ -146,7 +145,6 @@ const home = () => {
 
   return (
     <>
-      <Header username={user?.username} />
       <Filter
         status={status}
         categories={categories}

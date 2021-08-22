@@ -1,8 +1,8 @@
 import styles from 'src/assets/styles/modules/Profile.module.scss';
 import firebase from 'firebase/app';
 import { useRouter } from 'next/router';
-import { Header, PageTitle, PageWrapper } from 'src/components';
-import { Person, Face, AddPhotoAlternate } from '@material-ui/icons';
+import { PageTitle, PageWrapper } from 'src/components';
+import { Person, Face } from '@material-ui/icons';
 import { SecondaryButton } from 'src/components/buttons';
 import { useState } from 'react';
 import { MailEditModal, ProfileEditModal } from 'src/components/modals';
@@ -83,7 +83,6 @@ const Profile: React.VFC = () => {
   }, [currentUser, isOpenModal, isOpenChangeMailModal]);
   return (
     <PageWrapper>
-      <Header username={user?.username} />
       <PageTitle title={'プロフィール'}>
         <Person fontSize={'inherit'} />
       </PageTitle>
