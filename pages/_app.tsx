@@ -13,8 +13,7 @@ import { User } from 'src/types';
 function MyApp({ Component, pageProps }: AppProps) {
   const router = useRouter();
   const path = useRouter().pathname;
-  const basePath = path.match(/(?<=\/).*(?=\/)/g);
-  const isAccountPath = basePath && basePath[0] === 'account';
+  const isAccountPath = path.includes('account');
 
   const [currentUser, setCurrentUser] = useState<firebase.User | null>(null);
   const [user, setUser] = useState<User | undefined>(undefined);
