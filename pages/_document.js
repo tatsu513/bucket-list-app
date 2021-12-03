@@ -1,15 +1,15 @@
 import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/styles'; // works with @material-ui/core/styles, if you prefer to use it.
-import theme from '../src/theme'; // Adjust here as well
 
 export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="ja">
         <Head>
-          {/* Not exactly required, but this is the PWA primary color */}
-          <meta name="theme-color" content={theme.palette.primary.main} />
+          <link rel="manifest" href="/manifest.json" />
+          <link rel="apple-touch-icon" href="/pwa/apple-touch-icon.png"></link>
+          <meta name="theme-color" content="#fff" />
         </Head>
         <body>
           <Main />
