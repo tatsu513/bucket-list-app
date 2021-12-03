@@ -32,6 +32,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <div>
       <Head>
         <title>BUCKET LIST</title>
+        <link rel="manifest" href="/manifest.json" />
         <link
           rel="icon"
           href="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/240/apple/285/unicorn_1f984.png"
